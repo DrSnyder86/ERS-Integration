@@ -5,9 +5,13 @@
 
 # Screenshots
 https://r2.fivemanage.com/image/sLLMLJ8vLExb.png
+
 https://r2.fivemanage.com/image/WhHjS5PSgHZm.png
+
 https://r2.fivemanage.com/image/fdjumATvxYAN.png
+
 https://r2.fivemanage.com/image/DVjxnTVIs5Rj.png
+
 https://r2.fivemanage.com/image/75ioDK1cpXfI.png
 
 # Features
@@ -48,13 +52,13 @@ Player Rewards
 
 ## Dependencies
 Qb-core or Qbox framework
-Emergency Response Simulator    https://store.nights-software.com/category/ersgamemode
-Ps-dispatch                     https://github.com/Project-Sloth/ps-dispatch
-ox_lib                          https://github.com/overextended/ox_lib
+Emergency Response Simulator-https://store.nights-software.com/category/ersgamemode
+Ps-dispatch-https://github.com/Project-Sloth/ps-dispatch
+ox_lib-https://github.com/overextended/ox_lib
 
 ## Optional
-Wk-wars2x Radar                 https://github.com/WolfKnight98/wk_wars2x
-ps-mdt                          https://github.com/Project-Sloth/ps-mdt
+Wk-wars2x Radar-https://github.com/WolfKnight98/wk_wars2x
+ps-mdt-https://github.com/Project-Sloth/ps-mdt
 
 
 ## Events
