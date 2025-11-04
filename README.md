@@ -1,4 +1,4 @@
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
 
 
 # ERS integration script for QB-core created to be used with 'Emergency Response Simulator' by [nightssoftware](https://store.nights-software.com/)
@@ -92,10 +92,7 @@ ps-mdt-https://github.com/Project-Sloth/ps-mdt
 
 
 
-## 🧾 License
 
-This project, **ERS Integration**, is licensed under the **MIT License**.  
-Copyright © 2025 **DrSnyder**
 
 You are free to use, modify, and distribute this software for personal or commercial use,  
 as long as proper credit is given by keeping the license notice.
