@@ -3,7 +3,12 @@
 
 # ERS integration script for QB-core created to be used with 'Emergency Response Simulator' by [nightssoftware](https://store.nights-software.com/)
 
-
+# Screenshots
+https://r2.fivemanage.com/image/sLLMLJ8vLExb.png
+https://r2.fivemanage.com/image/WhHjS5PSgHZm.png
+https://r2.fivemanage.com/image/fdjumATvxYAN.png
+https://r2.fivemanage.com/image/DVjxnTVIs5Rj.png
+https://r2.fivemanage.com/image/75ioDK1cpXfI.png
 
 # Features
 
