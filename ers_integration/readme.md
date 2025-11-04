@@ -42,14 +42,14 @@ Player Rewards
 - dispatch does not display callout info
 
 ## Dependencies
-Qb-core or Qbox framework
-Emergency Response Simulator    https://store.nights-software.com/category/ersgamemode
-Ps-dispatch                     https://github.com/Project-Sloth/ps-dispatch
-ox_lib                          https://github.com/overextended/ox_lib
+-Qb-core or Qbox framework
+-Emergency Response Simulator    https://store.nights-software.com/category/ersgamemode
+-Ps-dispatch                     https://github.com/Project-Sloth/ps-dispatch
+-ox_lib                          https://github.com/overextended/ox_lib
 
 ## Optional
-Wk-wars2x Radar                 https://github.com/WolfKnight98/wk_wars2x
-ps-mdt                          https://github.com/Project-Sloth/ps-mdt
+-Wk-wars2x Radar                 https://github.com/WolfKnight98/wk_wars2x
+-ps-mdt                          https://github.com/Project-Sloth/ps-mdt
 
 
 ## Events
@@ -87,4 +87,5 @@ ps-mdt                          https://github.com/Project-Sloth/ps-mdt
 
 Licensed under the **DrSnyder Non-Commercial License (DS-NC)** — © 2025 DrSnyder.  
 Free to use, modify, and share for non-commercial purposes. Commercial use or sale requires written permission.
+
 
