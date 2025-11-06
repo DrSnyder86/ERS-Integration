@@ -20,27 +20,27 @@ https://www.youtube.com/watch?v=hOujbqjlBBQ
 # Features
 
 QBCore & QBox Integration
--Fully compatible with QBCore and QBox frameworks.
+- Fully compatible with QBCore and QBox frameworks.
 
 Radial Menu Support
--Includes radial menu functions for quick access to commands and actions. Players can easily trigger key functions without memorizing chat commands.
+- Includes radial menu functions for quick access to commands and actions. Players can easily trigger key functions without memorizing chat commands.
 Players can request or cancel services while inside of a vehicle.
 
 PS-Dispatch Integration
--Seamless integration with ps-dispatch for real-time notifications and dispatch events, allowing multiple players to attach to calls with ps-dispatch.
+- Seamless integration with ps-dispatch for real-time notifications and dispatch events, allowing multiple players to attach to calls with ps-dispatch.
 Persistent and Non-persistent dispatch notifications depending on call and completion state.
 
 Custom Command Functions
--Supports basic command triggers, allowing server admins to extend functionality or bind actions to custom commands.
+- Supports basic command triggers, allowing server admins to extend functionality or bind actions to custom commands.
 
 Dynamic Event Handling
--Listens for in-game events (pullover events, dispatch responses, on-scene arrivals) and interacts with your ERS systems accordingly.
+- Listens for in-game events (pullover events, dispatch responses, on-scene arrivals) and interacts with your ERS systems accordingly.
 
 Player Rewards
--Awards players with automatic bank payment bonus on completion of scene cleanup. Giving player incentive to clean-up their scenes.
+- Awards players with automatic bank payment bonus on completion of scene cleanup. Giving player incentive to clean-up their scenes.
 
 Traffic Stops
--When used with Wk_wars2k radar the front plate will lock automatically in the event of a pullover and notify dispatch of location.
+- When used with Wk_wars2k radar the front plate will lock automatically in the event of a pullover and notify dispatch of location.
 
 ## Installation
 - Make a backup of your current resourses for security.
@@ -67,14 +67,14 @@ https://github.com/DrSnyder86/ERS-Integration/tree/main
 
 
 ## Dependencies
--Qb-core or Qbox framework
--Emergency Response Simulator    https://store.nights-software.com/category/ersgamemode
--Ps-dispatch                     https://github.com/Project-Sloth/ps-dispatch
--ox_lib                          https://github.com/overextended/ox_lib
+- Qb-core or Qbox framework
+- Emergency Response Simulator    https://store.nights-software.com/category/ersgamemode
+- Ps-dispatch                     https://github.com/Project-Sloth/ps-dispatch
+- ox_lib                          https://github.com/overextended/ox_lib
 
 ## Optional
--Wk-wars2x Radar                 https://github.com/WolfKnight98/wk_wars2x
--ps-mdt                          https://github.com/Project-Sloth/ps-mdt
+- Wk-wars2x Radar                 https://github.com/WolfKnight98/wk_wars2x
+- ps-mdt                          https://github.com/Project-Sloth/ps-mdt
 
 
 ## Events
@@ -103,6 +103,7 @@ https://github.com/DrSnyder86/ERS-Integration/tree/main
 | `call:cancelcoroner`         | Cancels a pending coroner request.       
 | `call:cancelanimalrescue`    | Cancels a pending animal rescue request. 
 | `call:cancelroadservice`     | Cancels a pending road service request.  
+
 
 
 
