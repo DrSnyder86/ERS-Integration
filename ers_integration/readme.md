@@ -1,9 +1,21 @@
-[![License: DS-NC](https://img.shields.io/badge/License-DS--NC-lightgrey.svg)](LICENSE)
-
 
 # ERS integration script for QB-core created to be used with 'Emergency Response Simulator' by [nightssoftware](https://store.nights-software.com/)
 
+Screenshots
 
+https://r2.fivemanage.com/image/sLLMLJ8vLExb.png
+
+https://r2.fivemanage.com/image/WhHjS5PSgHZm.png
+
+https://r2.fivemanage.com/image/fdjumATvxYAN.png
+
+https://r2.fivemanage.com/image/DVjxnTVIs5Rj.png
+
+https://r2.fivemanage.com/image/75ioDK1cpXfI.png
+
+Demo
+
+https://www.youtube.com/watch?v=hOujbqjlBBQ
 
 # Features
 
@@ -27,6 +39,9 @@ Dynamic Event Handling
 Player Rewards
 -Awards players with automatic bank payment bonus on completion of scene cleanup. Giving player incentive to clean-up their scenes.
 
+Traffic Stops
+-When used with Wk_wars2k radar the front plate will lock automatically in the event of a pullover and notify dispatch of location.
+
 ## Installation
 - Make a backup of your current resourses for security.
 - Open the INSTALL ME Folder. Inside are your new ps-dispatch alerts and radial menu items. `Script will not work without these`.
@@ -37,24 +52,29 @@ Player Rewards
 - Open your qbx-radialmenu resourse. Go into the `config` folder and open the `client.lua`. Copy the items from `config.client` and paste them under `menu items` or `job items`.
 - Drag and drop the ers_integration script in your resourse folder. Be sure it is started after ERS and Ps-dispatch.
 
+## Update
+- Included a drag and drop version for the files inside ps-dispatch and qbx-radialmenu so you dont have to copy and paste. Latest versions of both.
+- Dispatch will display Last name and Callsign.
+- Front plate will auto lock on a pullover.
+- Added ability to open Speedzone menu in radial menu.
+
 ## Known Bugs
 - ps-dispatch blip error
 - dispatch does not display callout info
 
+## Download - Use this link for the latest release and features
+https://github.com/DrSnyder86/ERS-Integration/tree/main
+
+
 ## Dependencies
 -Qb-core or Qbox framework
--Emergency Response Simulator    
-https://store.nights-software.com/category/ersgamemode
--Ps-dispatch                    
-https://github.com/Project-Sloth/ps-dispatch
--ox_lib                         
-https://github.com/overextended/ox_lib
+-Emergency Response Simulator    https://store.nights-software.com/category/ersgamemode
+-Ps-dispatch                     https://github.com/Project-Sloth/ps-dispatch
+-ox_lib                          https://github.com/overextended/ox_lib
 
 ## Optional
--Wk-wars2x Radar                 
-https://github.com/WolfKnight98/wk_wars2x
--ps-mdt                          
-https://github.com/Project-Sloth/ps-mdt
+-Wk-wars2x Radar                 https://github.com/WolfKnight98/wk_wars2x
+-ps-mdt                          https://github.com/Project-Sloth/ps-mdt
 
 
 ## Events
@@ -83,15 +103,6 @@ https://github.com/Project-Sloth/ps-mdt
 | `call:cancelcoroner`         | Cancels a pending coroner request.       
 | `call:cancelanimalrescue`    | Cancels a pending animal rescue request. 
 | `call:cancelroadservice`     | Cancels a pending road service request.  
-
-
-
-
-
-[![License: DS-NC](https://img.shields.io/badge/License-DS--NC-lightgrey.svg)](LICENSE)
-
-Licensed under the **DrSnyder Non-Commercial License (DS-NC)** — © 2025 DrSnyder.  
-Free to use, modify, and share for non-commercial purposes. Commercial use or sale requires written permission.
 
 
 
