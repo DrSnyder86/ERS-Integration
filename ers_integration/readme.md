@@ -75,6 +75,7 @@ https://github.com/DrSnyder86/ERS-Integration/tree/main
 ## Optional
 - Wk-wars2x Radar                 https://github.com/WolfKnight98/wk_wars2x
 - ps-mdt                          https://github.com/Project-Sloth/ps-mdt
+- qbx_radialmenu
 
 
 ## Events
@@ -103,6 +104,7 @@ https://github.com/DrSnyder86/ERS-Integration/tree/main
 | `call:cancelcoroner`         | Cancels a pending coroner request.       
 | `call:cancelanimalrescue`    | Cancels a pending animal rescue request. 
 | `call:cancelroadservice`     | Cancels a pending road service request.  
+
 
 
 
