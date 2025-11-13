@@ -13,6 +13,22 @@ https://r2.fivemanage.com/image/DVjxnTVIs5Rj.png
 
 https://r2.fivemanage.com/image/75ioDK1cpXfI.png
 
+https://r2.fivemanage.com/image/y5GNyAqhZFf6.png
+
+https://r2.fivemanage.com/image/cRwF9KgJa2I7.png
+
+https://r2.fivemanage.com/image/oNWm1TPnA70M.png
+
+https://r2.fivemanage.com/image/286JJBy3VzJl.png
+
+https://r2.fivemanage.com/image/Q3PMDltU27xy.jpg
+
+https://r2.fivemanage.com/image/5UDpOC218Tez.png
+
+https://r2.fivemanage.com/image/fSVssFYcHyxu.png
+
+https://r2.fivemanage.com/image/9ZXHwtObGTsl.png
+
 Demo
 
 https://www.youtube.com/watch?v=hOujbqjlBBQ
@@ -22,13 +38,14 @@ https://www.youtube.com/watch?v=hOujbqjlBBQ
 QBCore & QBox Integration
 - Fully compatible with QBCore and QBox frameworks.
 
-Radial Menu Support
-- Includes radial menu functions for quick access to commands and actions. Players can easily trigger key functions without memorizing chat commands.
-Players can request or cancel services while inside of a vehicle.
+Qbx-Radial Menu Support
+- Includes qbx radial menu functions for quick access to commands and actions. Players can easily trigger key functions without memorizing chat commands.
+- Players can request or cancel services while inside of a vehicle. 
 
 PS-Dispatch Integration
-- Seamless integration with ps-dispatch for real-time notifications and dispatch events, allowing multiple players to attach to calls with ps-dispatch.
-Persistent and Non-persistent dispatch notifications depending on call and completion state.
+- Ps-dispatch simulates a dispatcher on service requests and certain events giving a bit more immersion for players.
+- Seamless integration with ps-dispatch for dispatch notifications and events.
+- Persistent and Non-persistent dispatch notifications depending on call and completion state.
 
 Custom Command Functions
 - Supports basic command triggers, allowing server admins to extend functionality or bind actions to custom commands.
@@ -42,6 +59,9 @@ Player Rewards
 Traffic Stops
 - When used with Wk_wars2k radar the front plate will lock automatically in the event of a pullover and notify dispatch of location.
 
+Postal
+- Nearest postal is now shown in dispatch events
+
 ## Installation
 - Make a backup of your current resourses for security.
 - Open the INSTALL ME Folder. Inside are your new ps-dispatch alerts and radial menu items. `Script will not work without these`.
@@ -53,14 +73,14 @@ Traffic Stops
 - Drag and drop the ers_integration script in your resourse folder. Be sure it is started after ERS and Ps-dispatch.
 
 ## Update
-- Included a drag and drop version for the files inside ps-dispatch and qbx-radialmenu so you dont have to copy and paste. Latest versions of both.
+- Included a drag and drop version for the ps-dispatch and qbx-radialmenu configs so you dont have to copy and paste. Latest versions of both.
 - Dispatch will display Last name and Callsign.
 - Front plate will auto lock on a pullover.
 - Added ability to open Speedzone menu in radial menu.
+- Optimized script and fixed all errors
 
 ## Known Bugs
-- ps-dispatch blip error
-- dispatch does not display callout info
+- Dispatch will display arrival event when the player requests a service even if the request is denied
 
 ## Download - Use this link for the latest release and features
 https://github.com/DrSnyder86/ERS-Integration/tree/main
@@ -71,11 +91,12 @@ https://github.com/DrSnyder86/ERS-Integration/tree/main
 - Emergency Response Simulator    https://store.nights-software.com/category/ersgamemode
 - Ps-dispatch                     https://github.com/Project-Sloth/ps-dispatch
 - ox_lib                          https://github.com/overextended/ox_lib
+- nearest-postal                  https://github.com/DevBlocky/nearest-postal
 
-## Optional
+## Optional but highly recommended
+
 - Wk-wars2x Radar                 https://github.com/WolfKnight98/wk_wars2x
 - ps-mdt                          https://github.com/Project-Sloth/ps-mdt
-- qbx_radialmenu
 
 
 ## Events
@@ -104,8 +125,6 @@ https://github.com/DrSnyder86/ERS-Integration/tree/main
 | `call:cancelcoroner`         | Cancels a pending coroner request.       
 | `call:cancelanimalrescue`    | Cancels a pending animal rescue request. 
 | `call:cancelroadservice`     | Cancels a pending road service request.  
-
-
 
 
 
