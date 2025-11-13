@@ -76,11 +76,11 @@ Postal
 # REPLACE-INSTALL
 - Make a backup as usual
 - Replace the following files in `ps-dispatch` with the ones provoded in the  REPLACE-INSTALL Folder.
-    ps-dispatch/client/alerts.lua
-    ps-dispatch/shared/config.lua
+   - ps-dispatch/client/alerts.lua
+   - ps-dispatch/shared/config.lua
 
 - Next replace the following in `qbx-radialmenu`.
-    qbx-radialmenu/config/client.lua
+   - qbx-radialmenu/config/client.lua
 
 ## Update
 - Included a drag and drop version for the ps-dispatch and qbx-radialmenu configs so you dont have to copy and paste. Latest versions of both.
