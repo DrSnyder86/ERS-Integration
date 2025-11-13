@@ -273,50 +273,50 @@ return {
             },
             
             
-				{
-                    id = 'gps',
-                    icon = 'location-dot',
-                    label = 'Quick GPS',
-                    items = {
-                        {
-                            id = 'clothing',
-                            icon = 'shirt',
-                            label = 'Clothing Store',
-                            event = 'quickgps:client:setClosestClothingWaypoint',
-                        },
-                        {
-                            id = 'hair',
-                            icon = 'scissors',
-                            label = 'Barber Shop',
-                            event = 'quickgps:client:setClosestHairWaypoint',
-                        },
-                        {
-                            id = 'tattoo',
-                            icon = 'syringe',
-                            label = 'Tattoo Parlor',
-                            event = 'quickgps:client:setClosestTatWaypoint',
-                        },
-                        {
-                            id = 'gas',
-                            icon = 'gas-pump',
-                            label = 'Gas Station',
-                            event = 'quickgps:client:setClosestGasWaypoint',
+				-- {
+    --                 id = 'gps',
+    --                 icon = 'location-dot',
+    --                 label = 'Quick GPS',
+    --                 items = {
+    --                     {
+    --                         id = 'clothing',
+    --                         icon = 'shirt',
+    --                         label = 'Clothing Store',
+    --                         event = 'quickgps:client:setClosestClothingWaypoint',
+    --                     },
+    --                     {
+    --                         id = 'hair',
+    --                         icon = 'scissors',
+    --                         label = 'Barber Shop',
+    --                         event = 'quickgps:client:setClosestHairWaypoint',
+    --                     },
+    --                     {
+    --                         id = 'tattoo',
+    --                         icon = 'syringe',
+    --                         label = 'Tattoo Parlor',
+    --                         event = 'quickgps:client:setClosestTatWaypoint',
+    --                     },
+    --                     {
+    --                         id = 'gas',
+    --                         icon = 'gas-pump',
+    --                         label = 'Gas Station',
+    --                         event = 'quickgps:client:setClosestGasWaypoint',
 
-                        },
-                        {
-                            id = 'bank',
-                            icon = 'vault',
-                            label = 'Bank',
-                            event = 'quickgps:client:setClosestBankWaypoint',
-                        },
-                        {
-                            id = 'con',
-                            icon = 'store',
-                            label = 'Convenience Store',
-                            event = 'quickgps:client:setClosestConWaypoint',
-                        },
-                    },
-                },
+    --                     },
+    --                     {
+    --                         id = 'bank',
+    --                         icon = 'vault',
+    --                         label = 'Bank',
+    --                         event = 'quickgps:client:setClosestBankWaypoint',
+    --                     },
+    --                     {
+    --                         id = 'con',
+    --                         icon = 'store',
+    --                         label = 'Convenience Store',
+    --                         event = 'quickgps:client:setClosestConWaypoint',
+    --                     },
+    --                 },
+    --             },
                 -- {
                 --     id = 'clothesMenu',
                 --     icon = 'shirt',
