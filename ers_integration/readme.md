@@ -41,30 +41,33 @@ QBCore & QBox Integration
 Qbx-radialmenu Support
 - Includes qbx radial menu functions for quick access to commands and actions. Players can easily trigger key functions without memorizing chat commands.
 - Players can request or cancel services while inside of a vehicle. 
+- Radial menu functions used to trigger dispatch request response events
 
 Qb-radialmenu Support
 - Included in the github link in the `Manual-Install` folder are converted qb-radialmenu items. They were converted to qb using chat gpt and not tested.
 
 PS-Dispatch Integration
-- Ps-dispatch simulates a dispatcher on service requests and certain events giving a bit more immersion for players.
+- Ps-dispatch simulates a dispatcher on service requests and certain events notifying of their arrival giving a bit more immersion for players.
 - Seamless integration with ps-dispatch for dispatch notifications and events.
 - Persistent and Non-persistent dispatch notifications depending on call and completion state.
+- Traffic stops, accepted callouts, callout arrivals and pursuits all trigger an automatic dispatch event with player location and data.
 
 Custom Command Functions
 - Supports basic command triggers, allowing server admins to extend functionality or bind actions to custom commands.
 
 Dynamic Event Handling
 - Listens for in-game events (pullover events, dispatch responses, on-scene arrivals) and interacts with your ERS systems accordingly.
+- Delays are intentional in dispatch events to give some more immersion.
 
 Player Rewards
 - Awards players with automatic bank payment bonus on completion of scene cleanup. Giving player incentive to clean-up their scenes.
 
 Traffic Stops
 - When used with Wk_wars2k radar the front plate will lock automatically.
-- Automatically sends dispatch alert when a stop is initiated
+- Sends dispatch alert when a stop is initiated
 
 Postal
-- Nearest postal is now shown in dispatch request events
+- Nearest postal is now shown in dispatch request and arrival events
 
 # Installation
 ## MANUAL-INSTALL
@@ -142,6 +145,7 @@ https://github.com/DrSnyder86/ERS-Integration/tree/main
 | `call:cancelcoroner`         | Cancels a pending coroner request.       
 | `call:cancelanimalrescue`    | Cancels a pending animal rescue request. 
 | `call:cancelroadservice`     | Cancels a pending road service request.  
+
 
 
 
