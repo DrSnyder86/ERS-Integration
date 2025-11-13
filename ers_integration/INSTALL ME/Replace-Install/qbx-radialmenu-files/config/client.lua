@@ -10,12 +10,18 @@ return {
             icon = 'user',
             label = 'Citizen',
             items = {
-                -- {
-                --     id = 'multijob_toggle',
-                --     icon = 'users-cog',  
-                --     label = 'Multi-Job',
-                --     event = 'multijob:toggle',
-                -- },
+                {
+                    id = 'multijob_toggle',
+                    icon = 'users-cog',  
+                    label = 'Multi-Job',
+                    event = 'multijob:toggle',
+                },
+                {
+                    id = 'tcs_toggle',
+                    icon = 'cog', 
+                    label = 'Toggle TSC',
+                    event = 'tcs:toggle',
+                },
                 {
                     id = 'givenum',
                     icon = 'address-book',
@@ -92,19 +98,25 @@ return {
             icon = 'clipboard-list',
             label = 'ERS Utilities',
             items = {
+                {
+                    id = 'speedzone',
+                    icon = 'triangle-exclamation', 
+                    label = 'Traffic Control',
+                    event = 'custom:speedzone',
+                },
                 -- {
                 --     id = 'tcs_toggle',
-                --     icon = 'cog', 
+                --     icon = 'cog',  
                 --     label = 'Toggle TSC',
                 --     event = 'tcs:toggle',
                 -- },
                 
-                {
-                    id = 'escort_toggle',
-                    icon = 'user-shield',  
-                    label = 'Escort',
-                    event = 'escort:toggle',
-                },
+                -- {
+                --     id = 'escort_toggle',
+                --     icon = 'user-shield',  
+                --     label = 'Escort',
+                --     event = 'escort:toggle',
+                -- },
                 {
                     id = 'ers',
                     icon = 'list-check',
@@ -116,9 +128,15 @@ return {
                         label = 'Request 911 Call',
                         event = 'callout:request',
                     },
+                    -- {
+                    --     id = 'speedzone',
+                    --     icon = 'triangle-exclamation', 
+                    --     label = 'Traffic Control',
+                    --     event = 'custom:speedzone',
+                    -- },
                     {
                         id = 'toggle_shift',
-                        icon = 'user-clock', 
+                        icon = 'user-clock',  
                         label = 'Toggle Shift',
                         event = 'shift:toggle',
                     },
@@ -255,50 +273,50 @@ return {
             },
             
             
-				-- {
-                --     id = 'gps',
-                --     icon = 'location-dot',
-                --     label = 'Quick GPS',
-                --     items = {
-                --         {
-                --             id = 'clothing',
-                --             icon = 'shirt',
-                --             label = 'Clothing Store',
-                --             event = 'quickgps:client:setClosestClothingWaypoint',
-                --         },
-                --         {
-                --             id = 'hair',
-                --             icon = 'scissors',
-                --             label = 'Barber Shop',
-                --             event = 'quickgps:client:setClosestHairWaypoint',
-                --         },
-                --         {
-                --             id = 'tattoo',
-                --             icon = 'syringe',
-                --             label = 'Tattoo Parlor',
-                --             event = 'quickgps:client:setClosestTatWaypoint',
-                --         },
-                --         {
-                --             id = 'gas',
-                --             icon = 'gas-pump',
-                --             label = 'Gas Station',
-                --             event = 'quickgps:client:setClosestGasWaypoint',
+				{
+                    id = 'gps',
+                    icon = 'location-dot',
+                    label = 'Quick GPS',
+                    items = {
+                        {
+                            id = 'clothing',
+                            icon = 'shirt',
+                            label = 'Clothing Store',
+                            event = 'quickgps:client:setClosestClothingWaypoint',
+                        },
+                        {
+                            id = 'hair',
+                            icon = 'scissors',
+                            label = 'Barber Shop',
+                            event = 'quickgps:client:setClosestHairWaypoint',
+                        },
+                        {
+                            id = 'tattoo',
+                            icon = 'syringe',
+                            label = 'Tattoo Parlor',
+                            event = 'quickgps:client:setClosestTatWaypoint',
+                        },
+                        {
+                            id = 'gas',
+                            icon = 'gas-pump',
+                            label = 'Gas Station',
+                            event = 'quickgps:client:setClosestGasWaypoint',
 
-                --         },
-                --         {
-                --             id = 'bank',
-                --             icon = 'vault',
-                --             label = 'Bank',
-                --             event = 'quickgps:client:setClosestBankWaypoint',
-                --         },
-                --         {
-                --             id = 'con',
-                --             icon = 'store',
-                --             label = 'Convenience Store',
-                --             event = 'quickgps:client:setClosestConWaypoint',
-                --         },
-                --     },
-                -- },
+                        },
+                        {
+                            id = 'bank',
+                            icon = 'vault',
+                            label = 'Bank',
+                            event = 'quickgps:client:setClosestBankWaypoint',
+                        },
+                        {
+                            id = 'con',
+                            icon = 'store',
+                            label = 'Convenience Store',
+                            event = 'quickgps:client:setClosestConWaypoint',
+                        },
+                    },
+                },
                 -- {
                 --     id = 'clothesMenu',
                 --     icon = 'shirt',
@@ -495,19 +513,19 @@ return {
             --     items = {
             --         {
             --             id = 'request_callout',
-            --             icon = 'bell',  
+            --             icon = 'bell',  -- icon for alerts/callouts
             --             label = 'Request Callout',
             --             event = 'callout:request',
             --         },
             --         {
             --             id = 'toggle_shift',
-            --             icon = 'user-clock',  
+            --             icon = 'user-clock',  -- icon representing shifts
             --             label = 'Toggle Shift',
             --             event = 'shift:toggle',
             --         },
             --         {
             --             id = 'toggle_callouts',
-            --             icon = 'clipboard-list', 
+            --             icon = 'clipboard-list',  -- icon representing callouts/tasks
             --             label = 'Toggle Callouts',
             --             event = 'callouts:toggle',
             --         },
@@ -524,7 +542,7 @@ return {
                 id = 'mdt_toggle',
                 icon = 'tablet-alt',
                 label = 'MDT Tablet',
-                event = 'mdt:toggle', 
+                event = 'mdt:toggle', -- custom event trigger
             },			
             {
                 id = 'policeInteractions',
