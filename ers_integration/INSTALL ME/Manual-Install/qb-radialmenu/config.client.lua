@@ -1,4 +1,4 @@
--- qbx-radialmenu/config/client.lua
+-- qb-radialmenu
 
 RadialMenu:AddOption({
     id = 'ersutilities',
@@ -253,3 +253,4 @@ RadialMenu:AddOption({
         },
     }
 })
+
