@@ -72,11 +72,14 @@ Postal
 - `These are not drag & drop. You must add them manually!`
 - Go into your ps-dispatch resourse. Open the `config` file in the `shared` folder.
    - ps-dispatch/shared/config.lua
+  
 - Add the new `Alert blips` from `add.config.lua` under the `Config.Blips` section.
 - Next head into your `client` folder and open `alerts` file. Scroll all the way to the bottom and paste the alerts from `add.alerts.lua` here.
    - ps-dispatch/client/alerts.lua
+     
 - Open your qbx-radialmenu resourse. Go into the `config` folder and open the `client.lua`. Copy the items from `config.client` and paste them under `menu items` or `job items`.
    - qbx-radialmenu/config/client.lua
+     
 - Drag and drop the ers_integration script in your resourse folder. Be sure it is started after ERS and Ps-dispatch.
 
 # REPLACE-INSTALL
@@ -87,6 +90,7 @@ Postal
 
 - Next replace the following in `qbx-radialmenu`.
     qbx-radialmenu/config/client.lua
+  
 - Drag and drop the ers_integration script in your resourse folder. Be sure it is started after ERS and Ps-dispatch.
   
 ## Update
