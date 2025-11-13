@@ -38,7 +38,7 @@ https://www.youtube.com/watch?v=hOujbqjlBBQ
 QBCore & QBox Integration
 - Fully compatible with QBCore and QBox frameworks.
 
-Qbx-Radial Menu Support
+Qbx-radialmenu Support
 - Includes qbx radial menu functions for quick access to commands and actions. Players can easily trigger key functions without memorizing chat commands.
 - Players can request or cancel services while inside of a vehicle. 
 
@@ -60,23 +60,27 @@ Player Rewards
 - Awards players with automatic bank payment bonus on completion of scene cleanup. Giving player incentive to clean-up their scenes.
 
 Traffic Stops
-- When used with Wk_wars2k radar the front plate will lock automatically in the event of a pullover and notify dispatch of location.
+- When used with Wk_wars2k radar the front plate will lock automatically.
+- Automatically sends dispatch alert when a stop is initiated
 
 Postal
-- Nearest postal is now shown in dispatch events
+- Nearest postal is now shown in dispatch request events
 
-## Installation
-# MANUAL-INSTALL
+# Installation
+## MANUAL-INSTALL
 - Make a backup of your current resourses for security.
 - Open the INSTALL ME Folder. Inside are your new ps-dispatch alerts and radial menu items. `Script will not work without these`.
 - `These are not drag & drop. You must add them manually!`
 - Go into your ps-dispatch resourse. Open the `config` file in the `shared` folder.
+   - ps-dispatch/shared/config.lua
 - Add the new `Alert blips` from `add.config.lua` under the `Config.Blips` section.
 - Next head into your `client` folder and open `alerts` file. Scroll all the way to the bottom and paste the alerts from `add.alerts.lua` here.
+   - ps-dispatch/client/alerts.lua
 - Open your qbx-radialmenu resourse. Go into the `config` folder and open the `client.lua`. Copy the items from `config.client` and paste them under `menu items` or `job items`.
+   - qbx-radialmenu/config/client.lua
 - Drag and drop the ers_integration script in your resourse folder. Be sure it is started after ERS and Ps-dispatch.
 
-# REPLACE-INSTALL
+## REPLACE-INSTALL
 - Make a backup as usual
 - Replace the following files in `ps-dispatch` with the ones provoded in the  REPLACE-INSTALL Folder.
    - ps-dispatch/client/alerts.lua
@@ -84,18 +88,19 @@ Postal
 
 - Next replace the following in `qbx-radialmenu`.
    - qbx-radialmenu/config/client.lua
+- Drag and drop the ers_integration script in your resourse folder. Be sure it is started after ERS and Ps-dispatch.
 
-## Update
+# Update
 - Included a drag and drop version for the ps-dispatch and qbx-radialmenu configs so you dont have to copy and paste. Latest versions of both.
 - Dispatch will display Last name and Callsign.
 - Front plate will auto lock on a pullover.
 - Added ability to open Speedzone menu in radial menu.
 - Optimized script and fixed all errors
 
-## Known Bugs
+# Known Bugs
 - Dispatch will display arrival event when the player requests a service even if the request is denied
 
-## Download - Use this link for the latest release and features
+# Download - Use this link for the latest release and features
 https://github.com/DrSnyder86/ERS-Integration/tree/main
 
 
@@ -137,7 +142,6 @@ https://github.com/DrSnyder86/ERS-Integration/tree/main
 | `call:cancelcoroner`         | Cancels a pending coroner request.       
 | `call:cancelanimalrescue`    | Cancels a pending animal rescue request. 
 | `call:cancelroadservice`     | Cancels a pending road service request.  
-
 
 
 
