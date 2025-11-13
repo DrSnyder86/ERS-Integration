@@ -63,6 +63,7 @@ Postal
 - Nearest postal is now shown in dispatch events
 
 ## Installation
+# MANUAL-INSTALL
 - Make a backup of your current resourses for security.
 - Open the INSTALL ME Folder. Inside are your new ps-dispatch alerts and radial menu items. `Script will not work without these`.
 - `These are not drag & drop. You must add them manually!`
@@ -71,6 +72,15 @@ Postal
 - Next head into your `client` folder and open `alerts` file. Scroll all the way to the bottom and paste the alerts from `add.alerts.lua` here.
 - Open your qbx-radialmenu resourse. Go into the `config` folder and open the `client.lua`. Copy the items from `config.client` and paste them under `menu items` or `job items`.
 - Drag and drop the ers_integration script in your resourse folder. Be sure it is started after ERS and Ps-dispatch.
+
+# REPLACE-INSTALL
+- Make a backup as usual
+- Replace the following files in `ps-dispatch` with the ones provoded in the  REPLACE-INSTALL Folder.
+    ps-dispatch/client/alerts.lua
+    ps-dispatch/shared/config.lua
+
+- Next replace the following in `qbx-radialmenu`.
+    qbx-radialmenu/config/client.lua
 
 ## Update
 - Included a drag and drop version for the ps-dispatch and qbx-radialmenu configs so you dont have to copy and paste. Latest versions of both.
@@ -93,8 +103,7 @@ https://github.com/DrSnyder86/ERS-Integration/tree/main
 - ox_lib                          https://github.com/overextended/ox_lib
 - nearest-postal                  https://github.com/DevBlocky/nearest-postal
 
-## Optional but highly recommended
-
+## Optional
 - Wk-wars2x Radar                 https://github.com/WolfKnight98/wk_wars2x
 - ps-mdt                          https://github.com/Project-Sloth/ps-mdt
 
