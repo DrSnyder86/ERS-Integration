@@ -60,7 +60,8 @@ Player Rewards
 - Awards players with automatic bank payment bonus on completion of scene cleanup. Giving player incentive to clean-up their scenes.
 
 Traffic Stops
-- When used with Wk_wars2k radar the front plate will lock automatically in the event of a pullover and notify dispatch of location.
+- When used with Wk_wars2k radar the front plate will lock automatically.
+- Automatically sends dispatch alert when a stop is initiated
 
 Postal
 - Nearest postal is now shown in dispatch events
