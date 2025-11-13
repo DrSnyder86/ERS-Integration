@@ -1,6 +1,6 @@
 Config = Config or {}
 
-Config.ShortCalls = true -- Dispatch notifications are sent containing only the alert name, omitting additional details. For more information, the dispatch menu can be accessed.  
+Config.ShortCalls = false -- Dispatch notifications are sent containing only the alert name, omitting additional details. For more information, the dispatch menu can be accessed.  
 Config.Debug = false -- Enables debug and send alerts when leo break the law.
 
 Config.RespondKeybind = 'E'
@@ -11,7 +11,9 @@ Config.MaxCallList = 15 -- maximum dispatch calls in dispatch list
 Config.OnDutyOnly = true -- Set true if only on duty players can see the alert
 Config.Jobs = { -- Job Types or names that can access the dispatch menu. If you want to allow more jobs to see certain dispatch alerts. Go to alerts.lua and add the job name to the alert.
     "leo",
-    "ems"
+    "ems",
+    "tow",
+    "mechanic"
 }
 
 Config.AlertCommandCooldown = 60 -- this would make the command work every 60 seconds to avoid spamming
@@ -23,7 +25,9 @@ Config.DefaultAlerts = {
     Autotheft = false,
     Melee = false,
     PlayerDowned = true,
-    Explosion = true
+    Explosion = true,
+    OfficerDown = true,
+    EmsDown = true,
 }
 
 Config.MinOffset = 1
@@ -123,34 +127,34 @@ Config.Blips = {
         flash = false
     },
     ['codefour'] = {
-        --radius = 0,
-        --sprite = 126,
-        --color = 3,
-        --scale = 1.5,
-        --length = 2,
+        radius = 0,
+        sprite = 126,
+        color = 3,
+        scale = 0.5,
+        length = 0.1,
         sound = 'robberysound',
-        --offset = false,
-        --flash = false
+        offset = false,
+        flash = false
     },
     ['onscene'] = {
         radius = 0,
         sprite = 161,
         color = 3,
         scale = 1.5,
-        length = 2,
+        length = 1,
         sound = 'robberysound',
         offset = false,
         flash = false
     },
     ['enroute'] = {
-        --radius = 0,
-        --sprite = 126,
-        --color = 3,
-        --scale = 1.5,
-        --length = 2,
+        radius = 0,
+        sprite = 126,
+        color = 3,
+        scale = 0.5,
+        length = 0.1,
         sound = 'robberysound',
-        --offset = false,
-        --flash = false
+        offset = false,
+        flash = false
     },
     ['civdead'] = {
         radius = 0,
@@ -168,6 +172,17 @@ Config.Blips = {
         color = 1,
         scale = 1.5,
         length = 2,
+        sound = 'Lose_1st',
+        sound2 = 'GTAO_FM_Events_Soundset',
+        offset = false,
+        flash = false
+    },
+    ['dispatch'] = {
+        radius = 0,
+        sprite = 480,
+        color = 1,
+        scale = 0.5,
+        length = 0.1,
         sound = 'Lose_1st',
         sound2 = 'GTAO_FM_Events_Soundset',
         offset = false,
@@ -208,8 +223,8 @@ Config.Blips = {
         radius = 15.0,
         sprite = 42,
         color = 1,
-        scale = 1.0,
-        length = 2,
+        scale = 0.5,
+        length = 1,
         sound = 'robberysound',
         offset = false,
         flash = false
@@ -218,7 +233,7 @@ Config.Blips = {
         radius = 25.0,
         sprite = 833,
         color = 1,
-        scale = 1.5,
+        scale = 0.5,
         length = 2,
         sound = 'ringing',
         offset = false,
