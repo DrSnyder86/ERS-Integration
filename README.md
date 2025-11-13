@@ -66,8 +66,8 @@ Traffic Stops
 Postal
 - Nearest postal is now shown in dispatch events
 
-## Installation
-# MANUAL-INSTALL
+# Installation
+## MANUAL-INSTALL
 - Make a backup of your current resourses for security.
 - Open the INSTALL ME Folder. Inside are your new ps-dispatch alerts and radial menu items. `Script will not work without these`.
 - `These are not drag & drop. You must add them manually!`
@@ -83,7 +83,7 @@ Postal
      
 - Drag and drop the ers_integration script in your resourse folder. Be sure it is started after ERS and Ps-dispatch.
 
-# REPLACE-INSTALL
+## REPLACE-INSTALL
 - Make a backup as usual
 - Replace the following files in `ps-dispatch` with the ones provoded in the  REPLACE-INSTALL Folder.
     ps-dispatch/client/alerts.lua
@@ -94,17 +94,17 @@ Postal
   
 - Drag and drop the ers_integration script in your resourse folder. Be sure it is started after ERS and Ps-dispatch.
   
-## Update
+# Update
 - Included a drag and drop version for the ps-dispatch and qbx-radialmenu configs so you dont have to copy and paste. Latest versions of both.
 - Dispatch will display Last name and Callsign.
 - Front plate will auto lock on a pullover.
 - Added ability to open Speedzone menu in radial menu.
 - Optimized script and fixed all errors
 
-## Known Bugs
+# Known Bugs
 - Dispatch will display arrival event when the player requests a service even if the request is denied
 
-## Download - Use this link for the latest release and features
+# Download - Use this link for the latest release and features
 https://github.com/DrSnyder86/ERS-Integration/tree/main
 
 
