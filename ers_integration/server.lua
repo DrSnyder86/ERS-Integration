@@ -1,6 +1,5 @@
 local QBCore = exports['qb-core']:GetCoreObject()
 
-
 --------------------------------------
 -- Callout Offered
 --------------------------------------
@@ -23,29 +22,33 @@ local QBCore = exports['qb-core']:GetCoreObject()
 --------------------------------------
 -- Callout Accepted
 --------------------------------------
-
 RegisterNetEvent('ErsIntegration::OnAcceptedCalloutOffer', function(calloutData)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
     if not Player then return end
 
-    local label = calloutData.label or "911 Call"
+    local ped = GetPlayerPed(src)
+    local coords = GetEntityCoords(ped)
     local lastName = Player.PlayerData.charinfo.lastname or "Unknown"
     local callsign = Player.PlayerData.metadata.callsign or "N/A"
 
-    -- Run dispatch after a short delay without blocking the main event
     CreateThread(function()
-        Wait(10000) -- 10 seconds
+        Wait(10000) -- 10 seconds delay
 
         TriggerEvent('ps-dispatch:server:notify', {
             code = '10-97',
+            codeName = 'enroute',
             title = "En-Route",
-            message = ("%s (%s) is Responding %s"):format(lastName, callsign, label),
-            jobs = { 'police', 'sheriff' }
+            icon = 'fas fa-car',
+            priority = 2,
+            message = ("911 Dispatch"),
+            alertTime = 15,
+            information = ("%s - %s is responding to the latest 911 Call. Will advise status when Im 10-23"):format(lastName, callsign),
+            jobs = { 'mechanic', 'tow', 'police', 'ems' },
+            coords = coords,
         })
     end)
 end)
-
 
 --------------------------------------
 -- Callout Arrived
@@ -59,19 +62,12 @@ RegisterNetEvent('ErsIntegration::OnArrivedAtCallout', function(calloutData)
     local lastName = Player.PlayerData.charinfo.lastname or "Unknown"
     local callsign = Player.PlayerData.metadata.callsign or "N/A"
 
-    -- Run after a short delay without blocking the event
     CreateThread(function()
-        Wait(10000) -- 10 seconds
+        Wait(10000) 
 
-        -- ps-dispatch handles the details internally
         TriggerClientEvent('ps-dispatch:client:onscene', src, '10-23')
-
-        -- Optional custom log or message (if you want server-side confirmation)
-        -- print(("%s (%s) arrived on scene for %s"):format(lastName, callsign, label))
     end)
 end)
-
-
 
 -- ------------------------------------
 -- Callout Completed before
@@ -107,24 +103,21 @@ RegisterNetEvent('ErsIntegration::OnCalloutCompletedSuccesfully', function(callo
     local Player = QBCore.Functions.GetPlayer(src)
     if not Player then return end
 
-    local charInfo = Player.PlayerData.charinfo
-    local name = ("%s %s"):format(charInfo.firstname, charInfo.lastname)
     local label = calloutData.label or "911 Call"
+    local lastName = Player.PlayerData.charinfo.lastname or "Unknown"
+    local callsign = Player.PlayerData.metadata.callsign or "N/A"
 
-    -- Run in a separate thread to avoid blocking
-    Citizen.CreateThread(function()
-        -- Delay before clearing the dispatch
-        Wait(10000)
+    CreateThread(function()
+
+        Wait(6000)
         TriggerClientEvent('ps-dispatch:client:codefour', src, 'Code-4')
 
-        -- Delay before rewarding the player
         Wait(10000)
         Player.Functions.AddMoney('bank', 5000, 'callout-complete')
 
-        -- Notify the player via ox_lib
         TriggerClientEvent('ox_lib:notify', src, {
             title = 'BONUS PAY!',
-            description = 'You received a $5000 bonus for clearing the scene.',
+            description = ('%s (%s) cleared the callout: %s. You received a $5000 bonus.'):format(lastName, callsign, label),
             type = 'success',
             duration = 8000
         })
@@ -139,103 +132,355 @@ RegisterNetEvent('ErsIntegration::OnPullover', function(pedData, vehicleData)
     local Player = QBCore.Functions.GetPlayer(src)
     if not Player then return end
 
-    local charInfo = Player.PlayerData.charinfo
-    local name = ("%s %s"):format(charInfo.firstname, charInfo.lastname)
+    local lastName = Player.PlayerData.charinfo.lastname or "Unknown"
+    local callsign = Player.PlayerData.metadata.callsign or "N/A"
     local plate = vehicleData and vehicleData.plate or "Unknown"
 
-    -- Lock the front radar
     TriggerClientEvent('custom:client:radarFrontLock', src)
 
-    -- OX_Lib notification
     TriggerClientEvent('ox_lib:notify', src, {
         title = 'Radar Plate Lock',
-        description = ('Plate lock engaged on vehicle [%s]'):format(plate),
+        description = ('%s (%s) locked plate [%s]'):format(lastName, callsign, plate),
         type = 'inform'
     })
 
-    -- Spawn a thread for delayed dispatch update
-    Citizen.CreateThread(function()
-        Wait(10000) -- 10 seconds delay
+    CreateThread(function()
+        Wait(10000)
         TriggerClientEvent('ps-dispatch:client:trafficstop', src, '10-97')
     end)
 end)
 
---pullover conclude
-
+--------------------------------------
+-- Pullover Conclude
+--------------------------------------
 RegisterNetEvent('ErsIntegration::OnPulloverEnded', function(pedData, vehicleData)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
     if not Player then return end
 
     local coords = GetEntityCoords(GetPlayerPed(src))
-    local name = ("%s %s"):format(Player.PlayerData.charinfo.firstname, Player.PlayerData.charinfo.lastname)
+
+    local streetHash = GetStreetNameAtCoord(coords.x, coords.y, coords.z)
+    local streetName = GetStreetNameFromHashKey(streetHash) or "Unknown Street"
+
+    local lastName = Player.PlayerData.charinfo.lastname or "Unknown"
+    local callsign = Player.PlayerData.metadata.callsign or "N/A"
     local plate = vehicleData and vehicleData.plate or "Traffic"
 
-    -- Add delay before dispatch (5000 = 5 seconds)
-    Citizen.Wait(8000)
+    CreateThread(function()
+        Wait(8000)
 
-    TriggerEvent('ps-dispatch:server:notify', {
-        code = 'Code-4',
-        title = "code4",
-        message = ("%s is Code-4 [%s]."):format(name, plate),
-        coords = coords,
-        jobs = { 'police', 'sheriff' }
-    })
+        TriggerEvent('ps-dispatch:server:notify', {
+            code = 'Code-4',
+            codeName = 'codefour',
+            title = "Code 4",
+            icon = 'fas fa-car',
+            message = ("911 Dispatch"),
+            coords = coords,
+            alertTime = 15,
+            jobs = { 'mechanic', 'tow', 'police', 'ems' },
+            information = ("Dispatch to %s (%s). Showing you Code-4 from your latest [%s] on %s."):format(lastName, callsign, plate, streetName),
 
-    -- TriggerClientEvent('ps-dispatch:client:codefour', src, 'Code-4')
-
-
+        })
+    end)
 end)
 
+--------------------------------------
+-- Pursuit Start
+--------------------------------------
+-- RegisterNetEvent('ErsIntegration::OnPursuitStarted', function(pedData, vehicleData)
+--     local src = source
+--     local Player = QBCore.Functions.GetPlayer(src)
+--     if not Player then return end
 
---pursuit start
+--     local coords = GetEntityCoords(GetPlayerPed(src))
+--     local lastName = Player.PlayerData.charinfo.lastname or "Unknown"
+--     local callsign = Player.PlayerData.metadata.callsign or "N/A"
+--     local plate = vehicleData and vehicleData.plate or "Unknown"
 
-RegisterNetEvent('ErsIntegration::OnPursuitStarted', function(pedData)
-    local src = source
-    local Player = QBCore.Functions.GetPlayer(src)
-    if not Player then return end
+--     -- Run asynchronously with short delay
+--     CreateThread(function()
+--         Wait(8000) -- 8 seconds
 
-    local coords = GetEntityCoords(GetPlayerPed(src))
-    local name = ("%s %s"):format(Player.PlayerData.charinfo.firstname, Player.PlayerData.charinfo.lastname)
-    local plate = vehicleData and vehicleData.plate or "911 Call"
+--         TriggerEvent('ps-dispatch:server:notify', {
+--             code = '10-99',
+--             title = "Pursuit",
+--             message = ("%s (%s) is in pursuit [%s]."):format(lastName, callsign, plate),
+--             coords = coords,
+--             jobs = { 'leo', 'ems' }
+--         })
+--     end)
+-- end)
 
-    -- Add delay before dispatch (5000 = 5 seconds)
-    Citizen.Wait(8000)
-
-    TriggerEvent('ps-dispatch:server:notify', {
-        code = '10-99',
-        title = "Pursuit",
-        message = ("%s is in pursuit [%s]."):format(name, plate),
-        coords = coords,
-        jobs = { 'police', 'sheriff' }
-    })
-
-    -- TriggerClientEvent('ps-dispatch:client:officerbackup', src, '10-99')
-
-
-end)
-
---pursuit conclude
-
+--------------------------------------
+-- Pursuit Conclude
+--------------------------------------
 -- RegisterNetEvent('ErsIntegration::OnPursuitEnded', function(pedData, vehicleData)
 --     local src = source
 --     local Player = QBCore.Functions.GetPlayer(src)
 --     if not Player then return end
 
 --     local coords = GetEntityCoords(GetPlayerPed(src))
---     local name = ("%s %s"):format(Player.PlayerData.charinfo.firstname, Player.PlayerData.charinfo.lastname)
---     local plate = vehicleData and vehicleData.plate or "911"
+--     local lastName = Player.PlayerData.charinfo.lastname or "Unknown"
+--     local callsign = Player.PlayerData.metadata.callsign or "N/A"
+--     local plate = vehicleData and vehicleData.plate or "Unknown"
 
-    -- TriggerEvent('ps-dispatch:server:notify', {
-    --     code = 'Code-4',
-    --     title = "Code-4",
-    --     message = ("%s is Code-4 from pursuit [%s]."):format(name, plate),
-    --     coords = coords,
-    --     jobs = { 'police', 'sheriff' }
-    -- })
+--     -- Run asynchronously with short delay
+--     CreateThread(function()
+--         Wait(8000) -- 8 seconds
 
---     TriggerClientEvent('ps-dispatch:client:codefour', src, 'Code-4')
+--         TriggerEvent('ps-dispatch:server:notify', {
+--             code = 'Code-4',
+--             title = "Code 4",
+--             message = ("%s (%s) is Code 4 from pursuit [%s]."):format(lastName, callsign, plate),
+--             coords = coords,
+--             jobs = { 'police', 'sheriff' }
+--         })
 
-
+--         -- Optionally trigger local client event if you want blip removal or cleanup
+--         -- TriggerClientEvent('ps-dispatch:client:codefour', src, 'Code-4')
+--     end)
 -- end)
+
+--------------------------------------------------------------------------------------------------
+-- Request EVENTS
+--------------------------------------------------------------------------------------------------
+RegisterNetEvent('ErsIntegration:server:OnCoronerRequested', function(postal)
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    if not Player then return end
+
+    local ped = GetPlayerPed(src)
+    local coords = GetEntityCoords(ped)
+    local lastName = Player.PlayerData.charinfo.lastname or "Unknown"
+    local callsign = Player.PlayerData.metadata.callsign or "N/A"
+
+    CreateThread(function()
+        Wait(8000) 
+
+        TriggerEvent('ps-dispatch:server:notify', {
+            code = '10-72', 
+            codeName = 'dispatch',
+            title = "Coroner Request",
+            icon = 'fas fa-car',
+            message = ("911 Dispatch"),
+            alertTime = 15,
+            jobs = { 'mechanic', 'tow', 'police', 'ems' },
+            information = ("Dispatch to %s (%s). Be advised local Coroner is confirmed 10-97 to your location nearest Postal Code [%s]. Their arrival is to be expected immediately!"):format(lastName, callsign, postal or 'Unknown'),
+            coords = coords,
+        })
+    end)
+end)
+
+RegisterNetEvent('ErsIntegration:server:OnMechanicRequested', function(postal)
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    if not Player then return end
+
+    local ped = GetPlayerPed(src)
+    local coords = GetEntityCoords(ped)
+    local lastName = Player.PlayerData.charinfo.lastname or "Unknown"
+    local callsign = Player.PlayerData.metadata.callsign or "N/A"
+
+    CreateThread(function()
+        Wait(8000)
+        TriggerEvent('ps-dispatch:server:notify', {
+            code = '10-51',
+            codeName = 'dispatch',
+            title = "Mechanic Responding",
+            icon = 'fas fa-car',
+            message = ("911 Dispatch"),
+            coords = coords,
+            alertTime = 15,
+            jobs = { 'mechanic', 'tow', 'police', 'ems' },
+            information = ("Dispatch to %s (%s). Be advised a Auto Mechanic is confirmed 10-97 to your location nearest Postal Code [%s]. Their arrival is to be expected immediately!"):format(
+                lastName, 
+                callsign, 
+                postal or 'Unknown'),
+        })
+    end)
+end)
+
+RegisterNetEvent('ErsIntegration:server:OnTowRequested', function(postal)
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    if not Player then return end
+
+    local ped = GetPlayerPed(src)
+    local coords = GetEntityCoords(ped)
+    local lastName = Player.PlayerData.charinfo.lastname or "Unknown"
+    local callsign = Player.PlayerData.metadata.callsign or "N/A"
+
+    CreateThread(function()
+        Wait(8000)
+        TriggerEvent('ps-dispatch:server:notify', {
+            code = '10-51',
+            codeName = 'dispatch',
+            title = "Tow Truck Responding",
+            icon = 'fas fa-car',
+            message = ("911 Dispatch"),
+            coords = coords,
+            alertTime = 15,
+            jobs = { 'mechanic', 'tow', 'police', 'ems' },
+            information = ("Dispatch to %s (%s). Be advised a Tow Truck Service is confirmed 10-97 to your location nearest Postal Code [%s]. Their arrival is to be expected immediately!"):format(lastName, callsign, postal or 'Unknown'),
+        })
+    end)
+end)
+
+RegisterNetEvent('ErsIntegration:server:OnTaxiRequested', function(postal)
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    if not Player then return end
+
+    local ped = GetPlayerPed(src)
+    local coords = GetEntityCoords(ped)
+    local lastName = Player.PlayerData.charinfo.lastname or "Unknown"
+    local callsign = Player.PlayerData.metadata.callsign or "N/A"
+
+    CreateThread(function()
+        Wait(8000)
+        TriggerEvent('ps-dispatch:server:notify', {
+            code = '10-62',
+            codeName = 'dispatch',
+            title = "Taxi Responding",
+            icon = 'fas fa-car',
+            message = ("911 Dispatch"),
+            coords = coords,
+            alertTime = 15,
+            jobs = { 'mechanic', 'tow', 'police', 'ems' },
+            information = ("Dispatch to %s (%s). Be advised a Taxi Service has been dispatched and is confirmed 10-97 to your location nearest Postal Code [%s]. Their arrival is to be expected immediately!"):format(lastName, callsign, postal or 'Unknown'),
+        })
+    end)
+end)
+
+RegisterNetEvent('ErsIntegration:server:OnPoliceRequested', function(postal)
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    if not Player then return end
+
+    local ped = GetPlayerPed(src)
+    local coords = GetEntityCoords(ped)
+    local lastName = Player.PlayerData.charinfo.lastname or "Unknown"
+    local callsign = Player.PlayerData.metadata.callsign or "N/A"
+
+    CreateThread(function()
+        Wait(8000)
+        TriggerEvent('ps-dispatch:server:notify', {
+            code = '10-32',
+            codeName = 'dispatch',
+            title = "Police Transport Arriving",
+            icon = 'fas fa-car',
+            message = ("911 Dispatch"),
+            coords = coords,
+            alertTime = 15,
+            jobs = { 'mechanic', 'tow', 'police', 'ems' },
+            information = ("Dispatch to %s (%s). Be advised a Police Transport has been dispatched and is confirmed 10-97 to your location nearest Postal Code [%s]. Their arrival is to be expected immediately!"):format(lastName, callsign, postal or 'Unknown'),
+        })
+    end)
+end)
+
+RegisterNetEvent('ErsIntegration:server:OnAnimalRescueRequested', function(postal)
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    if not Player then return end
+
+    local ped = GetPlayerPed(src)
+    local coords = GetEntityCoords(ped)
+    local lastName = Player.PlayerData.charinfo.lastname or "Unknown"
+    local callsign = Player.PlayerData.metadata.callsign or "N/A"
+
+    CreateThread(function()
+        Wait(8000)
+        TriggerEvent('ps-dispatch:server:notify', {
+            code = '10-11B',
+            codeName = 'dispatch',
+            title = "Animal Rescue Responding",
+            icon = 'fas fa-car',
+            message = ("911 Dispatch"),
+            coords = coords,
+            alertTime = 15,
+            jobs = { 'mechanic', 'tow', 'police', 'ems' },
+            information = ("Dispatch to %s (%s). Be advised a Animal Control Supervisor has been dispatched and is confirmed 10-97 to your location nearest Postal Code [%s]. Their arrival is to be expected immediately!"):format(lastName, callsign, postal or 'Unknown'),
+        })
+    end)
+end)
+
+RegisterNetEvent('ErsIntegration:server:OnAmbulanceRequested', function(postal)
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    if not Player then return end
+
+    local ped = GetPlayerPed(src)
+    local coords = GetEntityCoords(ped)
+    local lastName = Player.PlayerData.charinfo.lastname or "Unknown"
+    local callsign = Player.PlayerData.metadata.callsign or "N/A"
+
+    CreateThread(function()
+        Wait(8000)
+        TriggerEvent('ps-dispatch:server:notify', {
+            code = '10-52',
+            codeName = 'dispatch',
+            title = "Ambulance Responding",
+            icon = 'fas fa-car',
+            message = ("911 Dispatch"),
+            coords = coords,
+            alertTime = 15,
+            jobs = { 'mechanic', 'tow', 'police', 'ems' },
+            information = ("Dispatch to %s (%s). Be advised a Paramedic has been dispatched and is confirmed 10-97 to your location nearest Postal Code [%s]. Their arrival is to be expected immediately!"):format(lastName, callsign, postal or 'Unknown'),
+        })
+    end)
+end)
+
+RegisterNetEvent('ErsIntegration:server:OnFireRequested', function(postal)
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    if not Player then return end
+
+    local ped = GetPlayerPed(src)
+    local coords = GetEntityCoords(ped)
+    local lastName = Player.PlayerData.charinfo.lastname or "Unknown"
+    local callsign = Player.PlayerData.metadata.callsign or "N/A"
+
+    CreateThread(function()
+        Wait(8000)
+        TriggerEvent('ps-dispatch:server:notify', {
+            code = '10-53',
+            codeName = 'dispatch',
+            title = "Fire Department Responding",
+            icon = 'fas fa-car',
+            message = ("911 Dispatch"),
+            coords = coords,
+            alertTime = 15,
+            jobs = { 'mechanic', 'tow', 'police', 'ems' },
+            information = ("Dispatch to %s (%s). Be advised Fire Rescue has been dispatched and is confirmed 10-97 to your location nearest Postal Code [%s]. Their arrival is to be expected immediately!"):format(lastName, callsign, postal or 'Unknown'),
+        })
+    end)
+end)
+
+RegisterNetEvent('ErsIntegration:server:OnRoadServiceRequested', function(postal)
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    if not Player then return end
+
+    local ped = GetPlayerPed(src)
+    local coords = GetEntityCoords(ped)
+    local lastName = Player.PlayerData.charinfo.lastname or "Unknown"
+    local callsign = Player.PlayerData.metadata.callsign or "N/A"
+
+    CreateThread(function()
+        Wait(8000) 
+
+        TriggerEvent('ps-dispatch:server:notify', {
+            code = '10-60', 
+            codeName = 'dispatch',
+            title = 'Road Service Responding',
+            icon = 'fas fa-car',
+            message = ("911 Dispatch"),
+            coords = coords,
+            alertTime = 15,
+            jobs = { 'mechanic', 'tow', 'police', 'ems' },
+            information = ("Dispatch to %s (%s). Be advised a Road Service Crew is confirmed 10-97 to your location nearest Postal Code [%s]. Their arrival is to be expected immediately!"):format(lastName, callsign, postal or 'Unknown'),
+        })
+    end)
+end)
 
