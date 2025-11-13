@@ -42,6 +42,9 @@ Qbx-Radial Menu Support
 - Includes qbx radial menu functions for quick access to commands and actions. Players can easily trigger key functions without memorizing chat commands.
 - Players can request or cancel services while inside of a vehicle. 
 
+Qb-radialmenu Support
+- Included in the github link in the `Manual-Install` folder are converted qb-radialmenu items. They were converted to qb using chat gpt and not tested.
+
 PS-Dispatch Integration
 - Ps-dispatch simulates a dispatcher on service requests and certain events giving a bit more immersion for players.
 - Seamless integration with ps-dispatch for dispatch notifications and events.
@@ -134,6 +137,7 @@ https://github.com/DrSnyder86/ERS-Integration/tree/main
 | `call:cancelcoroner`         | Cancels a pending coroner request.       
 | `call:cancelanimalrescue`    | Cancels a pending animal rescue request. 
 | `call:cancelroadservice`     | Cancels a pending road service request.  
+
 
 
 
