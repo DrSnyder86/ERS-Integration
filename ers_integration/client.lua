@@ -1,88 +1,21 @@
---COMMANDS
-
-
--- RegisterNetEvent('autoems:request', function()
---     ExecuteCommand('autoems')  -- runs the /autoems command
--- end)
-
-RegisterNetEvent('custom:speedzone', function()
-    ExecuteCommand('speedzones')
-end)
-
-RegisterNetEvent('custom:client:radarFrontLock', function()
-    ExecuteCommand('radar_fr_cam')
-end)
-
-RegisterNetEvent('custom:client:useMDTTablet', function()
-    ExecuteCommand('mdt')
-end)
-
-RegisterNetEvent('mdt:toggle', function()
-    ExecuteCommand('mdt')  -- this runs the /mdt command
-end)
-
-RegisterNetEvent('tcs:toggle', function()
-    ExecuteCommand('tsc')  -- executes the /tsc command
-end)
-
-RegisterNetEvent('callout:request', function()
-    ExecuteCommand('requestcallout')  -- runs the /requestcallout command
-end)
-
-RegisterNetEvent('shift:toggle', function()
-    ExecuteCommand('toggleshift')  -- runs the /toggleshift command
-end)
-
-RegisterNetEvent('callouts:toggle', function()
-    ExecuteCommand('togglecallouts')  -- runs the /togglecallouts command
-end)
-
-RegisterNetEvent('multijob:toggle', function()
-    ExecuteCommand('multijob')  -- runs the /multijob command
-end)
-
-RegisterNetEvent('escort:toggle', function()
-    ExecuteCommand('escort')  -- runs the /escort command
-end)
-
-RegisterNetEvent('call:coroner', function()
-    ExecuteCommand('requestcoroner')
-end)
-
-RegisterNetEvent('call:mechanic', function()
-    ExecuteCommand('requestmechanic')
-end)
-
-RegisterNetEvent('call:tow', function()
-    ExecuteCommand('requesttow')
-end)
-
-RegisterNetEvent('call:taxi', function()
-    ExecuteCommand('requesttaxi')
-end)
-
-RegisterNetEvent('call:police', function()
-    ExecuteCommand('requestpolice')
-end)
-
-RegisterNetEvent('call:animalrescue', function()
-    ExecuteCommand('requestanimalrescue')
-end)
-
-RegisterNetEvent('call:ambulance', function()
-    ExecuteCommand('requestambulance')
-end)
-
-RegisterNetEvent('call:roadservice', function()
-    ExecuteCommand('requestroadservice')
-end)
-
-RegisterNetEvent('custom:requestfire', function()
-    ExecuteCommand('requestfire')
-end)
+--------------------------------------
+-- Custom Calls
+--------------------------------------
+-- RegisterNetEvent('autoems:request', function() ExecuteCommand('autoems') end)
+RegisterNetEvent('custom:speedzone', function() ExecuteCommand('speedzones') end)
+RegisterNetEvent('custom:broom', function() ExecuteCommand('broom') end)
+RegisterNetEvent('custom:client:radarFrontLock', function() ExecuteCommand('radar_fr_cam') end)
+RegisterNetEvent('custom:client:useMDTTablet', function() ExecuteCommand('mdt') end)
+RegisterNetEvent('mdt:toggle', function() ExecuteCommand('mdt') end)
+RegisterNetEvent('tcs:toggle', function() ExecuteCommand('tsc') end)
+RegisterNetEvent('callout:request', function() ExecuteCommand('requestcallout') end)
+RegisterNetEvent('shift:toggle', function() ExecuteCommand('toggleshift') end)
+RegisterNetEvent('callouts:toggle', function() ExecuteCommand('togglecallouts') end)
+RegisterNetEvent('multijob:toggle', function() ExecuteCommand('multijob') end)
+RegisterNetEvent('escort:toggle', function() ExecuteCommand('escort') end)
 
 --------------------------------------
--- Basic client events for cancel requests
+-- Cancel Requests
 --------------------------------------
 RegisterNetEvent('call:cancelambulance', function() ExecuteCommand('cancelambulance') end)
 RegisterNetEvent('call:cancelfire', function() ExecuteCommand('cancelfire') end)
@@ -94,7 +27,21 @@ RegisterNetEvent('call:cancelcoroner', function() ExecuteCommand('cancelcoroner'
 RegisterNetEvent('call:cancelanimalrescue', function() ExecuteCommand('cancelanimalrescue') end)
 RegisterNetEvent('call:cancelroadservice', function() ExecuteCommand('cancelroadservice') end)
 
+----------------------
+-- Postal Requests and functions
+----------------------
+local function sendPostalAndTrigger(event, cmd)
+    ExecuteCommand(cmd)
+    local postal = exports['nearest-postal']:getPostal()
+    TriggerServerEvent(event, postal)
+end
 
-
-
-
+RegisterNetEvent('call:coroner',       function() sendPostalAndTrigger('ErsIntegration:server:OnCoronerRequested', 'requestcoroner') end)
+RegisterNetEvent('call:mechanic',      function() sendPostalAndTrigger('ErsIntegration:server:OnMechanicRequested', 'requestmechanic') end)
+RegisterNetEvent('call:tow',           function() sendPostalAndTrigger('ErsIntegration:server:OnTowRequested', 'requesttow') end)
+RegisterNetEvent('call:taxi',          function() sendPostalAndTrigger('ErsIntegration:server:OnTaxiRequested', 'requesttaxi') end)
+RegisterNetEvent('call:police',        function() sendPostalAndTrigger('ErsIntegration:server:OnPoliceRequested', 'requestpolice') end)
+RegisterNetEvent('call:animalrescue',  function() sendPostalAndTrigger('ErsIntegration:server:OnAnimalRescueRequested', 'requestanimalrescue') end)
+RegisterNetEvent('call:ambulance',     function() sendPostalAndTrigger('ErsIntegration:server:OnAmbulanceRequested', 'requestambulance') end)
+RegisterNetEvent('custom:requestfire', function() sendPostalAndTrigger('ErsIntegration:server:OnFireRequested', 'requestfire') end)
+RegisterNetEvent('call:roadservice',   function() sendPostalAndTrigger('ErsIntegration:server:OnRoadServiceRequested', 'requestroadservice') end)
