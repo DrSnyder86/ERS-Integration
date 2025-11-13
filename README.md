@@ -4,17 +4,29 @@
 Screenshots
 
 https://r2.fivemanage.com/image/sLLMLJ8vLExb.png
+
 https://r2.fivemanage.com/image/WhHjS5PSgHZm.png
+
 https://r2.fivemanage.com/image/fdjumATvxYAN.png
+
 https://r2.fivemanage.com/image/DVjxnTVIs5Rj.png
+
 https://r2.fivemanage.com/image/75ioDK1cpXfI.png
+
 https://r2.fivemanage.com/image/y5GNyAqhZFf6.png
+
 https://r2.fivemanage.com/image/cRwF9KgJa2I7.png
+
 https://r2.fivemanage.com/image/oNWm1TPnA70M.png
+
 https://r2.fivemanage.com/image/286JJBy3VzJl.png
+
 https://r2.fivemanage.com/image/Q3PMDltU27xy.jpg
+
 https://r2.fivemanage.com/image/5UDpOC218Tez.png
+
 https://r2.fivemanage.com/image/fSVssFYcHyxu.png
+
 https://r2.fivemanage.com/image/9ZXHwtObGTsl.png
 
 Demo
@@ -51,6 +63,7 @@ Postal
 - Nearest postal is now shown in dispatch events
 
 ## Installation
+# MANUAL-INSTALL
 - Make a backup of your current resourses for security.
 - Open the INSTALL ME Folder. Inside are your new ps-dispatch alerts and radial menu items. `Script will not work without these`.
 - `These are not drag & drop. You must add them manually!`
@@ -59,6 +72,15 @@ Postal
 - Next head into your `client` folder and open `alerts` file. Scroll all the way to the bottom and paste the alerts from `add.alerts.lua` here.
 - Open your qbx-radialmenu resourse. Go into the `config` folder and open the `client.lua`. Copy the items from `config.client` and paste them under `menu items` or `job items`.
 - Drag and drop the ers_integration script in your resourse folder. Be sure it is started after ERS and Ps-dispatch.
+
+# REPLACE-INSTALL
+- Make a backup as usual
+- Replace the following files in `ps-dispatch` with the ones provoded in the  REPLACE-INSTALL Folder.
+    ps-dispatch/client/alerts.lua
+    ps-dispatch/shared/config.lua
+
+- Next replace the following in `qbx-radialmenu`.
+    qbx-radialmenu/config/client.lua
 
 ## Update
 - Included a drag and drop version for the ps-dispatch and qbx-radialmenu configs so you dont have to copy and paste. Latest versions of both.
