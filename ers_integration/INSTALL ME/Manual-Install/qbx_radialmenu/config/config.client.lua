@@ -41,6 +41,12 @@
                         label = 'MDT Tablet',
                         event = 'mdt:toggle',
                     },
+                    {
+                        id = 'speedzone',
+                        icon = 'triangle-exclamation', 
+                        label = 'Traffic Control',
+                        event = 'custom:speedzone',
+                    },
                 },
             },
 
