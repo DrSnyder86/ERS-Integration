@@ -87,7 +87,8 @@ Postal
 
 - Next replace the following in `qbx-radialmenu`.
     qbx-radialmenu/config/client.lua
-
+- Drag and drop the ers_integration script in your resourse folder. Be sure it is started after ERS and Ps-dispatch.
+  
 ## Update
 - Included a drag and drop version for the ps-dispatch and qbx-radialmenu configs so you dont have to copy and paste. Latest versions of both.
 - Dispatch will display Last name and Callsign.
