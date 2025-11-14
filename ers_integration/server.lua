@@ -188,29 +188,37 @@ end)
 --------------------------------------
 -- Pursuit Start
 --------------------------------------
--- RegisterNetEvent('ErsIntegration::OnPursuitStarted', function(pedData, vehicleData)
---     local src = source
---     local Player = QBCore.Functions.GetPlayer(src)
---     if not Player then return end
+RegisterNetEvent('ErsIntegration::OnPursuitStarted', function(pedData, vehicleData)
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    if not Player then return end
 
---     local coords = GetEntityCoords(GetPlayerPed(src))
---     local lastName = Player.PlayerData.charinfo.lastname or "Unknown"
---     local callsign = Player.PlayerData.metadata.callsign or "N/A"
---     local plate = vehicleData and vehicleData.plate or "Unknown"
+    local coords = GetEntityCoords(GetPlayerPed(src))
 
---     -- Run asynchronously with short delay
---     CreateThread(function()
---         Wait(8000) -- 8 seconds
+    local streetHash = GetStreetNameAtCoord(coords.x, coords.y, coords.z)
+    local streetName = GetStreetNameFromHashKey(streetHash) or "Unknown Street"
 
---         TriggerEvent('ps-dispatch:server:notify', {
---             code = '10-99',
---             title = "Pursuit",
---             message = ("%s (%s) is in pursuit [%s]."):format(lastName, callsign, plate),
---             coords = coords,
---             jobs = { 'leo', 'ems' }
---         })
---     end)
--- end)
+    local lastName = Player.PlayerData.charinfo.lastname or "Unknown"
+    local callsign = Player.PlayerData.metadata.callsign or "N/A"
+
+    CreateThread(function()
+        Wait(8000)
+
+        TriggerEvent('ps-dispatch:server:notify', {
+            code = '10-80',
+            codeName = 'trafficstop',
+            title = "Pursuit",
+            icon = 'fas fa-car',
+            message = ("911 Dispatch"),
+            coords = coords,
+            priority = 1,
+            alertTime = 15,
+            jobs = {  'leo' },
+            information = ("%s-%s Im in a pursuit on %s."):format(lastName, callsign, streetName),
+
+        })
+    end)
+end)
 
 --------------------------------------
 -- Pursuit Conclude
@@ -483,4 +491,5 @@ RegisterNetEvent('ErsIntegration:server:OnRoadServiceRequested', function(postal
         })
     end)
 end)
+
 
