@@ -42,8 +42,8 @@ RegisterNetEvent('ErsIntegration::OnAcceptedCalloutOffer', function(calloutData)
             icon = 'fas fa-car',
             priority = 2,
             message = ("911 Dispatch"),
-            alertTime = 15,
-            information = ("%s - %s is responding to the latest 911 Call. Will advise status when Im 10-23"):format(lastName, callsign),
+            alertTime = 10,
+            information = ("%s-%s is responding to the latest 911 Call."):format(lastName, callsign),
             jobs = { 'mechanic', 'tow', 'police', 'ems' },
             coords = coords,
         })
@@ -160,8 +160,6 @@ RegisterNetEvent('ErsIntegration::OnPulloverEnded', function(pedData, vehicleDat
 
     local coords = GetEntityCoords(GetPlayerPed(src))
 
-    local streetHash = GetStreetNameAtCoord(coords.x, coords.y, coords.z)
-    local streetName = GetStreetNameFromHashKey(streetHash) or "Unknown Street"
 
     local lastName = Player.PlayerData.charinfo.lastname or "Unknown"
     local callsign = Player.PlayerData.metadata.callsign or "N/A"
@@ -177,9 +175,9 @@ RegisterNetEvent('ErsIntegration::OnPulloverEnded', function(pedData, vehicleDat
             icon = 'fas fa-car',
             message = ("911 Dispatch"),
             coords = coords,
-            alertTime = 15,
-            jobs = { 'mechanic', 'tow', 'police', 'ems' },
-            information = ("Dispatch to %s (%s). Showing you Code-4 from your latest [%s] on %s."):format(lastName, callsign, plate, streetName),
+            alertTime = 10,
+            jobs = { 'leo', 'ems' },
+            information = ("%s (%s). Code-4 from my last %s."):format(lastName, callsign, plate),
 
         })
     end)
@@ -195,11 +193,10 @@ RegisterNetEvent('ErsIntegration::OnPursuitStarted', function(pedData, vehicleDa
 
     local coords = GetEntityCoords(GetPlayerPed(src))
 
-    local streetHash = GetStreetNameAtCoord(coords.x, coords.y, coords.z)
-    local streetName = GetStreetNameFromHashKey(streetHash) or "Unknown Street"
 
     local lastName = Player.PlayerData.charinfo.lastname or "Unknown"
     local callsign = Player.PlayerData.metadata.callsign or "N/A"
+    local plate = vehicleData and vehicleData.plate or "Traffic"
 
     CreateThread(function()
         Wait(8000)
@@ -213,8 +210,8 @@ RegisterNetEvent('ErsIntegration::OnPursuitStarted', function(pedData, vehicleDa
             coords = coords,
             priority = 1,
             alertTime = 15,
-            jobs = {  'leo' },
-            information = ("%s-%s Im in a pursuit on %s."):format(lastName, callsign, streetName),
+            jobs = {  'leo', 'ems' },
+            information = ("%s-%s Show me in a %s."):format(lastName, callsign, plate),
 
         })
     end)
@@ -275,7 +272,7 @@ RegisterNetEvent('ErsIntegration:server:OnCoronerRequested', function(postal)
             alertTime = 10,
             priority = 1,
             jobs = { 'mechanic', 'tow', 'police', 'ems' },
-            information = ("Dispatch to %s (%s). Be advised local Coroner is confirmed 10-97 to your location nearest Postal Code [%s]."):format(lastName, callsign, postal or 'Unknown'),
+            information = ("Dispatch to %s (%s). Be advised local Coroner is confirmed 10-97 to your location nearest Postal %s."):format(lastName, callsign, postal or 'Unknown'),
             coords = coords,
         })
     end)
@@ -302,7 +299,7 @@ RegisterNetEvent('ErsIntegration:server:OnMechanicRequested', function(postal)
             coords = coords,
             alertTime = 10,
             jobs = { 'mechanic', 'tow', 'police', 'ems' },
-            information = ("Dispatch to %s (%s). Be advised a Auto Mechanic is confirmed 10-97 to your location nearest Postal Code [%s]."):format(
+            information = ("Dispatch to %s (%s). Be advised a Auto Mechanic is confirmed 10-97 to your location nearest Postal %s."):format(
                 lastName, 
                 callsign, 
                 postal or 'Unknown'),
@@ -331,7 +328,7 @@ RegisterNetEvent('ErsIntegration:server:OnTowRequested', function(postal)
             coords = coords,
             alertTime = 10,
             jobs = { 'mechanic', 'tow', 'police', 'ems' },
-            information = ("Dispatch to %s (%s). Be advised a Tow Truck Service is confirmed 10-97 to your location nearest Postal Code [%s]."):format(lastName, callsign, postal or 'Unknown'),
+            information = ("Dispatch to %s (%s). Be advised a Tow Truck Service is confirmed 10-97 to your location nearest Postal %s."):format(lastName, callsign, postal or 'Unknown'),
         })
     end)
 end)
@@ -357,7 +354,7 @@ RegisterNetEvent('ErsIntegration:server:OnTaxiRequested', function(postal)
             coords = coords,
             alertTime = 10,
             jobs = { 'mechanic', 'tow', 'police', 'ems' },
-            information = ("Dispatch to %s (%s). Be advised a Taxi Service has been dispatched and is confirmed 10-97 to your location nearest Postal Code [%s]. "):format(lastName, callsign, postal or 'Unknown'),
+            information = ("Dispatch to %s (%s). Be advised a Taxi Service has been dispatched and is confirmed 10-97 to your location nearest Postal %s."):format(lastName, callsign, postal or 'Unknown'),
         })
     end)
 end)
@@ -383,7 +380,7 @@ RegisterNetEvent('ErsIntegration:server:OnPoliceRequested', function(postal)
             coords = coords,
             alertTime = 10,
             jobs = { 'mechanic', 'tow', 'police', 'ems' },
-            information = ("Dispatch to %s (%s). Be advised a Police Transport has been dispatched and is confirmed 10-97 to your location nearest Postal Code [%s]."):format(lastName, callsign, postal or 'Unknown'),
+            information = ("Dispatch to %s (%s). Be advised a Police Transport has been dispatched and is confirmed 10-97 to your location nearest Postal %s."):format(lastName, callsign, postal or 'Unknown'),
         })
     end)
 end)
@@ -409,7 +406,7 @@ RegisterNetEvent('ErsIntegration:server:OnAnimalRescueRequested', function(posta
             coords = coords,
             alertTime = 10,
             jobs = { 'mechanic', 'tow', 'police', 'ems' },
-            information = ("Dispatch to %s (%s). Be advised a Animal Control Supervisor has been dispatched and is confirmed 10-97 to your location nearest Postal Code [%s]."):format(lastName, callsign, postal or 'Unknown'),
+            information = ("Dispatch to %s (%s). Be advised a Animal Control Supervisor has been dispatched and is confirmed 10-97 to your location nearest Postal %s."):format(lastName, callsign, postal or 'Unknown'),
         })
     end)
 end)
@@ -436,7 +433,7 @@ RegisterNetEvent('ErsIntegration:server:OnAmbulanceRequested', function(postal)
             priority = 1,
             alertTime = 10,
             jobs = { 'mechanic', 'tow', 'police', 'ems' },
-            information = ("Dispatch to %s (%s). Be advised a Paramedic has been dispatched and is confirmed 10-97 to your location nearest Postal Code [%s]."):format(lastName, callsign, postal or 'Unknown'),
+            information = ("Dispatch to %s (%s). Be advised a Paramedic has been dispatched and is confirmed 10-97 to your location nearest Postal %s."):format(lastName, callsign, postal or 'Unknown'),
         })
     end)
 end)
@@ -462,7 +459,7 @@ RegisterNetEvent('ErsIntegration:server:OnFireRequested', function(postal)
             coords = coords,
             alertTime = 10,
             jobs = { 'mechanic', 'tow', 'police', 'ems' },
-            information = ("Dispatch to %s (%s). Be advised Fire Rescue has been dispatched and is confirmed 10-97 to your location nearest Postal Code [%s]."):format(lastName, callsign, postal or 'Unknown'),
+            information = ("Dispatch to %s (%s). Be advised Fire Rescue has been dispatched and is confirmed 10-97 to your location nearest Postal %s."):format(lastName, callsign, postal or 'Unknown'),
         })
     end)
 end)
@@ -489,10 +486,8 @@ RegisterNetEvent('ErsIntegration:server:OnRoadServiceRequested', function(postal
             coords = coords,
             alertTime = 10,
             jobs = { 'mechanic', 'tow', 'police', 'ems' },
-            information = ("Dispatch to %s (%s). Be advised a Road Service Crew is confirmed 10-97 to your location nearest Postal Code [%s]."):format(lastName, callsign, postal or 'Unknown'),
+            information = ("Dispatch to %s (%s). Be advised a Road Service Crew is confirmed 10-97 to your location nearest Postal %s."):format(lastName, callsign, postal or 'Unknown'),
         })
     end)
 end)
-
-
 
