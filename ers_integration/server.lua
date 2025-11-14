@@ -196,7 +196,7 @@ RegisterNetEvent('ErsIntegration::OnPursuitStarted', function(pedData, vehicleDa
 
     local lastName = Player.PlayerData.charinfo.lastname or "Unknown"
     local callsign = Player.PlayerData.metadata.callsign or "N/A"
-    local plate = vehicleData and vehicleData.plate or "Traffic"
+    local plate = vehicleData and vehicleData.plate or "Pursuit"
 
     CreateThread(function()
         Wait(8000)
@@ -490,4 +490,5 @@ RegisterNetEvent('ErsIntegration:server:OnRoadServiceRequested', function(postal
         })
     end)
 end)
+
 
