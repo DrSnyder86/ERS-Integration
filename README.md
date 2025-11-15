@@ -51,33 +51,41 @@ ERS Submenu (radialmenu)
 - ERS Services Menu - Request ambulance, tow, coroner etc.
 - State Dispatch Menu - Activate specific ps-dispatch events. Traffic stop, 10-99, Code-4, En-route.
 
+PS-Dispatch Integration
+- Ps-dispatch simulates a dispatcher on service requests and certain events notifying of arrivals and calls giving a bit more immersion for players.
+- Persistent and Non-persistent dispatch notifications depending on call and completion state.
+- Traffic stops, accepted callouts, callout arrivals and pursuits all trigger an automatic dispatch event with player location and data.
+
+Non-Persistent Ps-dispatch Events (Only displayed in call list for short time)
+- Accepted Callout (10-97 Responding notification)
+- Pullover Ended (Code-4 notification)
+- Pursuit Started
+- All Service Requests (Dispatch will notify of services arriving on scene after a request)
+
+Persistent Ps-dispatch Events with Postals (Remains in call list like default dispatch events)
+- Callout arrival (On Scene notification)
+- Callout completed successfully (Code-4 notification)
+- Traffic Stops
+
 Duty Locations
-- Go on/off duty for services at designated points around the map using ox-target or qb-target.
+- Go on/off duty for services at designated points using ox-target or qb-target.
 - Add or remove duty locations in the `config.lua`.
 
 Inventory Item Support
 - Add usable items to your Qb or Qbox inventory. 
 - Currently supports the `Broom`, `MDT`, and `Wraith Radar Remote`.
 
-PS-Dispatch Integration
-- Ps-dispatch simulates a dispatcher on service requests and certain events notifying of arrivals and calls giving a bit more immersion for players.
-- Integration with ps-dispatch for dispatch notifications and events.
-- Persistent and Non-persistent dispatch notifications depending on call and completion state.
-- Traffic stops, accepted callouts, callout arrivals and pursuits all trigger an automatic dispatch event with player location and data.
-
-Custom Command Functions
-- Supports basic command triggers, allowing server admins to extend functionality or bind actions to custom commands.
-
 Dynamic Event Handling
 - Listens for in-game events (pullover events, dispatch responses, on-scene arrivals) and interacts with your ERS systems accordingly.
 - Delays are intentional in dispatch events to give some more immersion.
+- Supports basic command triggers, allowing server admins to extend functionality or bind actions to custom commands.
 
 Player Rewards
 - Awards players with automatic bank payment bonus on completion of scene cleanup. Giving player incentive to clean-up their scenes.
 - Adjust reward amount in `config.lua`.
 
 Traffic Stops
-- When used with Wk_wars2k radar the front plate will lock automatically.
+- When used with Wk_wars2k radar the front plate will lock automatically. (enable/disable in config)
 - Sends dispatch alert when a stop is initiated.
 
 Postal
