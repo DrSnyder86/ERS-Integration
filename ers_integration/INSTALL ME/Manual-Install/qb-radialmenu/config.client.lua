@@ -1,8 +1,13 @@
 -- qb-radialmenu/config.lua
 
+-- Add right after
+-- Config.MenuItems = {
 --==========================
 -- ERS STUFF START
 --==========================
+-- This is a complete table
+
+
 {
     id = 'ers_x',
     title = 'ERS',
@@ -77,7 +82,7 @@
             }
         },
     }
-}
+},
 
 --==========================
 -- ERS STUFF END
