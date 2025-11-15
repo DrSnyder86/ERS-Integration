@@ -1,27 +1,98 @@
+
 local bags = {[40] = true, [41] = true, [44] = true, [45] = true}
 
 return {
-    enableExtraMenu = false,
+    enableExtraMenu = true,
     flipTime = 15000,
 
     menuItems = {
+--==========================
+-- ERS STUFF START
+--==========================
+         {
+    id = "ers_x",
+    icon = "clipboard-list",
+    label = "ERS",
+    items = {
+        {
+            id = "ers_duty",
+            icon = "clipboard-list",
+            label = "ERS Duty",
+            items = {
+                { id = "toggle_police", icon = "user-shield", label = "Toggle Police Duty", server = "ers:server:TogglePoliceShift" },
+                { id = "toggle_ambulance", icon = "briefcase-medical", label = "Toggle Ambulance Duty", server = "ers:server:ToggleAmbulanceShift" },
+                { id = "toggle_fire", icon = "fire-extinguisher", label = "Toggle Fire Duty", server = "ers:server:ToggleFireShift" },
+                { id = "toggle_tow", icon = "truck", label = "Toggle Tow Duty", server = "ers:server:ToggleTowShift" },
+            }
+        },
+        {
+            id = "ers_calls",
+            icon = "list-check",
+            label = "ERS Utilities",
+            items = {
+                { id = "request_callout", icon = "bell", label = "Request 911 Call", event = "callout:request" },
+                -- { id = "toggle_shift", icon = "user-clock", label = "Toggle Shift", event = "shift:toggle" },
+                { id = "toggle_callouts", icon = "clipboard-list", label = "Toggle 911 Dispatch", event = "callouts:toggle" },
+                { id = "wraith", icon = "car-side", label = "Wraith Radar", event = "wk:openRemote" },
+                { id = "mdt_toggle", icon = "tablet-alt", label = "MDT Tablet", event = "mdt:toggle" },
+                { id = "speedzone", icon = "triangle-exclamation", label = "Traffic Control", event = "custom:speedzone" },
+            }
+        },
+        {
+            id = "ers_cancel",
+            icon = 'triangle-exclamation',
+            label = 'Cancel Requests',
+            items = {
+                { id = 'cancel_ambulance', icon = 'ambulance', label = 'Cancel Ambulance', event = 'call:cancelambulance' },
+                { id = 'cancel_fire', icon = 'truck', label = 'Cancel Fire Unit', event = 'call:cancelfire' },
+                { id = 'cancel_police', icon = 'shield-alt', label = 'Cancel Police', event = 'call:cancelpolice' },
+                { id = 'cancel_coroner', icon = 'skull-crossbones', label = 'Cancel Coroner', event = 'call:cancelcoroner' },
+                { id = 'cancel_taxi', icon = 'taxi', label = 'Cancel Taxi', event = 'call:canceltaxi' },
+                { id = 'cancel_tow', icon = 'truck', label = 'Cancel Tow', event = 'call:canceltow' },
+                { id = 'cancel_mechanic', icon = 'wrench', label = 'Cancel Mechanic', event = 'call:cancelmechanic' },
+                { id = 'cancel_animal_rescue', icon = 'paw', label = 'Cancel Animal Rescue', event = 'call:cancelanimalrescue' },
+                { id = 'cancel_roadservice', icon = 'truck', label = 'Cancel Road Service', event = 'call:cancelroadservice' },
+            }
+        },
+        {
+            id = "ers_request",
+            icon = 'clipboard-list',
+            label = 'ERS Services',
+            items = {
+                { id = 'request_ambulance', icon = 'ambulance', label = 'Ambulance', event = 'call:ambulance' },
+                { id = 'request_police', icon = 'shield-alt', label = 'PD Transport', event = 'call:police' },
+                { id = 'request_tow', icon = 'truck', label = 'Tow', event = 'call:tow' },
+                { id = 'requestfire', icon = 'truck', label = 'Fire Unit', event = 'custom:requestfire' },
+                { id = 'request_coroner', icon = 'skull-crossbones', label = 'Coroner', event = 'call:coroner' },
+                { id = 'request_mechanic', icon = 'wrench', label = 'Mechanic', event = 'call:mechanic' },
+                { id = 'request_roadservice', icon = 'truck', label = 'Road Service', event = 'call:roadservice' },
+                { id = 'request_taxi', icon = 'taxi', label = 'Taxi', event = 'call:taxi' },
+                { id = 'request_animal_rescue', icon = 'paw', label = 'Animal Rescue', event = 'call:animalrescue' },
+            }
+        },
+        {
+            id = "ers_state",
+            icon = 'list-check',
+            label = 'State Dispatch',
+            items = {
+                { id = 'trafficStop', icon = 'car-side', label = '10-11', event = 'ps-dispatch:client:trafficstop' },
+                { id = 'emergencyButton', icon = 'bell', label = '10-99', event = 'ps-dispatch:client:officerbackup' },
+                { id = 'fireCall', icon = 'bell', label = 'FIRE', event = 'ps-dispatch:client:firecall' },
+                { id = 'enroute', icon = 'bell', label = '10-97', event = 'ps-dispatch:client:enroute' },
+                { id = 'onscene', icon = 'bell', label = '10-23', event = 'ps-dispatch:client:onscene' },
+                { id = 'codefour', icon = 'bell', label = 'Code-4', event = 'ps-dispatch:client:codefour' },
+            }
+        },
+    }
+},
+--==========================
+-- ERS STUFF END
+--==========================
         {
             id = 'citizen',
             icon = 'user',
             label = 'Citizen',
             items = {
-                {
-                    id = 'multijob_toggle',
-                    icon = 'users-cog',  
-                    label = 'Multi-Job',
-                    event = 'multijob:toggle',
-                },
-                {
-                    id = 'tcs_toggle',
-                    icon = 'cog', 
-                    label = 'Toggle TSC',
-                    event = 'tcs:toggle',
-                },
                 {
                     id = 'givenum',
                     icon = 'address-book',
@@ -91,459 +162,161 @@ return {
                 },
             },
         },
-        
-        
         {
             id = 'general',
-            icon = 'clipboard-list',
-            label = 'ERS Utilities',
+            icon = 'rectangle-list',
+            label = 'General',
             items = {
                 {
-                    id = 'speedzone',
-                    icon = 'triangle-exclamation', 
-                    label = 'Traffic Control',
-                    event = 'custom:speedzone',
-                },
-                -- {
-                --     id = 'tcs_toggle',
-                --     icon = 'cog',  
-                --     label = 'Toggle TSC',
-                --     event = 'tcs:toggle',
-                -- },
-                
-                -- {
-                --     id = 'escort_toggle',
-                --     icon = 'user-shield',  
-                --     label = 'Escort',
-                --     event = 'escort:toggle',
-                -- },
-                {
-                    id = 'ers',
-                    icon = 'list-check',
-                    label = 'ERS Dispatch',
+                    id = 'clothesMenu',
+                    icon = 'shirt',
+                    label = 'Clothing',
                     items = {
-                    {
-                        id = 'request_callout',
-                        icon = 'bell',  
-                        label = 'Request 911 Call',
-                        event = 'callout:request',
-                    },
-                    -- {
-                    --     id = 'speedzone',
-                    --     icon = 'triangle-exclamation', 
-                    --     label = 'Traffic Control',
-                    --     event = 'custom:speedzone',
-                    -- },
-                    {
-                        id = 'toggle_shift',
-                        icon = 'user-clock',  
-                        label = 'Toggle Shift',
-                        event = 'shift:toggle',
-                    },
-                    {
-                        id = 'toggle_callouts',
-                        icon = 'clipboard-list',  
-                        label = 'Toggle 911 Dispatch',
-                        event = 'callouts:toggle',
+                        {
+                            id = 'hair',
+                            icon = 'user',
+                            label = 'Hair',
+                            event = 'qb-radialmenu:ToggleClothing',
+                            args = {id = 'Hair'},
+                        },
+                        {
+                            id = 'ear',
+                            icon = 'ear-deaf',
+                            label = 'Ear Piece',
+                            event = 'qb-radialmenu:ToggleProps',
+                            args = 'Ear',
+                        },
+                        {
+                            id = 'neck',
+                            icon = 'user-tie',
+                            label = 'Neck',
+                            event = 'qb-radialmenu:ToggleClothing',
+                            args = {id = 'Neck'},
+                        },
+                        {
+                            id = 'top',
+                            icon = 'shirt',
+                            label = 'Top',
+                            event = 'qb-radialmenu:ToggleClothing',
+                            args = {id = 'Top'},
+                        },
+                        {
+                            id = 'shirt',
+                            icon = 'shirt',
+                            label = 'Shirt',
+                            event = 'qb-radialmenu:ToggleClothing',
+                            args = {id = 'Shirt'},
+                        },
+                        {
+                            id = 'pants',
+                            icon = 'user',
+                            label = 'Pants',
+                            event = 'qb-radialmenu:ToggleClothing',
+                            args = {id = 'Pants'},
+                        },
+                        {
+                            id = 'shoes',
+                            icon = 'shoe-prints',
+                            label = 'Shoes',
+                            event = 'qb-radialmenu:ToggleClothing',
+                            args = {id = 'Shoes'},
+                        },
+                        {
+                            id = 'clothingExtras',
+                            icon = 'plus',
+                            label = 'Extras',
+                            items = {
+                                {
+                                    id = 'hat',
+                                    icon = 'hat-cowboy-side',
+                                    label = 'Hat',
+                                    event = 'qb-radialmenu:ToggleProps',
+                                    args = 'Hat',
+                                },
+                                {
+                                    id = 'glasses',
+                                    icon = 'glasses',
+                                    label = 'Glasses',
+                                    event = 'qb-radialmenu:ToggleProps',
+                                    args = 'Glasses',
+                                },
+                                {
+                                    id = 'visor',
+                                    icon = 'hat-cowboy-side',
+                                    label = 'Visor',
+                                    event = 'qb-radialmenu:ToggleProps',
+                                    args = 'Visor',
+                                },
+                                {
+                                    id = 'mask',
+                                    icon = 'masks-theater',
+                                    label = 'Mask',
+                                    event = 'qb-radialmenu:ToggleClothing',
+                                    args = {id = 'Mask'},
+                                },
+                                {
+                                    id = 'vest',
+                                    icon = 'vest',
+                                    label = 'Vest',
+                                    event = 'qb-radialmenu:ToggleClothing',
+                                    args = {id = 'Vest'},
+                                },
+                                {
+                                    id = 'bag',
+                                    icon = 'bag',
+                                    label = 'Bag',
+                                    event = 'qb-radialmenu:ToggleClothing',
+                                    args = {id = 'Bag'},
+                                },
+                                {
+                                    id = 'bracelet',
+                                    icon = 'user',
+                                    label = 'Bracelet',
+                                    event = 'qb-radialmenu:ToggleProps',
+                                    args = 'Bracelet',
+                                },
+                                {
+                                    id = 'watch',
+                                    icon = 'stopwatch',
+                                    label = 'Watch',
+                                    event = 'qb-radialmenu:ToggleProps',
+                                    args = 'Watch',
+                                },
+                                {
+                                    id = 'gloves',
+                                    icon = 'mitten',
+                                    label = 'Gloves',
+                                    event = 'qb-radialmenu:ToggleClothing',
+                                    args = {id = 'Gloves'},
+                                },
+                            },
+                        },
                     },
                 },
-            },
-            {
-    id = 'cancel_requests',
-    icon = 'triangle-exclamation',
-    label = 'Cancel Requests',
-    items = {
-        {
-            id = 'cancel_ambulance',
-            icon = 'ambulance',
-            label = 'Cancel Ambulance',
-            event = 'call:cancelambulance',
-        },
-        {
-            id = 'cancel_fire',
-            icon = 'truck',
-            label = 'Cancel Fire Unit',
-            event = 'call:cancelfire',
-        },
-        {
-            id = 'cancel_police',
-            icon = 'shield-alt',
-            label = 'Cancel Police',
-            event = 'call:cancelpolice',
-        },
-        {
-            id = 'cancel_coroner',
-            icon = 'skull-crossbones',
-            label = 'Cancel Coroner',
-            event = 'call:cancelcoroner',
-        },
-        {
-            id = 'cancel_taxi',
-            icon = 'taxi',
-            label = 'Cancel Taxi',
-            event = 'call:canceltaxi',
-        },
-        {
-            id = 'cancel_tow',
-            icon = 'truck',
-            label = 'Cancel Tow',
-            event = 'call:canceltow',
-        },
-        {
-            id = 'cancel_mechanic',
-            icon = 'wrench',
-            label = 'Cancel Mechanic',
-            event = 'call:cancelmechanic',
-        },
-        
-        {
-            id = 'cancel_animal_rescue',
-            icon = 'paw',
-            label = 'Cancel Animal Rescue',
-            event = 'call:cancelanimalrescue',
-        },
-        {
-            id = 'cancel_roadservice',
-            icon = 'truck',
-            label = 'Cancel Road Service',
-            event = 'call:cancelroadservice',
-        },
-    },
-},
-            {
-            id = 'ersservices',
-            icon = 'clipboard-list',
-            label = 'ERS Services',
-            items = {
-                {
-                id = 'request_ambulance',
-                icon = 'ambulance',
-                label = 'Ambulance',
-                event = 'call:ambulance',
-            },                    
-            {
-                id = 'request_police',
-                icon = 'shield-alt',
-                label = 'PD Transport',
-                event = 'call:police',
-            },
-            {
-                id = 'request_tow',
-                icon = 'truck',
-                label = 'Tow',
-                event = 'call:tow',
-            },
-            {
-                id = 'requestfire',
-                icon = 'truck',
-                label = 'Fire Unit',
-                event = 'custom:requestfire',
-            },
-            {
-                id = 'request_coroner',
-                icon = 'skull-crossbones',
-                label = 'Coroner',
-                event = 'call:coroner',
-            },
-            {
-                id = 'request_mechanic',
-                icon = 'wrench',
-                label = 'Mechanic',
-                event = 'call:mechanic',
-            },
-            {
-                id = 'request_roadservice',
-                icon = 'truck',  
-                label = 'Road Service',
-                event = 'call:roadservice',
-            },
-            {
-                id = 'request_taxi',
-                icon = 'taxi',
-                label = 'Taxi',
-                event = 'call:taxi',
-            },            
-            {
-                id = 'request_animal_rescue',
-                icon = 'paw',
-                label = 'Animal Rescue',
-                event = 'call:animalrescue',
-            },
-                },
-            },
-            
-            
-				-- {
-    --                 id = 'gps',
-    --                 icon = 'location-dot',
-    --                 label = 'Quick GPS',
-    --                 items = {
-    --                     {
-    --                         id = 'clothing',
-    --                         icon = 'shirt',
-    --                         label = 'Clothing Store',
-    --                         event = 'quickgps:client:setClosestClothingWaypoint',
-    --                     },
-    --                     {
-    --                         id = 'hair',
-    --                         icon = 'scissors',
-    --                         label = 'Barber Shop',
-    --                         event = 'quickgps:client:setClosestHairWaypoint',
-    --                     },
-    --                     {
-    --                         id = 'tattoo',
-    --                         icon = 'syringe',
-    --                         label = 'Tattoo Parlor',
-    --                         event = 'quickgps:client:setClosestTatWaypoint',
-    --                     },
-    --                     {
-    --                         id = 'gas',
-    --                         icon = 'gas-pump',
-    --                         label = 'Gas Station',
-    --                         event = 'quickgps:client:setClosestGasWaypoint',
-
-    --                     },
-    --                     {
-    --                         id = 'bank',
-    --                         icon = 'vault',
-    --                         label = 'Bank',
-    --                         event = 'quickgps:client:setClosestBankWaypoint',
-    --                     },
-    --                     {
-    --                         id = 'con',
-    --                         icon = 'store',
-    --                         label = 'Convenience Store',
-    --                         event = 'quickgps:client:setClosestConWaypoint',
-    --                     },
-    --                 },
-    --             },
-                -- {
-                --     id = 'clothesMenu',
-                --     icon = 'shirt',
-                --     label = 'Clothing',
-                --     items = {
-                --         {
-                --             id = 'hat',
-                --             icon = 'hat-cowboy-side',
-                --             label = 'Hat',
-                --             event = 'qb-radialmenu:ToggleProps',
-                --             args = 'Hat',
-                --         },
-                --         {
-                --             id = 'mask',
-                --             icon = 'masks-theater',
-                --             label = 'Mask',
-                --             event = 'qb-radialmenu:ToggleClothing',
-                --             args = {id = 'Mask'},
-                --         },
-                --         {
-                --             id = 'neck',
-                --             icon = 'user-tie',
-                --             label = 'Neck',
-                --             event = 'qb-radialmenu:ToggleClothing',
-                --             args = {id = 'Neck'},
-                --         },
-				-- 		{
-                --             id = 'glasses',
-                --             icon = 'glasses',
-                --             label = 'Glasses',
-                --             event = 'qb-radialmenu:ToggleProps',
-                --             args = 'Glasses',
-                --         },
-				-- 		{
-                --             id = 'gloves',
-                --             icon = 'mitten',
-                --             label = 'Gloves',
-                --             event = 'qb-radialmenu:ToggleClothing',
-                --             args = {id = 'Gloves'},
-                --          },
-                --         {
-                --             id = 'top',
-                --             icon = 'shirt',
-                --             label = 'Top',
-                --             event = 'qb-radialmenu:ToggleClothing',
-                --             args = {id = 'Top'},
-                --         },
-                --         {
-                --             id = 'shirt',
-                --             icon = 'shirt',
-                --             label = 'Shirt',
-                --             event = 'qb-radialmenu:ToggleClothing',
-                --             args = {id = 'Shirt'},
-                --         },
-                --         {
-                --             id = 'vest',
-                --             icon = 'vest',
-                --             label = 'Vest',
-                --             event = 'qb-radialmenu:ToggleClothing',
-                --             args = {id = 'Vest'},
-                --         },
-                --         {
-                --             id = 'bag',
-                --             icon = 'bag',
-                --             label = 'Bag',
-                --             event = 'qb-radialmenu:ToggleClothing',
-                --             args = {id = 'Bag'},
-                --         },
-                --         {
-                --             id = 'clothingExtras',
-                --             icon = 'plus',
-                --             label = 'Extras',
-                --             items = {
-                --                 {
-                --                     id = 'hat',
-                --                     icon = 'hat-cowboy-side',
-                --                     label = 'Hat',
-                --                     event = 'qb-radialmenu:ToggleProps',
-                --                     args = 'Hat',
-                --                 },
-                --                 {
-                --                     id = 'glasses',
-                --                     icon = 'glasses',
-                --                     label = 'Glasses',
-                --                     event = 'qb-radialmenu:ToggleProps',
-                --                     args = 'Glasses',
-                --                 },
-                --                 {
-                --                     id = 'visor',
-                --                     icon = 'hat-cowboy-side',
-                --                     label = 'Visor',
-                --                     event = 'qb-radialmenu:ToggleProps',
-                --                     args = 'Visor',
-                --                 },
-                --                 {
-                --                     id = 'mask',
-                --                     icon = 'masks-theater',
-                --                     label = 'Mask',
-                --                     event = 'qb-radialmenu:ToggleClothing',
-                --                     args = {id = 'Mask'},
-                --                 },
-                --                 {
-                --                     id = 'vest',
-                --                     icon = 'vest',
-                --                     label = 'Vest',
-                --                     event = 'qb-radialmenu:ToggleClothing',
-                --                     args = {id = 'Vest'},
-                --                 },
-                --                 {
-                --                     id = 'bag',
-                --                     icon = 'bag',
-                --                     label = 'Bag',
-                --                     event = 'qb-radialmenu:ToggleClothing',
-                --                     args = {id = 'Bag'},
-                --                 },
-                --                 {
-                --                     id = 'bracelet',
-                --                     icon = 'user',
-                --                     label = 'Bracelet',
-                --                     event = 'qb-radialmenu:ToggleProps',
-                --                     args = 'Bracelet',
-                --                 },
-                --                 {
-                --                     id = 'watch',
-                --                     icon = 'stopwatch',
-                --                     label = 'Watch',
-                --                     event = 'qb-radialmenu:ToggleProps',
-                --                     args = 'Watch',
-                --                 },
-                --                 {
-                --                     id = 'gloves',
-                --                     icon = 'mitten',
-                --                     label = 'Gloves',
-                --                     event = 'qb-radialmenu:ToggleClothing',
-                --                     args = {id = 'Gloves'},
-                --                 },
-                --             },
-                --         },
-                --     },
-                -- },
             },
         },
     },
 
     jobItems = {
         police = {
-			{
-                id = 'dispatch',
-                icon = 'list-check',
-                label = 'State Dispatch',
-                items = {
-                    {
-						id = 'trafficStop',
-						icon = 'car-side',
-						label = '10-11',
-						event = 'ps-dispatch:client:trafficstop',
-					},
-                    {
-						id = 'emergencyButton',
-						icon = 'bell',
-						label = '10-99',
-						event = 'ps-dispatch:client:officerbackup',
-					},
-                    {
-						id = 'fireCall',
-						icon = 'bell',
-						label = 'FIRE',
-						event = 'ps-dispatch:client:firecall',
-					},
-					{
-						id = 'enroute',
-						icon = 'bell',
-						label = '10-97',
-						event = 'ps-dispatch:client:enroute',
-					},
-                    {
-						id = 'onscene',
-						icon = 'bell',
-						label = '10-23',
-						event = 'ps-dispatch:client:onscene',
-					},
-                    {
-						id = 'codefour',
-						icon = 'bell',
-						label = 'Code-4',
-						event = 'ps-dispatch:client:codefour',
-					},
-                },
+            {
+                id = 'emergencyButton',
+                icon = 'bell',
+                label = 'Emergency Button',
+                event = 'police:client:SendPoliceEmergencyAlert',
             },
-            -- {
-            --     id = 'ers',
-            --     icon = 'list-check',
-            --     label = 'ERS Dispatch',
-            --     items = {
-            --         {
-            --             id = 'request_callout',
-            --             icon = 'bell',  -- icon for alerts/callouts
-            --             label = 'Request Callout',
-            --             event = 'callout:request',
-            --         },
-            --         {
-            --             id = 'toggle_shift',
-            --             icon = 'user-clock',  -- icon representing shifts
-            --             label = 'Toggle Shift',
-            --             event = 'shift:toggle',
-            --         },
-            --         {
-            --             id = 'toggle_callouts',
-            --             icon = 'clipboard-list',  -- icon representing callouts/tasks
-            --             label = 'Toggle Callouts',
-            --             event = 'callouts:toggle',
-            --         },
-            --     },
-            -- },
-            
             {
-				id = 'wraith',
-				icon = 'car-side',
-				label = 'Wraith Radar',
-				event = 'wk:openRemote',
-			},
+                id = 'resetHouse',
+                icon = 'key',
+                label = 'Reset House Lock',
+                event = 'qb-houses:client:ResetHouse',
+            },
             {
-                id = 'mdt_toggle',
-                icon = 'tablet-alt',
-                label = 'MDT Tablet',
-                event = 'mdt:toggle', -- custom event trigger
-            },			
+                id = 'revokeDriversLicense',
+                icon = 'id-card',
+                label = 'Revoke Drivers License',
+                event = 'police:client:SeizeDriverLicense',
+            },
             {
                 id = 'policeInteractions',
                 icon = 'list-check',
@@ -567,29 +340,17 @@ return {
                         label = 'Search',
                         event = 'police:client:SearchPlayer',
                     },
-					{
-						id = 'revokeDriversLicense',
-						icon = 'id-card',
-						label = 'Revoke Drivers License',
-						event = 'police:client:SeizeDriverLicense',
-					},
                     {
-                        id = 'revive',
-                        icon = 'user-doctor',
-                        label = 'Revive',
-                        event = 'hospital:client:RevivePlayer',
-                    },
-			        {
-                        id = 'treatWounds',
-                        icon = 'bandage',
-                        label = 'Heal Wounds',
-                        event = 'hospital:client:TreatWounds',
+                        id = 'jail',
+                        icon = 'user-lock',
+                        label = 'Jail',
+                        event = 'police:client:JailPlayer',
                     },
                 },
             },
             {
                 id = 'policeObjects',
-                icon = 'triangle-exclamation',
+                icon = 'road',
                 label = 'Police Objects',
                 items = {
                     {
@@ -626,6 +387,12 @@ return {
                         label = 'Lighting',
                         event = 'police:client:spawnPObj',
                         args = 'light',
+                    },
+                    {
+                        id = 'spikeStrip',
+                        icon = 'caret-up',
+                        label = 'Spikestrip',
+                        event = 'police:client:SpawnSpikeStrip',
                     },
                     {
                         id = 'deleteObject',
