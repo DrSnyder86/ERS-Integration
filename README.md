@@ -43,12 +43,12 @@ Qbx-radialmenu and Qb-radialmenu Support
 - Players can easily trigger key functions without memorizing chat commands.
 - Players can request or cancel services while inside of a vehicle. 
 - Radial menu functions used to trigger dispatch request response events.
-ERS Menu
-- `Duty Menu - Toggle police, ambulance, fire amd tow jobs specifically.`
-- `Utility Menu - Request callouts, toggle callouts, wraith radar remote, open mdt, speedzone menu.`
-- `Cancel Request Menu - Cancel service requests.`
-- `ERS Services Menu - Request ambulance, tow, coroner etc.`
-- `State Dispatch Menu - Activate specific ps-dispatch events. Traffic stop, 10-99, Code-4, En-route.`
+ERS Submenu
+- Duty Menu - Toggle police, ambulance, fire amd tow jobs specifically.
+- Utility Menu - Request callouts, toggle callouts, wraith radar remote, open mdt, speedzone menu.
+- Cancel Request Menu - Cancel service requests.
+- ERS Services Menu - Request ambulance, tow, coroner etc.
+- State Dispatch Menu - Activate specific ps-dispatch events. Traffic stop, 10-99, Code-4, En-route.
 
 Duty Locations
 - Go on/off duty for services at designated points around the map using ox-target or qb-target.
