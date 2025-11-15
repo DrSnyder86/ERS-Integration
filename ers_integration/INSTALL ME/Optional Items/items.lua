@@ -21,3 +21,14 @@
 			event = "custom:broom", 
 		},
     },
+
+	['wraithradar'] = {
+        label = 'Wraith Radar Remote',
+        weight = 100,
+		stack = false,
+        allowArmed = true,
+		description = "Remote for Police Radar Control",
+        client = {
+            event = 'wk:openRemote'
+        }
+    },
