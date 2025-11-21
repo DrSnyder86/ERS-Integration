@@ -276,8 +276,8 @@ RegisterNetEvent('ErsIntegration::OnArrivedAtCallout', function(calloutData)
 
     local infoOptions = {
     ("%s (%s) On Scene 911 Call: %s: %s"):format(lastName, callsign, calloutData.CalloutName or "Unknown", calloutData.Description or "Unknown"),
-    ("%s (%s) On Scene 911 Call: %s"):format(lastName, callsign, calloutData.CalloutName or "Unknown"),
-    ("%s (%s) On Scene 911 Call: %s"):format(lastName, callsign, calloutData.CalloutName or "Unknown")
+    ("%s (%s) On Scene 911 Call: %s: %s"):format(lastName, callsign, calloutData.CalloutName or "Unknown", calloutData.Description or "Unknown"),
+    ("%s (%s) On Scene 911 Call: %s: %s"):format(lastName, callsign, calloutData.CalloutName or "Unknown", calloutData.Description or "Unknown")
 }
 
     local randomInfo = infoOptions[math.random(#infoOptions)]
@@ -915,4 +915,5 @@ RegisterNetEvent('ErsIntegration:server:OnRoadServiceRequested', function(postal
         })
     end)
 end)
+
 
