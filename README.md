@@ -89,9 +89,8 @@ Traffic Stops
 Postal
 - Nearest postal is now displayed in dispatch request and arrival events.
 
-## IF YOU ARE UPDATING. RE-INSTALL EVERYTHING
-
 # Installation
+## IF YOU ARE UPDATING. RE-INSTALL EVERYTHING
 ## MANUAL-INSTALL
 - Make a backup of your current resourses for security.
 - Open the `INSTALL ME` Folder. Inside are your new ps-dispatch alerts and radial menu items. `Script will not work without these`.
