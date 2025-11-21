@@ -132,19 +132,6 @@ OR
 - Item tables and images located in `INSTALL ME/Optional Items/items.lua`.
 - Supports `qb` and `ox` inventories.
 
-# Update
-- Included a drag and drop version for the ps-dispatch and radial menu configs so you dont have to copy and paste. Latest versions of both.
-- Dispatch will display Last name and Callsign.
-- Front plate will auto lock on a pullover.
-- Added ability to open Speedzone menu in radial menu.
-- Optimized script and fixed all errors
-- Dispatch events with postals and information for service requests
-- New config file for configurable duty points around the map using qb or ox target.
-- Ability to change Dispatch event delays and callout complete bonus in config file.
-- Use your ERS broom as a item
-- Use your Radar remote as item
-- Simplified and condensed the radial menu items for easier implementation
-
 # Known Bugs
 - Dispatch will display arrival event when the player requests a service even if the request is denied
 
