@@ -89,6 +89,8 @@ Traffic Stops
 Postal
 - Nearest postal is now displayed in dispatch request and arrival events.
 
+## IF YOU ARE UPDATING. RE-INSTALL EVERYTHING
+
 # Installation
 ## MANUAL-INSTALL
 - Make a backup of your current resourses for security.
