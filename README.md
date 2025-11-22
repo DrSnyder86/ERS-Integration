@@ -17,43 +17,6 @@ Screenshots
   <div class="slide fade"><img src="https://r2.fivemanage.com/image/9ZXHwtObGTsl.png"></div>
 </div>
 
-<style>
-.slideshow-container {
-  position: relative;
-  max-width: 700px;
-  margin: auto;
-}
-.slide {
-  display: none;
-}
-.slide img {
-  width: 100%;
-  border-radius: 8px;
-}
-.fade {
-  animation: fadeEffect 1.5s;
-}
-@keyframes fadeEffect {
-  from {opacity: .4} 
-  to {opacity: 1}
-}
-</style>
-
-<script>
-let slideIndex = 0;
-showSlides();
-function showSlides() {
-  const slides = document.getElementsByClassName("slide");
-  for (let i = 0; i < slides.length; i++) {
-    slides[i].style.display = "none";
-  }
-  slideIndex++;
-  if (slideIndex > slides.length) { slideIndex = 1 }
-  slides[slideIndex-1].style.display = "block";
-  setTimeout(showSlides, 3000);
-}
-</script>
-
 Demo
 
 https://www.youtube.com/watch?v=hOujbqjlBBQ
