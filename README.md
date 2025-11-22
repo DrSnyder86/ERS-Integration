@@ -3,27 +3,56 @@
 
 Screenshots
 
-https://r2.fivemanage.com/image/sLLMLJ8vLExb.png
+<div class="slideshow-container">
+  <div class="slide fade"><img src="https://r2.fivemanage.com/image/sLLMLJ8vLExb.png"></div>
+  <div class="slide fade"><img src="https://r2.fivemanage.com/image/WhHjS5PSgHZm.png"></div>
+  <div class="slide fade"><img src="https://r2.fivemanage.com/image/fdjumATvxYAN.png"></div>
+  <div class="slide fade"><img src="https://r2.fivemanage.com/image/DVjxnTVIs5Rj.png"></div>
+  <div class="slide fade"><img src="https://r2.fivemanage.com/image/75ioDK1cpXfI.png"></div>
+  <div class="slide fade"><img src="https://r2.fivemanage.com/image/RhpxfMcrWjSy.png"></div>
+  <div class="slide fade"><img src="https://r2.fivemanage.com/image/shtx5AE53dWo.png"></div>
+  <div class="slide fade"><img src="https://r2.fivemanage.com/image/u3fjTRd7w2LD.png"></div>
+  <div class="slide fade"><img src="https://r2.fivemanage.com/image/oGxvuqCQh4aG.png"></div>
+  <div class="slide fade"><img src="https://r2.fivemanage.com/image/WrJ0Nzh0mL4W.png"></div>
+  <div class="slide fade"><img src="https://r2.fivemanage.com/image/9ZXHwtObGTsl.png"></div>
+</div>
 
-https://r2.fivemanage.com/image/WhHjS5PSgHZm.png
+<style>
+.slideshow-container {
+  position: relative;
+  max-width: 700px;
+  margin: auto;
+}
+.slide {
+  display: none;
+}
+.slide img {
+  width: 100%;
+  border-radius: 8px;
+}
+.fade {
+  animation: fadeEffect 1.5s;
+}
+@keyframes fadeEffect {
+  from {opacity: .4} 
+  to {opacity: 1}
+}
+</style>
 
-https://r2.fivemanage.com/image/fdjumATvxYAN.png
-
-https://r2.fivemanage.com/image/DVjxnTVIs5Rj.png
-
-https://r2.fivemanage.com/image/75ioDK1cpXfI.png
-
-https://r2.fivemanage.com/image/RhpxfMcrWjSy.png
-
-https://r2.fivemanage.com/image/shtx5AE53dWo.png
-
-https://r2.fivemanage.com/image/u3fjTRd7w2LD.png
-
-https://r2.fivemanage.com/image/oGxvuqCQh4aG.png
-
-https://r2.fivemanage.com/image/WrJ0Nzh0mL4W.png
-
-https://r2.fivemanage.com/image/9ZXHwtObGTsl.png
+<script>
+let slideIndex = 0;
+showSlides();
+function showSlides() {
+  const slides = document.getElementsByClassName("slide");
+  for (let i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";
+  }
+  slideIndex++;
+  if (slideIndex > slides.length) { slideIndex = 1 }
+  slides[slideIndex-1].style.display = "block";
+  setTimeout(showSlides, 3000);
+}
+</script>
 
 Demo
 
