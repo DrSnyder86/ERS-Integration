@@ -132,11 +132,12 @@ RegisterNetEvent('ErsIntegration::OnIsOfferedCallout', function(calloutData)
     local coords = GetEntityCoords(ped)
     local lastName = Player.PlayerData.charinfo.lastname or "Unknown"
     local callsign = Player.PlayerData.metadata.callsign or "N/A"
+    local units = calloutData.CalloutUnitsRequired.description or "N/A"
 
     local infoOptions = {
-    ("%s"):format(calloutData.Description or "Unknown"),
-    ("%s"):format(calloutData.Description or "Unknown"),
-    ("%s"):format(calloutData.Description or "Unknown")
+    ("%s | Requesting: %s"):format(calloutData.Description or "Unknown", units),
+    ("%s | Requesting: %s"):format(calloutData.Description or "Unknown", units),
+    ("%s | Requesting: %s"):format(calloutData.Description or "Unknown", units)
 }
 
     local randomInfo = infoOptions[math.random(#infoOptions)]
@@ -198,13 +199,13 @@ RegisterNetEvent('ErsIntegration::OnAcceptedCalloutOffer', function(calloutData)
     local lastName = Player.PlayerData.charinfo.lastname or "Unknown"
     local callsign = Player.PlayerData.metadata.callsign or "N/A"
     local plate = vehicleData and vehicleData.plate or "Traffic"
-    local job = Player.PlayerData.job.name or "N/A"
+    local job = Player.PlayerData.job.grade.name or ""
     local units = calloutData.CalloutUnitsRequired.description or "N/A"
 
     local infoOptions = {
-    ("(Caller: %s %s) %s Requesting %s"):format(calloutData.FirstName or "Unknown", calloutData.LastName or "Unknown", calloutData.Description or "Unknown", units),
-    ("(Caller: %s %s) %s Requesting %s"):format(calloutData.FirstName or "Unknown", calloutData.LastName or "Unknown", calloutData.Description or "Unknown", units),
-    ("(Caller: %s %s) %s Requesting %s"):format(calloutData.FirstName or "Unknown", calloutData.LastName or "Unknown", calloutData.Description or "Unknown", units)
+    ("Caller: %s %s | %s | Requesting: %s"):format(calloutData.FirstName or "Unknown", calloutData.LastName or "Unknown", calloutData.Description or "Unknown", units),
+    ("Caller: %s %s | %s | Requesting: %s"):format(calloutData.FirstName or "Unknown", calloutData.LastName or "Unknown", calloutData.Description or "Unknown", units),
+    ("Caller: %s %s | %s | Requesting: %s"):format(calloutData.FirstName or "Unknown", calloutData.LastName or "Unknown", calloutData.Description or "Unknown", units)
 }
 
     local randomInfo = infoOptions[math.random(#infoOptions)]
@@ -216,12 +217,12 @@ RegisterNetEvent('ErsIntegration::OnAcceptedCalloutOffer', function(calloutData)
             code = 'Dispatch',
             codeName = 'enroute',
             title = "EnRoute",
-            icon = 'fas fa-phone',
+            icon = 'fas fa-route',
             priority = 2,
             message = ("%s"):format(calloutData.CalloutName or "Unknown"),
             alertTime = 10,
             street = ("%s %s"):format(calloutData.Postal or "Unknown", calloutData.StreetName or "Unknown"),
-            name = ("%s %s (%s) (%s)"):format(
+            name = ("%s %s (%s) | %s"):format(
                 firstName,
                 lastName,
                 callsign,
@@ -272,6 +273,7 @@ RegisterNetEvent('ErsIntegration::OnArrivedAtCallout', function(calloutData)
     local firstName = Player.PlayerData.charinfo.firstname or "Unknown"
     local lastName = Player.PlayerData.charinfo.lastname or "Unknown"
     local callsign = Player.PlayerData.metadata.callsign or "N/A"
+    local job = Player.PlayerData.job.grade.name or ""
     --local plate = vehicleData and vehicleData.plate or "Traffic"
 
     local infoOptions = {
@@ -291,16 +293,17 @@ RegisterNetEvent('ErsIntegration::OnArrivedAtCallout', function(calloutData)
             title = "OnsScene",
             icon = 'fas fa-map-marker-alt',
             priority = 2,
-            message = ("%s (%s) On-Scene"):format(     
+            message = ("%s (%s) | On-Scene"):format(     
                 lastName,
                 callsign),
             alertTime = 10,
             street = ("%s %s"):format(calloutData.Postal or "Unknown", calloutData.StreetName or "Unknown"),
             --name = ("%s %s"):format(calloutData.FirstName or "Unknown", calloutData.LastName or "Unknown"),
-            name = ("%s %s (%s)"):format(
+            name = ("%s %s (%s) | %s"):format(
                 firstName,
                 lastName,
-                callsign),
+                callsign,
+                job),
             information = randomInfo,
             jobs = Config.Dispatch.CallArrive,
             coords = coords,
@@ -349,12 +352,13 @@ RegisterNetEvent('ErsIntegration::OnCalloutCompletedSuccesfully', function(callo
     local firstName = Player.PlayerData.charinfo.firstname or "Unknown"
     local lastName = Player.PlayerData.charinfo.lastname or "Unknown"
     local callsign = Player.PlayerData.metadata.callsign or "N/A"
+    local job = Player.PlayerData.job.grade.name or ""
     --local plate = vehicleData and vehicleData.plate or "Traffic"
 
     local infoOptions = {
-    ("%s (%s) Code-4 from my last Call %s"):format(lastName, callsign, calloutData.CalloutName or "Unknown"),
-    ("%s (%s) Code-4 from my last Call %s"):format(lastName, callsign, calloutData.CalloutName or "Unknown"),
-    ("%s (%s) Code-4 from my last Call %s"):format(lastName, callsign, calloutData.CalloutName or "Unknown")
+    ("%s (%s) Code-4 from my last Call"):format(lastName, callsign),
+    ("%s (%s) Code-4 from my last Call"):format(lastName, callsign),
+    ("%s (%s) Code-4 from my last Call"):format(lastName, callsign)
 }
 
     local randomInfo = infoOptions[math.random(#infoOptions)]
@@ -368,15 +372,16 @@ RegisterNetEvent('ErsIntegration::OnCalloutCompletedSuccesfully', function(callo
             title = "CodeFour",
             icon = 'fas fa-clock',
             priority = 2,
-            message = ("%s (%s) Code-4"):format(     
+            message = ("%s (%s) | Code-4"):format(     
                 lastName,
                 callsign),
             alertTime = 10,
-            street = ("%s %s"):format(calloutData.Postal or "Unknown", calloutData.StreetName or "Unknown"),
-            name = ("%s %s (%s)"):format(
+            --street = ("%s %s"):format(calloutData.Postal or "Unknown", calloutData.StreetName or "Unknown"),
+            name = ("%s %s (%s) | %s"):format(
                 firstName,
                 lastName,
-                callsign),
+                callsign,
+                job),
             information = randomInfo,
             jobs = Config.Dispatch.CallComplete,
             coords = coords,
@@ -387,10 +392,9 @@ RegisterNetEvent('ErsIntegration::OnCalloutCompletedSuccesfully', function(callo
 
         TriggerClientEvent('ox_lib:notify', src, {
             title = 'BONUS PAY!',
-            description = ('%s (%s) cleared the callout: %s. You received a bonus.'):format(
+            description = ('%s (%s) cleared the call. You received a bonus.'):format(
                 lastName, 
-                callsign, 
-                calloutData.CalloutName or "Unknown"),
+                callsign),
             type = 'success',
             duration = 8000
         })
@@ -409,7 +413,6 @@ RegisterNetEvent('ErsIntegration::OnPullover', function(pedData, vehicleData)
     if not Player then return end
 
     local coords = GetEntityCoords(GetPlayerPed(src))
-
     local firstName = Player.PlayerData.charinfo.firstname or "Unknown"
     local lastName = Player.PlayerData.charinfo.lastname or "Unknown"
     local callsign = Player.PlayerData.metadata.callsign or "N/A"
@@ -420,7 +423,7 @@ RegisterNetEvent('ErsIntegration::OnPullover', function(pedData, vehicleData)
 
         TriggerClientEvent('ox_lib:notify', src, {
             title = 'ALPR LOCK',
-            description = ('%s (%s) locked plate [ %s ]'):format(lastName, callsign, vehicleData.license_plate or "Unknown"),
+            description = ('%s (%s) locked plate | %s |'):format(lastName, callsign, vehicleData.license_plate or "Unknown"),
             type = 'inform',
             duration = 4000
         })
@@ -435,7 +438,7 @@ RegisterNetEvent('ErsIntegration::OnPullover', function(pedData, vehicleData)
             title = "TrafficStop",
             icon = 'fas fa-car-side',
             priority = 2,
-            message = ("%s (%s) Traffic"):format(     
+            message = ("%s (%s) | Traffic"):format(     
                 lastName,
                 callsign),
             name = ("%s %s (%s)"):format(
@@ -444,39 +447,25 @@ RegisterNetEvent('ErsIntegration::OnPullover', function(pedData, vehicleData)
                 callsign),
             coords = coords,
             alertTime = 10,
-            vehicle = ("%s"):format(vehicleData.model or "N/A"),
+            vehicle = ("%s %s"):format(vehicleData.make or "N/A", vehicleData.model or "N/A"),
             plate = ("%s"):format(vehicleData.license_plate or "N/A"),
-            color = ("%s"):format(vehicleData.color or "N/A"),
+            color = ("%s, %s"):format(vehicleData.color or "N/A", vehicleData.color_secondary or "N/A"),
+            class = ("%s"):format(vehicleData.vehicle_class or "N/A"),
             jobs = Config.Dispatch.TrafficStop,
-            information = ("%s (%s). Show me on a traffic stop. (PLATE: %s) (Vehicle: %s %s) (Reg. Owner: %s) (ID: %s %s)"):format(
+            information = ("%s (%s). Show me on a Traffic Stop. - PLATE CHECK - Owner: %s | Insurance: %s | BOLO: %s | Stolen: %s |"):format(
                 lastName, 
                 callsign, 
-                vehicleData.license_plate or "N/A",
-                vehicleData.make or "N/A",
-                vehicleData.model or "N/A",
-                vehicleData.owner_name or "N/A",                
-                pedData.FirstName or "N/A",
-                pedData.LastName or "N/A"),
+                -- vehicleData.license_plate or "N/A",
+                -- vehicleData.make or "N/A",
+                -- vehicleData.model or "N/A",
+                vehicleData.owner_name or "N/A",
+                vehicleData.insurance and "true" or "false",
+                vehicleData.bolo and "true" or "false",
+                vehicleData.stolen and "true" or "false"),
         })
         -- Wait(2000)
 
-        -- local info = ("VEHICLE CHECK:\n" ..
-        --     "Owner: %s\n" ..
-        --     "Plate: %s\n" ..
-        --     "Make: %s\n" ..
-        --     "Model: %s\n" ..
-        --     "Stolen: %s\n" ..
-        --     "Insurance: %s\n" ..
-        --     "BOLO: %s"
-        -- ):format(
-        --     vehicleData.owner_name or "Unknown",
-        --     vehicleData.license_plate or "Unknown",
-        --     vehicleData.make or "Unknown",
-        --     vehicleData.model or "Unknown",
-        --     vehicleData.stolen and "true" or "false",
-        --     vehicleData.insurance and "true" or "false",
-        --     vehicleData.bolo and "true" or "false"
-        -- )
+
     end)
 end)
 
@@ -491,7 +480,6 @@ RegisterNetEvent('ErsIntegration::OnPulloverEnded', function(pedData, vehicleDat
     if not Player then return end
 
     local coords = GetEntityCoords(GetPlayerPed(src))
-
     local firstName = Player.PlayerData.charinfo.firstname or "Unknown"
     local lastName = Player.PlayerData.charinfo.lastname or "Unknown"
     local callsign = Player.PlayerData.metadata.callsign or "N/A"
@@ -506,7 +494,7 @@ RegisterNetEvent('ErsIntegration::OnPulloverEnded', function(pedData, vehicleDat
             title = "Code4",
             icon = 'fas fa-car-side',
             priority = 2,
-            message = ("%s (%s) Code-4"):format(     
+            message = ("%s (%s) | Code-4"):format(     
                 lastName,
                 callsign),
             name = ("%s %s (%s)"):format(
@@ -515,17 +503,18 @@ RegisterNetEvent('ErsIntegration::OnPulloverEnded', function(pedData, vehicleDat
                 callsign),
             coords = coords,
             alertTime = 10,
-            vehicle = ("%s"):format(vehicleData.model or "N/A"),
+            vehicle = ("%s %s"):format(vehicleData.make or "N/A", vehicleData.model or "N/A"),
             plate = ("%s"):format(vehicleData.license_plate or "N/A"),
-            color = ("%s"):format(vehicleData.color or "N/A"),
+            color = ("%s, %s"):format(vehicleData.color or "N/A", vehicleData.color_secondary or "N/A"),
+            class = ("%s"):format(vehicleData.vehicle_class or "N/A"),
             jobs = Config.Dispatch.TrafficStop,
-            information = ("%s (%s). Code-4 from my last Traffic: (PLATE: %s) (Reg. Owner: %s) (Vehicle: %s %s) (ID: %s %s)"):format(
+            information = ("%s (%s). Code-4 from my last Traffic: (ID: %s %s)"):format(
                 lastName, 
                 callsign, 
-                vehicleData.license_plate or "N/A",
-                vehicleData.owner_name or "N/A",
-                vehicleData.make or "N/A",
-                vehicleData.model or "N/A",
+                -- vehicleData.license_plate or "N/A",
+                -- vehicleData.owner_name or "N/A",
+                -- vehicleData.make or "N/A",
+                -- vehicleData.model or "N/A",
                 pedData.FirstName or "N/A",
                 pedData.LastName or "N/A"),
 
@@ -536,7 +525,7 @@ end)
 --------------------------------------
 -- Pursuit Start
 --------------------------------------
-RegisterNetEvent('ErsIntegration::OnPursuitStarted', function(pedData, vehicleData)
+RegisterNetEvent('ErsIntegration::OnPursuitStarted', function(pedData)
     if not Config.EnablePursuitNotifications then return end
 
     local src = source
@@ -544,11 +533,10 @@ RegisterNetEvent('ErsIntegration::OnPursuitStarted', function(pedData, vehicleDa
     if not Player then return end
 
     local coords = GetEntityCoords(GetPlayerPed(src))
-
     local firstName = Player.PlayerData.charinfo.firstname or "Unknown"
     local lastName = Player.PlayerData.charinfo.lastname or "Unknown"
     local callsign = Player.PlayerData.metadata.callsign or "N/A"
-    local plate = vehicleData and vehicleData.license_plate or "Active Pursuit"
+    -- local plate = vehicleData and vehicleData.license_plate or "Active Pursuit"
 
     CreateThread(function()
         Wait(Config.WaitTimes.PursuitStart)
@@ -559,7 +547,7 @@ RegisterNetEvent('ErsIntegration::OnPursuitStarted', function(pedData, vehicleDa
             title = "Pursuit",
             icon = 'fas fa-car',
             priority = 2,
-            message = ("%s (%s) Pursuit"):format(     
+            message = ("%s (%s) | Pursuit"):format(     
                 lastName,
                 callsign),
             name = ("%s %s (%s)"):format(
@@ -567,16 +555,20 @@ RegisterNetEvent('ErsIntegration::OnPursuitStarted', function(pedData, vehicleDa
                 lastName,
                 callsign),
             coords = coords,
+            -- vehicle = ("%s %s"):format(vehicleData.make or "N/A", vehicleData.model or "N/A"),
+            -- plate = ("%s"):format(vehicleData.license_plate or "N/A"),
+            -- color = ("%s, %s"):format(vehicleData.color or "N/A", vehicleData.color_secondary or "N/A"),
+            -- class = ("%s"):format(vehicleData.vehicle_class or "N/A"),
             alertTime = 10,
             jobs = Config.Dispatch.TrafficStop,
-            information = ("%s (%s). Show me in a Active Pursuit: (PLATE: %s) (Registered Owner: %s) (Vehicle: %s %s)"):format(
+            information = ("%s (%s). Show me in a Active Pursuit"):format(
                 lastName, 
-                callsign, 
-                vehicleData.license_plate or "Unknown",
-                vehicleData.owner_name or "Unknown",
-                vehicleData.make or "Unknown",
-                vehicleData.model or "Unknown"),
-
+                callsign 
+                -- vehicleData.owner_name or "Unknown",
+                -- vehicleData.insurance and "true" or "false",
+                -- vehicleData.bolo and "true" or "false",
+                -- vehicleData.stolen and "true" or "false"
+            ),
         })
     end)
 end)
@@ -615,7 +607,7 @@ end)
 --------------------------------------------------------------------------------------------------
 -- Request EVENTS
 --------------------------------------------------------------------------------------------------
-RegisterNetEvent('ErsIntegration:server:OnCoronerRequested', function(postal)
+RegisterNetEvent('ErsIntegration:server:OnCoronerRequested', function(postal, streetName)
     if not Config.EnableServiceRequest then return end
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
@@ -626,6 +618,8 @@ RegisterNetEvent('ErsIntegration:server:OnCoronerRequested', function(postal)
     local lastName = Player.PlayerData.charinfo.lastname or "Unknown"
     local callsign = Player.PlayerData.metadata.callsign or "N/A"
 
+
+
     CreateThread(function()
         Wait(Config.WaitTimes.RequestEvents) 
 
@@ -634,22 +628,24 @@ RegisterNetEvent('ErsIntegration:server:OnCoronerRequested', function(postal)
             codeName = 'dispatch',
             title = "Coroner",
             icon = 'fas fa-skull-crossbones',
-            message = ("Coroner On Scene %s"):format(
+            message = ("Coroner On Scene | %s"):format(
                 postal),
             name = ("Coroner Service"),
             coords = coords,
+            street = ("%s %s"):format(
+                postal,
+                streetName or "Unknown"),
             alertTime = 10,
             priority = 1,
             jobs = Config.Dispatch.ServiceRequest,
-            information = ("Dispatch to %s (%s). Be advised local Coroner is confirmed 10-97 to your location Postal %s."):format(
+            information = ("Dispatch to %s (%s). Be advised local Coroner is confirmed 10-97 to your location."):format(
                 lastName, 
-                callsign, 
-                postal or 'Unknown'),          
+                callsign),          
         })
     end)
 end)
 
-RegisterNetEvent('ErsIntegration:server:OnMechanicRequested', function(postal)
+RegisterNetEvent('ErsIntegration:server:OnMechanicRequested', function(postal, streetName)
     if not Config.EnableServiceRequest then return end
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
@@ -667,22 +663,24 @@ RegisterNetEvent('ErsIntegration:server:OnMechanicRequested', function(postal)
             codeName = 'dispatch',
             title = "MechanicResponding",
             icon = 'fas fa-tools',
-            message = ("Roadside Assistance On Scene %s"):format(
+            message = ("Roadside Assistance On Scene | %s"):format(
                 postal),
             name = ("Mechanic Service"),
             coords = coords,
+            street = ("%s %s"):format(
+                postal,
+                streetName or "Unknown"),
             alertTime = 10,
             priority = 2,
             jobs = Config.Dispatch.ServiceRequest,
-            information = ("Dispatch to %s (%s). Be advised a Auto Mechanic is confirmed 10-97 to your location Postal %s."):format(
+            information = ("Dispatch to %s (%s). Be advised a Auto Mechanic is confirmed 10-97 to your location."):format(
                 lastName, 
-                callsign, 
-                postal or 'Unknown'),
+                callsign),
         })
     end)
 end)
 
-RegisterNetEvent('ErsIntegration:server:OnTowRequested', function(postal)
+RegisterNetEvent('ErsIntegration:server:OnTowRequested', function(postal, streetName)
     if not Config.EnableServiceRequest then return end
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
@@ -702,22 +700,24 @@ RegisterNetEvent('ErsIntegration:server:OnTowRequested', function(postal)
             codeName = 'dispatch',
             title = "TowTruck",
             icon = 'fas fa-truck-pickup',
-            message = ("Tow Service On Scene %s"):format(
+            message = ("Tow Service On Scene | %s"):format(
                 postal),
             name = ("Towing Service"),
             coords = coords,
+            street = ("%s %s"):format(
+                postal,
+                streetName or "Unknown"),
             priority = 2,
             alertTime = 10,
             jobs = Config.Dispatch.ServiceRequest,
-            information = ("Dispatch to %s (%s). Be advised a Tow Truck Service is confirmed 10-97 to your location Postal %s."):format(
+            information = ("Dispatch to %s (%s). Be advised a Tow Truck Service is confirmed 10-97 to your location."):format(
                 lastName, 
-                callsign, 
-                postal or 'Unknown'),
+                callsign),
         })
     end)
 end)
 
-RegisterNetEvent('ErsIntegration:server:OnTaxiRequested', function(postal)
+RegisterNetEvent('ErsIntegration:server:OnTaxiRequested', function(postal, streetName)
     if not Config.EnableServiceRequest then return end
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
@@ -735,22 +735,24 @@ RegisterNetEvent('ErsIntegration:server:OnTaxiRequested', function(postal)
             codeName = 'dispatch',
             title = "TaxiResponding",
             icon = 'fa-solid fa-taxi',
-            message = ("Taxi Service On Scene %s"):format(
+            message = ("Taxi Service On Scene | %s"):format(
                 postal),
             name = ("Taxi Service"),
             coords = coords,
+            street = ("%s %s"):format(
+                postal,
+                streetName or "Unknown"),
             priority = 2,
             alertTime = 10,
             jobs = Config.Dispatch.ServiceRequest,
-            information = ("Dispatch to %s (%s). Be advised a Taxi Service has been dispatched and is confirmed 10-97 to your location Postal %s."):format(
+            information = ("Dispatch to %s (%s). Be advised a Taxi Service has been dispatched and is confirmed 10-97 to your location."):format(
                 lastName, 
-                callsign, 
-                postal or 'Unknown'),
+                callsign),
         })
     end)
 end)
 
-RegisterNetEvent('ErsIntegration:server:OnPoliceRequested', function(postal)
+RegisterNetEvent('ErsIntegration:server:OnPoliceRequested', function(postal, streetName)
     if not Config.EnableServiceRequest then return end
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
@@ -768,22 +770,24 @@ RegisterNetEvent('ErsIntegration:server:OnPoliceRequested', function(postal)
             codeName = 'dispatch',
             title = "PoliceTransport",
             icon = 'fa-solid fa-car-on',
-            message = ("PD Transport On Scene %s"):format(
+            message = ("PD Transport On Scene | %s"):format(
                 postal),
             name = ("Police Transport"),
             coords = coords,
+            street = ("%s %s"):format(
+                postal,
+                streetName or "Unknown"),
             priority = 2,
             alertTime = 10,
             jobs = Config.Dispatch.ServiceRequest,
-            information = ("Dispatch to %s (%s). Be advised a Police Transport Officer has been dispatched and is confirmed 10-97 to your location  Postal %s."):format(
+            information = ("Dispatch to %s (%s). Be advised a Police Transport Officer has been dispatched and is confirmed 10-97 to your location."):format(
                 lastName, 
-                callsign, 
-                postal or 'Unknown'),
+                callsign),
         })
     end)
 end)
 
-RegisterNetEvent('ErsIntegration:server:OnAnimalRescueRequested', function(postal)
+RegisterNetEvent('ErsIntegration:server:OnAnimalRescueRequested', function(postal, streetName)
     if not Config.EnableServiceRequest then return end
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
@@ -801,22 +805,24 @@ RegisterNetEvent('ErsIntegration:server:OnAnimalRescueRequested', function(posta
             codeName = 'dispatch',
             title = "AnimalRescue",
             icon = 'fa-solid fa-paw',
-            message = ("Animal Control On Scene %s"):format(
+            message = ("Animal Control On Scene | %s"):format(
                 postal),
             name = ("Animal Rescue"),
             coords = coords,
+            street = ("%s %s"):format(
+                postal,
+                streetName or "Unknown"),
             priority = 2,
             alertTime = 10,
             jobs = Config.Dispatch.ServiceRequest,
-            information = ("Dispatch to %s (%s). Be advised a Animal Control Supervisor has been dispatched and is confirmed 10-97 to your location Postal %s."):format(
+            information = ("Dispatch to %s (%s). Be advised a Animal Control Supervisor has been dispatched and is confirmed 10-97 to your location."):format(
                 lastName, 
-                callsign, 
-                postal or 'Unknown'),
+                callsign),
         })
     end)
 end)
 
-RegisterNetEvent('ErsIntegration:server:OnAmbulanceRequested', function(postal)
+RegisterNetEvent('ErsIntegration:server:OnAmbulanceRequested', function(postal, streetName)
     if not Config.EnableServiceRequest then return end
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
@@ -834,22 +840,24 @@ RegisterNetEvent('ErsIntegration:server:OnAmbulanceRequested', function(postal)
             codeName = 'dispatch',
             title = "Ambulance",
             icon = 'fas fa-ambulance',
-            message = ("Paramedic Arriving %s"):format(
+            message = ("Paramedic Arriving | %s"):format(
                 postal),
             name = ("Ambulance Service"),
             coords = coords,
+            street = ("%s %s"):format(
+                postal,
+                streetName or "Unknown"),
             priority = 1,
             alertTime = 10,
             jobs = Config.Dispatch.ServiceRequest,
-            information = ("Dispatch to %s (%s). Be advised a Paramedic has been dispatched and is confirmed 10-97 to your location Postal %s."):format(
+            information = ("Dispatch to %s (%s). Be advised a Paramedic has been dispatched and is confirmed 10-97 to your location."):format(
                 lastName, 
-                callsign, 
-                postal or 'Unknown'),
+                callsign),
         })
     end)
 end)
 
-RegisterNetEvent('ErsIntegration:server:OnFireRequested', function(postal)
+RegisterNetEvent('ErsIntegration:server:OnFireRequested', function(postal, streetName)
     if not Config.EnableServiceRequest then return end
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
@@ -867,22 +875,24 @@ RegisterNetEvent('ErsIntegration:server:OnFireRequested', function(postal)
             codeName = 'dispatch',
             title = "FireRescue",
             icon = 'fas fa-fire-flame-curved',
-            message = ("Fire Rescue On Scene %s"):format(
+            message = ("Fire Rescue On Scene | %s"):format(
                 postal),
             name = ("Fire Rescue"),
             coords = coords,
+            street = ("%s %s"):format(
+                postal,
+                streetName or "Unknown"),
             priority = 1,
             alertTime = 10,
             jobs = Config.Dispatch.ServiceRequest,
-            information = ("Dispatch to %s (%s). Be advised Fire Rescue has been dispatched and is confirmed 10-97 to your location Postal %s."):format(
+            information = ("Dispatch to %s (%s). Be advised Fire Rescue has been dispatched and is confirmed 10-97 to your location."):format(
                 lastName, 
-                callsign, 
-                postal or 'Unknown'),
+                callsign),
         })
     end)
 end)
 
-RegisterNetEvent('ErsIntegration:server:OnRoadServiceRequested', function(postal)
+RegisterNetEvent('ErsIntegration:server:OnRoadServiceRequested', function(postal, streetName)
     if not Config.EnableServiceRequest then return end
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
@@ -901,19 +911,20 @@ RegisterNetEvent('ErsIntegration:server:OnRoadServiceRequested', function(postal
             codeName = 'dispatch',
             title = 'RoadService',
             icon = 'fas fa-triangle-exclamation',
-            message = ("Road Service On Scene %s"):format(
+            message = ("Road Service On Scene | %s"):format(
                 postal),
             name = ("Road Service Crew"),
             coords = coords,
+            street = ("%s %s"):format(
+                postal,
+                streetName or "Unknown"),
             priority = 2,
             alertTime = 10,
             jobs = Config.Dispatch.ServiceRequest,
-            information = ("Dispatch to %s (%s). Be advised a Road Service Crew is confirmed 10-97 to your location Postal %s."):format(
+            information = ("Dispatch to %s (%s). Be advised a Road Service Crew is confirmed 10-97 to your location."):format(
                 lastName, 
-                callsign, 
-                postal or 'Unknown'),
+                callsign),
         })
     end)
 end)
-
 
