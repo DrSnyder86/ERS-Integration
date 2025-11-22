@@ -21,6 +21,10 @@ RegisterNetEvent("ErsIntegration::OnAcceptedCalloutOffer", function(data)
     CalloutData = data
 end)
 
+RegisterNetEvent("ErsIntegration::OnCalloutCompletedSuccesfully", function(data)
+    CalloutData = data
+end)
+
 RegisterNetEvent("ErsIntegration::OnPulloverStarted", function(data)
     CalloutData = data
 end)
@@ -135,8 +139,15 @@ RegisterNetEvent('ersi:call:cancelroadservice', function() ExecuteCommand('cance
 ----------------------------------------
 local function sendPostalAndTrigger(event, cmd)
     ExecuteCommand(cmd)
+
     local postal = exports['nearest-postal']:getPostal()
-    TriggerServerEvent(event, postal)
+
+    local ped = PlayerPedId()
+    local coords = GetEntityCoords(ped)
+    local streetHash = GetStreetNameAtCoord(coords.x, coords.y, coords.z)
+    local streetName = GetStreetNameFromHashKey(streetHash)
+
+    TriggerServerEvent(event, postal, streetName)
 end
 
 RegisterNetEvent('ersi:call:coroner',       function() sendPostalAndTrigger('ErsIntegration:server:OnCoronerRequested', 'requestcoroner') end)
@@ -155,9 +166,9 @@ RegisterNetEvent('ersi:call:roadservice',   function() sendPostalAndTrigger('Ers
 RegisterNetEvent("ErsIntegration:Server:PrintPedDataToChat", function(info)
     -- Print into chat
     TriggerEvent('chat:addMessage', {
-        color = {0, 150, 255},
+        color = {255, 0, 0},
         multiline = true,
-        args = {"DISPATCH", info}
+        args = {"DISPATCH", "^1" .. info}
     })
 end)
 
