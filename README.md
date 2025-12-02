@@ -4,17 +4,18 @@
 Screenshots
 
 <div class="slideshow-container">
-  <div class="slide fade"><img src="https://r2.fivemanage.com/image/sLLMLJ8vLExb.png"></div>
-  <div class="slide fade"><img src="https://r2.fivemanage.com/image/WhHjS5PSgHZm.png"></div>
-  <div class="slide fade"><img src="https://r2.fivemanage.com/image/fdjumATvxYAN.png"></div>
-  <div class="slide fade"><img src="https://r2.fivemanage.com/image/DVjxnTVIs5Rj.png"></div>
-  <div class="slide fade"><img src="https://r2.fivemanage.com/image/75ioDK1cpXfI.png"></div>
-  <div class="slide fade"><img src="https://r2.fivemanage.com/image/RhpxfMcrWjSy.png"></div>
-  <div class="slide fade"><img src="https://r2.fivemanage.com/image/shtx5AE53dWo.png"></div>
-  <div class="slide fade"><img src="https://r2.fivemanage.com/image/u3fjTRd7w2LD.png"></div>
-  <div class="slide fade"><img src="https://r2.fivemanage.com/image/oGxvuqCQh4aG.png"></div>
-  <div class="slide fade"><img src="https://r2.fivemanage.com/image/WrJ0Nzh0mL4W.png"></div>
-  <div class="slide fade"><img src="https://r2.fivemanage.com/image/9ZXHwtObGTsl.png"></div>
+https://r2.fivemanage.com/image/wDPMJQBfuG5D.png
+https://r2.fivemanage.com/image/ZwJqks3kjwuq.png
+https://r2.fivemanage.com/image/z752VMUMlrtR.png
+https://r2.fivemanage.com/image/QMMW4wpxlADj.png
+https://r2.fivemanage.com/image/aAbsN9yUfpy4.png
+https://r2.fivemanage.com/image/RV1KmWlwlwFH.png
+https://r2.fivemanage.com/image/P5BWm1F9g9xP.png
+https://r2.fivemanage.com/image/7MPsQ37En2oE.png
+https://r2.fivemanage.com/image/LBqHlcZ3Tkyv.png
+https://r2.fivemanage.com/image/W4mzQipRcAS5.png
+https://r2.fivemanage.com/image/1qierHolZa8R.png
+https://r2.fivemanage.com/image/WrJ0Nzh0mL4W.png
 </div>
 
 Demo
@@ -32,22 +33,25 @@ Qbx-radialmenu and Qb-radialmenu Support
 - Players can request or cancel services while inside of a vehicle. 
 - Radial menu functions used to trigger dispatch response events.
 
-ERS Submenu (radialmenu)
+ERS Submenu (qb/qbx-radialmenu)
 - Duty Menu - Toggle police, ambulance, fire amd tow jobs specifically.
 - Utility Menu - Request callouts, toggle callouts, wraith radar remote, open mdt, speedzone menu.
 - Cancel Request Menu - Cancel service requests.
 - ERS Services Menu - Request ambulance, tow, coroner etc.
+- Pursuit Backup Menu - Request pursuit backup
 
 PS-Dispatch Integration
 - Ps-dispatch simulates a dispatcher on service requests and certain events notifying of arrivals and calls giving a bit more immersion for players.
 - Persistent dispatch notifications for all players.
 - Traffic stops, accepted callouts, callout arrivals and pursuits all trigger dispatch events with player location and data.
 - Callouts appear in dispatch as 911 Calls with caller and call details
-- Uses `Character Name`, `Callsign` and `Job` in dispatch
+- Uses Player details `Character Name`, `Callsign` and `Job` in dispatch events
 - Added `Tow` and `Fire` jobs to receive dispatch events (callouts and request events)
 
-Duty Locations
-- Go on/off duty for services at designated points using ox-target or qb-target.
+QB-target/Ox-target Support
+- Go on/off duty for services at configurable points using ox-target or qb-target.
+- Request `Tow` or `Mechanic` when targeting a vehicle while on duty.
+- Request `Ambulance` and `Coroner` when targeting a downed ped while on duty.
 - Add or remove duty locations in the `config.lua`.
 
 Dispatch Chat Display (only happens on first interaction - enable/disable in config)
@@ -59,10 +63,10 @@ Dispatch Chat Display (only happens on first interaction - enable/disable in con
 Inventory Item Support (qb_inventory and ox_inventory items)
 - Use your ERS tools as items. 
 - Currently supports the `Stretcher`, `Fire Hose`, `Broom`, `MDT`, and `Wraith Radar Remote`.
-   - Stretcher    - uses same as /stretcher command
-   - Fire Hose    - uses same as /hose command
-   - Broom        - uses same as /broom command
-   - MDT          - opens any MDT that uses /mdt
+   - Stretcher    - uses same as `stretcher` command
+   - Fire Hose    - uses same as `hose` command
+   - Broom        - uses same as `broom` command
+   - MDT          - opens any MDT that uses `mdt` command
    - Wraith Radar - use your radar remote as item
 
 Player Rewards
@@ -70,14 +74,13 @@ Player Rewards
 - Adjust reward amount in `config.lua`.
 
 Traffic Stops
-- When used with Wk_wars2k radar the front plate will lock automatically. (enable/disable in config)
+- When used with `Wk_wars2x` radar the front plate will lock automatically. (enable/disable in config)
 - Sends dispatch alert when a stop is initiated.
 
 Postal
 - Nearest postal is now displayed in dispatch request and arrival events.
 
 # Installation
-## IF YOU ARE UPDATING. RE-INSTALL EVERYTHING
 ## MANUAL-INSTALL
 - Make a backup of your current resourses for security.
 - Open the `INSTALL ME` Folder. Inside are your new ps-dispatch alerts and radial menu items. `Script will not work without these`.
@@ -105,7 +108,7 @@ OR
 
 - Next replace the following in `qbx-radialmenu`.
    - qbx-radialmenu/config/client.lua
-OR
+- OR
 - Replace in `qb-radialmenu`.
    - qb-radialmenu/config.lua
 
@@ -121,6 +124,8 @@ OR
 - Item tables and images located in `INSTALL ME/Optional Items/items.lua`.
 - Supports `qb` and `ox` inventories.
 
+## UPDATE
+- Removed ox_lib as dependency
 # Known Bugs
 - Dispatch will display arrival event when the player requests a service even if the request is denied
 
@@ -132,9 +137,8 @@ https://github.com/DrSnyder86/ERS-Integration/tree/main
 - Qb-core or Qbox framework
 - Emergency Response Simulator    https://store.nights-software.com/category/ersgamemode
 - Ps-dispatch                     https://github.com/Project-Sloth/ps-dispatch
-- ox_lib                          https://github.com/overextended/ox_lib
 - qb-radialmenu                   https://github.com/qbcore-framework/qb-radialmenu
-or
+- OR
 - qbx-radialmenu                  https://github.com/Qbox-project/qbx_radialmenu
 
 ## Recommended
@@ -142,6 +146,21 @@ or
 - Wk-wars2x Radar                 https://github.com/WolfKnight98/wk_wars2x
 - ps-mdt                          https://github.com/Project-Sloth/ps-mdt
 
+### License
+For an updated license, check the ``License`` file. That file will always overrule anything mentioned in the ``readme.md``
+
+ers_integration - DrSnyder
+
+Copyright © 2025 DrSnyder. All rights reserved.
+
+You can use and edit this code to your liking as long as you don't ever claim it to be your own code and always provide proper credit. You're not allowed to sell ers_integration or any code you take from it. If you want to release your own version of qb_ers_integration, you have to link the original GitHub repo, or release it via a Forked repo.
+
+         ██████╗ ██████╗ ███████╗███╗   ██╗██╗   ██╗██████╗ ███████╗██████╗ 
+         ██╔══██╗██╔══██╗██╔════╝████╗  ██║╚██╗ ██╔╝██╔══██╗██╔════╝██╔══██╗
+         ██║  ██║██████╔╝███████╗██╔██╗ ██║ ╚████╔╝ ██║  ██║█████╗  ██████╔╝
+         ██║  ██║██╔══██╗╚════██║██║╚██╗██║  ╚██╔╝  ██║  ██║██╔══╝  ██╔══██╗
+         ██████╔╝██║  ██║███████║██║ ╚████║   ██║   ██████╔╝███████╗██║  ██║
+         ╚═════╝ ╚═╝  ╚═╝╚══════╝╚═╝  ╚═══╝   ╚═╝   ╚═════╝ ╚══════╝╚═╝  ╚═╝
 
 
 
