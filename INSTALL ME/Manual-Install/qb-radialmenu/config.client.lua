@@ -68,48 +68,48 @@
                 { id = 'requestanimalrescue', title = 'Animal Rescue', icon = 'paw', type = 'client', event = 'ersi:call:animalrescue', shouldClose = true },
             }
         },
-        {
-            id = "ers_backup_main",
-            title = "Pursuit Backup",
-            icon = "shield-plus",
-            items = {
-                {
-                    id = "ers_backup_light",
-                    title = "Light",
-                    icon = "shield-half",
-                    type = "client",
-                    export = "ERS_RequestLightBackup"
-                },
-                {
-                    id = "ers_backup_medium",
-                    title = "Medium",
-                    icon = "shield",
-                    type = "client",
-                    export = "ERS_RequestMediumBackup"
-                },
-                {
-                    id = "ers_backup_heavy",
-                    title = "Heavy",
-                    icon = "shield-check",
-                    type = "client",
-                    export = "ERS_RequestHeavyBackup"
-                },
-                {
-                    id = "ers_backup_air",
-                    title = "Air Support",
-                    icon = "helicopter",
-                    type = "client",
-                    export = "ERS_RequestAirBackup"
-                },
-                {
-                    id = "ers_backup_army",
-                    title = "Army",
-                    icon = "swords",
-                    type = "client",
-                    export = "ERS_RequestArmyBackup"
-                },
-            }
-        },
+        -- {
+        --     id = "ers_backup_main",
+        --     title = "Pursuit Backup",
+        --     icon = "shield-plus",
+        --     items = {
+        --         {
+        --             id = "ers_backup_light",
+        --             title = "Light",
+        --             icon = "shield-half",
+        --             type = "client",
+        --             export = "ERS_RequestLightBackup"
+        --         },
+        --         {
+        --             id = "ers_backup_medium",
+        --             title = "Medium",
+        --             icon = "shield",
+        --             type = "client",
+        --             export = "ERS_RequestMediumBackup"
+        --         },
+        --         {
+        --             id = "ers_backup_heavy",
+        --             title = "Heavy",
+        --             icon = "shield-check",
+        --             type = "client",
+        --             export = "ERS_RequestHeavyBackup"
+        --         },
+        --         {
+        --             id = "ers_backup_air",
+        --             title = "Air Support",
+        --             icon = "helicopter",
+        --             type = "client",
+        --             export = "ERS_RequestAirBackup"
+        --         },
+        --         {
+        --             id = "ers_backup_army",
+        --             title = "Army",
+        --             icon = "swords",
+        --             type = "client",
+        --             export = "ERS_RequestArmyBackup"
+        --         },
+        --     }
+        -- },
     }
 },
 
@@ -117,4 +117,5 @@
 -- ERS STUFF END
 
 --==========================
+
 
