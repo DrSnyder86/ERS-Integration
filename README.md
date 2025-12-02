@@ -141,6 +141,7 @@ OR
 - Removed ox_lib as dependency
 # Known Bugs
 - Dispatch will display arrival event when the player requests a service even if the request is denied
+- Pursuit Backup Radial Menu Functions not implemented yet (skip installing this)
 
 # Download - Use this link for the latest release and features
 https://github.com/DrSnyder86/ERS-Integration/tree/main
