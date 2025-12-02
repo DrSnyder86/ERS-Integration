@@ -1,8 +1,15 @@
+-- ███████╗██████╗ ███████╗        ██╗███╗   ██╗████████╗███████╗ ██████╗ ██████╗  █████╗ ████████╗██╗ ██████╗ ███╗   ██╗
+-- ██╔════╝██╔══██╗██╔════╝        ██║████╗  ██║╚══██╔══╝██╔════╝██╔════╝ ██╔══██╗██╔══██╗╚══██╔══╝██║██╔═══██╗████╗  ██║
+-- █████╗  ██████╔╝███████╗        ██║██╔██╗ ██║   ██║   █████╗  ██║  ███╗██████╔╝███████║   ██║   ██║██║   ██║██╔██╗ ██║
+-- ██╔══╝  ██╔══██╗╚════██║        ██║██║╚██╗██║   ██║   ██╔══╝  ██║   ██║██╔══██╗██╔══██║   ██║   ██║██║   ██║██║╚██╗██║
+-- ███████╗██║  ██║███████║███████╗██║██║ ╚████║   ██║   ███████╗╚██████╔╝██║  ██║██║  ██║   ██║   ██║╚██████╔╝██║ ╚████║
+-- ╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝╚═╝╚═╝  ╚═══╝   ╚═╝   ╚══════╝ ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝
+
 -- ===============================================================================================================
 -- CONFIGURATION FILE FOR ERS_INTEGRATION
 -- ===============================================================================================================
 -- This config defines the locations for duty toggles for Police, Ambulance, Fire, and Tow jobs. It also
--- includes global wait times for various ERS events such as callouts, pullovers, pursuits, and request events.
+-- includes global wait times for dispatch events such as callouts, pullovers, pursuits, and request events.
 -- Adjust the vector3 coordinates to match your server's station duty locations, and modify wait times as needed.
 -- ===============================================================================================================
 
@@ -15,9 +22,10 @@ Config.EnableRadarLock      = true
 Config.EnableCalloutOffer           = true  -- Callout offer
 Config.EnableCalloutAccept          = true  -- Callout accept
 Config.EnableCalloutArrive          = true  -- Callout arrival
-Config.EnableCalloutComplete        = true  -- Callout complete (will also enable/disable callout bonus pay)
-Config.EnablePulloverNotifications  = true  -- Automatic pullover
-Config.EnablePursuitNotifications   = true  -- Pursuit started
+Config.EnableCalloutComplete        = true  -- Callout complete 
+Config.EnablePulloverNotify         = true  -- Pullover start
+Config.EnablePulloverCode4          = true  -- Pullover Code-4
+Config.EnablePursuitNotify          = true  -- Pursuit started
 Config.EnableServiceRequest         = true  -- Service request arrival
 
 -- Display Info In Chat
@@ -39,7 +47,8 @@ Config.Dispatch = {
 }
 
 -- Player Reward For Completed Callout ($$$$)(Triggers when a callout is automatically completed. Pursuits, scene clean-ups)
-Config.BonusPay          = 5000 -- Bank deposited money
+Config.EnableBonusPay    = true
+Config.BonusPayAmount    = 5000 -- Bank deposited money
 
 -- Ps-dispatch Wait Times (in milliseconds - 10000 = 10 Seconds)(Time in between ERS dispatch events and ps-dispatch)(Simulates reaction and response times)
 -- Set to 0 (ZERO) for no delay
@@ -59,6 +68,7 @@ Config.DutyPoints = {
     police = {
         vec3(441.18, -981.97, 30.69),   --MRPD
         vec3(1854.03, 3687.2, 34.22),   --SANDY
+		vec3(-447.3, 6013.3, 31.72),
     },
     ambulance = {
         vec3(441.18, -981.97, 30.69),   --MRPD
@@ -74,14 +84,16 @@ Config.DutyPoints = {
         vec3(441.18, -981.97, 30.69),   --MRPD
         vec3(471.39, -1311.03, 29.21),
         vec3(210.0, -1410.0, 30.5),
-        vec3(190.0, -1390.0, 30.5),
     }
 }
 
-
-
-
-
+-- Target menu
+Config.DutyConfig = {
+    police = { icon = "fa-solid fa-car-on", label = "ERS Police Duty", event = "ers:server:TogglePoliceShift" },
+    ambulance = { icon = "fa-solid fa-truck-medical", label = "ERS Ambulance Duty", event = "ers:server:ToggleAmbulanceShift" },
+    fire = { icon = "fa-solid fa-fire", label = "ERS Fire Duty", event = "ers:server:ToggleFireShift" },
+    tow = { icon = "fa-solid fa-car-burst", label = "ERS Tow Duty", event = "ers:server:ToggleTowShift" },
+}
 
 
 
