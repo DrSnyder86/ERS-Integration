@@ -4,14 +4,9 @@ local PlayerData = QBCore.Functions.GetPlayerData()
 local lastCalloutData = nil
 local currentCalloutData = nil
 local lastPedData = nil
+
 Config = Config or {}
 
-Config.DutyConfig = {
-    police = { icon = "fa-solid fa-car-on", label = "ERS Police Duty", event = "ers:server:TogglePoliceShift" },
-    ambulance = { icon = "fa-solid fa-truck-medical", label = "ERS Ambulance Duty", event = "ers:server:ToggleAmbulanceShift" },
-    fire = { icon = "fa-solid fa-fire", label = "ERS Fire Duty", event = "ers:server:ToggleFireShift" },
-    tow = { icon = "fa-solid fa-car-burst", label = "ERS Tow Duty", event = "ers:server:ToggleTowShift" },
-}
 
 RegisterNetEvent("ErsIntegration:OnAcceptedCalloutOffer", function(data)
     CalloutData = data
@@ -25,9 +20,9 @@ RegisterNetEvent("ErsIntegration::OnCalloutCompletedSuccesfully", function(data)
     CalloutData = data
 end)
 
-RegisterNetEvent("ErsIntegration::OnPulloverStarted", function(data)
-    CalloutData = data
-end)
+-- RegisterNetEvent("ErsIntegration::OnPulloverStarted", function(data)
+--     CalloutData = data
+-- end)
 
 RegisterNetEvent("ErsIntegration:client:SetPedData", function(data)
     PedData = data
@@ -37,69 +32,8 @@ RegisterNetEvent("ErsIntegration:client:SetCalloutData", function(data)
     CalloutData = data
 end)
 
--- target shift
-local function CanToggleShift(shiftType)
-    local src = PlayerId()
-    local isOnShift = exports['night_ers']:getIsPlayerOnShift(src)
-    local activeType = exports['night_ers']:getPlayerActiveServiceType(src)
-    return (not isOnShift) or (activeType == shiftType)
-end
-
--- Register all duty points
-for job, points in pairs(Config.DutyPoints) do
-    for _, coords in ipairs(points) do
-        Citizen.CreateThread(function()
-            -- ox_target
-            if exports.ox_target and exports.ox_target.addBoxZone then
-                exports.ox_target:addBoxZone({
-                    coords = coords,
-                    size = vec3(1.5, 1.5, 1.0),
-                    rotation = 0,
-                    debug = false,
-                    options = {
-                        {
-                            name = Config.DutyConfig[job].event,
-                            icon = Config.DutyConfig[job].icon,
-                            label = Config.DutyConfig[job].label,
-                            onSelect = function()
-                                TriggerServerEvent(Config.DutyConfig[job].event)
-                            end,
-                            canInteract = function()
-                                return CanToggleShift(job) and #(GetEntityCoords(PlayerPedId()) - coords) < 2.0
-                            end
-                        }
-                    }
-                })
-            -- qb-target
-            elseif exports['qb-target'] then
-                exports['qb-target']:AddBoxZone(Config.DutyConfig[job].event, coords, 1.5, 1.5, {
-                    name = Config.DutyConfig[job].event,
-                    heading = 0,
-                    debugPoly = false,
-                    minZ = coords.z - 1.0,
-                    maxZ = coords.z + 1.0,
-                }, {
-                    options = {
-                        {
-                            type = "client",
-                            event = Config.DutyConfig[job].event,
-                            icon = Config.DutyConfig[job].icon,
-                            label = Config.DutyConfig[job].label,
-                            canInteract = function()
-                                return CanToggleShift(job)
-                            end
-                        }
-                    },
-                    distance = 2.0
-                })
-            end
-        end)
-    end
-end
-
-
 --------------------------------------
----- Custom Calls --------------------
+---- ERS Stuff    --------------------
 --------------------------------------
 
 RegisterNetEvent('ersi:broom', function() ExecuteCommand('broom') end)
@@ -160,6 +94,49 @@ RegisterNetEvent('ersi:call:ambulance',     function() sendPostalAndTrigger('Ers
 RegisterNetEvent('ersi:call:requestfire',   function() sendPostalAndTrigger('ErsIntegration:server:OnFireRequested', 'requestfire') end)
 RegisterNetEvent('ersi:call:roadservice',   function() sendPostalAndTrigger('ErsIntegration:server:OnRoadServiceRequested', 'requestroadservice') end)
 
+
+----------------------------------------
+---- Get street and postal for pullover 
+----------------------------------------
+RegisterNetEvent('ErsIntegration:client:GetStreetAndPostal', function()
+    local ped = PlayerPedId()
+    local coords = GetEntityCoords(ped)
+
+    local streetHash, crossingHash = GetStreetNameAtCoord(coords.x, coords.y, coords.z)
+    local streetName = GetStreetNameFromHashKey(streetHash or 0)
+
+    local postal = exports['nearest-postal']:getPostal(coords)
+
+    TriggerServerEvent('ErsIntegration:server:ReceiveStreetAndPostal', streetName, postal)
+end)
+
+----------------------------------------
+---- Get street and postal for pullover end
+----------------------------------------
+RegisterNetEvent('ErsIntegration:client:GetStreetAndPostalEnd', function()
+    local ped = PlayerPedId()
+    local coords = GetEntityCoords(ped)
+
+    local streetHash, crossingHash = GetStreetNameAtCoord(coords.x, coords.y, coords.z)
+    local streetName = GetStreetNameFromHashKey(streetHash or 0)
+    local postal = exports['nearest-postal']:getPostal(coords)
+
+    TriggerServerEvent('ErsIntegration:server:ReceiveStreetAndPostalEnd', streetName, postal)
+end)
+----------------------------------------
+---- Get street and postal for pursuit
+----------------------------------------
+RegisterNetEvent('ErsIntegration:client:GetStreetAndPostalPursuit', function()
+    local ped = PlayerPedId()
+    local coords = GetEntityCoords(ped)
+
+    local streetHash, crossingHash = GetStreetNameAtCoord(coords.x, coords.y, coords.z)
+    local streetName = GetStreetNameFromHashKey(streetHash or 0)
+    local postal = exports['nearest-postal']:getPostal(coords)
+
+    TriggerServerEvent('ErsIntegration:server:ReceiveStreetAndPostalPursuit', streetName, postal)
+end)
+
 ---------------------------------------
 ---- PED AND PLATE CHECK --------------
 ---------------------------------------
@@ -173,7 +150,7 @@ RegisterNetEvent("ErsIntegration:Server:PrintPedDataToChat", function(info)
 end)
 
 ---------------------------------------
----- PURSUIT BACKUP -------------------
+---- PURSUIT BACKUP - WIP--------------
 ---------------------------------------
 exports('ERS_RequestLightBackup', function()
     ERS_RequestOrCancelPursuitBackupByType("light")
@@ -194,5 +171,9 @@ end)
 exports('ERS_RequestArmyBackup', function()
     ERS_RequestOrCancelPursuitBackupByType("army")
 end)
+
+---------------------------------------
+---- TEST LOGIC -------------------
+---------------------------------------
 
 
