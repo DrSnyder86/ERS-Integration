@@ -91,53 +91,53 @@ return {
     label = "ERS Menu",
     items = {
          -- WIP Pursuit Backup
-                {
-            id = "ers_backup_main",
-            icon = "Request Backup",
-            label = "shield-plus",
-            items = {
-                {
-                    id = "ers_backup_light",
-                    label = "Light Backup",
-                    icon = "shield-half",
-                    onSelect = function()
-                        exports['night_ers']:ERS_RequestLightBackup()
-                    end
-                },
-                {
-                    id = "ers_backup_medium",
-                    label = "Medium Backup",
-                    icon = "shield",
-                    onSelect = function()
-                        exports['night_ers']:ERS_RequestMediumBackup()
-                    end
-                },
-                {
-                    id = "ers_backup_heavy",
-                    label = "Heavy Backup",
-                    icon = "shield-check",
-                    onSelect = function()
-                        exports['night_ers']:ERS_RequestHeavyBackup()
-                    end
-                },
-                {
-                    id = "ers_backup_air",
-                    label = "Air Support",
-                    icon = "helicopter",
-                    onSelect = function()
-                        exports['night_ers']:ERS_RequestAirBackup()
-                    end
-                },
-                {
-                    id = "ers_backup_army",
-                    label = "Army Backup",
-                    icon = "swords",
-                    onSelect = function()
-                        exports['night_ers']:ERS_RequestArmyBackup()
-                    end
-                },
-            }
-        },
+        --         {
+        --     id = "ers_backup_main",
+        --     icon = "Request Backup",
+        --     label = "shield-plus",
+        --     items = {
+        --         {
+        --             id = "ers_backup_light",
+        --             label = "Light Backup",
+        --             icon = "shield-half",
+        --             onSelect = function()
+        --                 exports['night_ers']:ERS_RequestLightBackup()
+        --             end
+        --         },
+        --         {
+        --             id = "ers_backup_medium",
+        --             label = "Medium Backup",
+        --             icon = "shield",
+        --             onSelect = function()
+        --                 exports['night_ers']:ERS_RequestMediumBackup()
+        --             end
+        --         },
+        --         {
+        --             id = "ers_backup_heavy",
+        --             label = "Heavy Backup",
+        --             icon = "shield-check",
+        --             onSelect = function()
+        --                 exports['night_ers']:ERS_RequestHeavyBackup()
+        --             end
+        --         },
+        --         {
+        --             id = "ers_backup_air",
+        --             label = "Air Support",
+        --             icon = "helicopter",
+        --             onSelect = function()
+        --                 exports['night_ers']:ERS_RequestAirBackup()
+        --             end
+        --         },
+        --         {
+        --             id = "ers_backup_army",
+        --             label = "Army Backup",
+        --             icon = "swords",
+        --             onSelect = function()
+        --                 exports['night_ers']:ERS_RequestArmyBackup()
+        --             end
+        --         },
+        --     }
+        -- },
 
         {
             id = "ers_duty",
