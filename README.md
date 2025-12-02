@@ -1,6 +1,8 @@
 
 # ERS integration script for QB-core created to be used with 'Emergency Response Simulator' by [nightssoftware](https://store.nights-software.com/)
 
+## DOWNLOAD `CODE` FOR UP TO DATE VERSION
+
 Screenshots
 
 <div class="slideshow-container">
