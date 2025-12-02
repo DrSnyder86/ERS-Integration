@@ -58,7 +58,7 @@ Config.MenuItems = {
                 { id = 'requestambulance', title = 'Ambulance', icon = 'briefcase-medical', type = 'client', event = 'ersi:call:ambulance', shouldClose = true },
                 { id = 'requestpolice', title = 'PD Transport', icon = 'handcuffs', type = 'client', event = 'ersi:call:police', shouldClose = true },
                 { id = 'requesttow', title = 'Tow', icon = 'truck-pickup', type = 'client', event = 'ersi:call:tow', shouldClose = true },
-                { id = 'requestfire', title = 'Fire Unit', icon = 'fire', type = 'client', event = 'ersi:custom:requestfire', shouldClose = true },
+                { id = 'requestfire', title = 'Fire Unit', icon = 'fire', type = 'client', event = 'ersi:call:requestfire', shouldClose = true },
                 { id = 'requestcoroner', title = 'Coroner', icon = 'skull-crossbones', type = 'client', event = 'ersi:call:coroner', shouldClose = true },
                 { id = 'requestmechanic', title = 'Mechanic', icon = 'wrench', type = 'client', event = 'ersi:call:mechanic', shouldClose = true },
                 { id = 'requestroadservice', title = 'Road Service', icon = 'broom', type = 'client', event = 'ersi:call:roadservice', shouldClose = true },
@@ -66,20 +66,48 @@ Config.MenuItems = {
                 { id = 'requestanimalrescue', title = 'Animal Rescue', icon = 'paw', type = 'client', event = 'ersi:call:animalrescue', shouldClose = true },
             }
         },
-        -- REMOVED FROM PS-DISPATCH
-        -- {
-        --     id = 'ers_state',
-        --     title = 'State Dispatch',
-        --     icon = 'list-check',
-        --     items = {
-        --         { id = 'trafficStop', title = '10-11', icon = 'car-side', type = 'client', event = 'ps-dispatch:client:trafficstop', shouldClose = true },
-        --         { id = 'emergencyButton', title = '10-99', icon = 'bell', type = 'client', event = 'ps-dispatch:client:officerbackup', shouldClose = true },
-        --         { id = 'fireCall', title = 'FIRE', icon = 'bell', type = 'client', event = 'ps-dispatch:client:firecall', shouldClose = true },
-        --         { id = 'enroute', title = '10-97', icon = 'bell', type = 'client', event = 'ps-dispatch:client:enroute', shouldClose = true },
-        --         { id = 'onscene', title = '10-23', icon = 'bell', type = 'client', event = 'ps-dispatch:client:onscene', shouldClose = true },
-        --         { id = 'codefour', title = 'Code-4', icon = 'bell', type = 'client', event = 'ps-dispatch:client:codefour', shouldClose = true },
-        --     }
-        -- },
+        {
+            id = "ers_backup_main",
+            title = "Pursuit Backup",
+            icon = "shield-plus",
+            items = {
+                {
+                    id = "ers_backup_light",
+                    title = "Light",
+                    icon = "shield-half",
+                    type = "client",
+                    export = "ERS_RequestLightBackup"
+                },
+                {
+                    id = "ers_backup_medium",
+                    title = "Medium",
+                    icon = "shield",
+                    type = "client",
+                    export = "ERS_RequestMediumBackup"
+                },
+                {
+                    id = "ers_backup_heavy",
+                    title = "Heavy",
+                    icon = "shield-check",
+                    type = "client",
+                    export = "ERS_RequestHeavyBackup"
+                },
+                {
+                    id = "ers_backup_air",
+                    title = "Air Support",
+                    icon = "helicopter",
+                    type = "client",
+                    export = "ERS_RequestAirBackup"
+                },
+                {
+                    id = "ers_backup_army",
+                    title = "Army",
+                    icon = "swords",
+                    type = "client",
+                    export = "ERS_RequestArmyBackup"
+                },
+            }
+        },
     }
 },
 
@@ -973,4 +1001,5 @@ Config.ExtraCommands = {
         OffsetX = -0.12,
         OffsetY = 0.2
     }
+
 }
