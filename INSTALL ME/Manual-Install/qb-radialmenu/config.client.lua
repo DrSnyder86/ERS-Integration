@@ -60,7 +60,7 @@
                 { id = 'requestambulance', title = 'Ambulance', icon = 'briefcase-medical', type = 'client', event = 'ersi:call:ambulance', shouldClose = true },
                 { id = 'requestpolice', title = 'PD Transport', icon = 'handcuffs', type = 'client', event = 'ersi:call:police', shouldClose = true },
                 { id = 'requesttow', title = 'Tow', icon = 'truck-pickup', type = 'client', event = 'ersi:call:tow', shouldClose = true },
-                { id = 'requestfire', title = 'Fire Unit', icon = 'fire', type = 'client', event = 'ersi:custom:requestfire', shouldClose = true },
+                { id = 'requestfire', title = 'Fire Unit', icon = 'fire', type = 'client', event = 'ersi:call:requestfire', shouldClose = true },
                 { id = 'requestcoroner', title = 'Coroner', icon = 'skull-crossbones', type = 'client', event = 'ersi:call:coroner', shouldClose = true },
                 { id = 'requestmechanic', title = 'Mechanic', icon = 'wrench', type = 'client', event = 'ersi:call:mechanic', shouldClose = true },
                 { id = 'requestroadservice', title = 'Road Service', icon = 'broom', type = 'client', event = 'ersi:call:roadservice', shouldClose = true },
@@ -72,7 +72,6 @@
             id = "ers_backup_main",
             title = "Pursuit Backup",
             icon = "shield-plus",
-            type = "submenu",
             items = {
                 {
                     id = "ers_backup_light",
@@ -118,3 +117,4 @@
 -- ERS STUFF END
 
 --==========================
+
