@@ -56,7 +56,6 @@ end)
 RegisterServerEvent("ErsIntegration::OnFirstVehicleInteraction")
 AddEventHandler("ErsIntegration::OnFirstVehicleInteraction", function(src, vehicleData, context)
 
-    -- Only run for traffic stop (pullover)
     if context ~= "on_pullover" then return end
 
     if not Config.ShowPlateInChat then return end
@@ -88,8 +87,7 @@ end)
 ------------------------
 RegisterServerEvent("ErsIntegration::OnFirstNPCInteraction")
 AddEventHandler("ErsIntegration::OnFirstNPCInteraction", function(src, pedData, context)
-
-    --if context ~= "on_interaction" then return end
+    
 
     if not Config.ShowLicenseInChat then return end
 
@@ -97,12 +95,9 @@ AddEventHandler("ErsIntegration::OnFirstNPCInteraction", function(src, pedData, 
         Wait(5000)
         local info = ("ID CHECK:\n" ..
             "Name: %s %s\n" ..
-            --"Last Name: %s\n" ..
             "DOB: %s\n" ..
             "Address: %s\n" ..
             "%s, %s %s\n" ..
-            --"State: %s\n" ..
-            --"Postal Code: %s\n" ..
             "Active Warrant: %s"
         ):format(
             pedData.FirstName or "N/A",
@@ -122,7 +117,7 @@ end)
 -- Callout Offered
 --------------------------------------
 RegisterNetEvent('ErsIntegration::OnIsOfferedCallout', function(calloutData)
-    if not Config.EnableCalloutOffer then return end
+    --if not Config.EnableCalloutOffer then return end
 
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
@@ -130,57 +125,71 @@ RegisterNetEvent('ErsIntegration::OnIsOfferedCallout', function(calloutData)
 
     local ped = GetPlayerPed(src)
     local coords = GetEntityCoords(ped)
+
     local lastName = Player.PlayerData.charinfo.lastname or "Unknown"
     local callsign = Player.PlayerData.metadata.callsign or "N/A"
-    local units = calloutData.CalloutUnitsRequired.description or "N/A"
+
+    local callUnits = calloutData.CalloutUnitsRequired.description or "N/A"
+    local callFirstName = calloutData.FirstName or "Unknown"
+    local callLastName = calloutData.LastName or "Unknown"
+    local callName = calloutData.CalloutName or "Unknown"
+    local callPostal = calloutData.Postal or "Unknown"
+    local callStreet = calloutData.StreetName or "Unknown"
+    local callDesc = calloutData.Description or "Unknown"
+
 
     local infoOptions = {
-    ("%s | Requesting: %s"):format(calloutData.Description or "Unknown", units),
-    ("%s | Requesting: %s"):format(calloutData.Description or "Unknown", units),
-    ("%s | Requesting: %s"):format(calloutData.Description or "Unknown", units)
-}
+        ("%s | Requesting: %s"):format(callDesc, callUnits),
+        ("%s | Requesting: %s"):format(callDesc, callUnits),
+        ("%s | Requesting: %s"):format(callDesc, callUnits)
+    }
 
     local randomInfo = infoOptions[math.random(#infoOptions)]
 
     CreateThread(function()
         Wait(Config.WaitTimes.CalloutOffer)
 
-        TriggerEvent('ps-dispatch:server:notify', {
-            code = '911',
-            codeName = 'enroute',
-            title = "EnRoute",
-            icon = 'fas fa-phone',
-            priority = 2,
-            message = ("%s"):format(calloutData.CalloutName or "Unknown"),
-            alertTime = 10,
-            street = ("%s %s"):format(calloutData.Postal or "Unknown", calloutData.StreetName or "Unknown"),
-            name = ("%s %s"):format(calloutData.FirstName or "Unknown", calloutData.LastName or "Unknown"),
-            information = randomInfo,
-            jobs = Config.Dispatch.CallOffer,
-            coords = coords,
-        })
-
-        local info = ("INCOMING 911 CALL:\n" ..
-            "Caller: %s %s\n" ..
-            "Call: %s\n" ..
-            "%s %s\n" ..
-            "Report: %s"
-        ):format(
-            calloutData.FirstName or "Unknown",
-            calloutData.LastName or "Unknown",
-            calloutData.CalloutName or "Unknown",
-            calloutData.Postal or "Unknown", 
-            calloutData.StreetName or "Unknown",                    
-            calloutData.Description or "Unknown"
-        )
-
-        -- Print to server console for debugging
-        --print("911 Call\n" .. info)
-        --Wait(2000)
-        -- Send to player chat
-        if Config.Show911CallInChat then
-        TriggerClientEvent("ErsIntegration:Server:PrintPedDataToChat", src, info)
+        if Config.EnableCalloutOffer then
+            TriggerEvent('ps-dispatch:server:notify', {
+                code = '911',
+                codeName = 'dispatch',
+                title = "EnRoute",
+                icon = 'fas fa-bullhorn',
+                priority = 2,
+                message = ("%s"):format(callName),
+                alertTime = 10,
+                street = ("%s %s"):format(
+                    callPostal,
+                    callStreet
+                ),
+                name = ("%s %s"):format(
+                    callFirstName,
+                    callLastName
+                ),
+                information = randomInfo,
+                jobs = Config.Dispatch.CallOffer,
+                coords = coords,
+            })
         end
+
+        if Config.Show911CallInChat then
+            local info = ("INCOMING 911 CALL:\n" ..
+                "Caller: %s %s\n" ..
+                "Call: %s\n" ..
+                "%s %s\n" ..
+                "Report: %s"
+            ):format(
+                callFirstName,
+                callLastName,
+                callName,
+                callPostal,
+                callStreet,
+                callDesc
+            )
+
+            TriggerClientEvent("ErsIntegration:Server:PrintPedDataToChat", src, info)
+        end
+
     end)
 end)
 
@@ -188,7 +197,7 @@ end)
 -- Callout Accepted
 --------------------------------------
 RegisterNetEvent('ErsIntegration::OnAcceptedCalloutOffer', function(calloutData)
-    if not Config.EnableCalloutAccept then return end
+    --if not Config.EnableCalloutAccept then return end
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
     if not Player then return end
@@ -198,72 +207,74 @@ RegisterNetEvent('ErsIntegration::OnAcceptedCalloutOffer', function(calloutData)
     local firstName = Player.PlayerData.charinfo.firstname or "Unknown"
     local lastName = Player.PlayerData.charinfo.lastname or "Unknown"
     local callsign = Player.PlayerData.metadata.callsign or "N/A"
-    local plate = vehicleData and vehicleData.plate or "Traffic"
     local job = Player.PlayerData.job.grade.name or ""
-    local units = calloutData.CalloutUnitsRequired.description or "N/A"
+
+    local callUnits = calloutData.CalloutUnitsRequired.description or "N/A"
+    local callFirstName = calloutData.FirstName or "Unknown"
+    local callLastName = calloutData.LastName or "Unknown"
+    local callName = calloutData.CalloutName or "Unknown"
+    local callPostal = calloutData.Postal or "Unknown"
+    local callStreet = calloutData.StreetName or "Unknown"
+    local callDesc = calloutData.Description or "Unknown"
 
     local infoOptions = {
-    ("Caller: %s %s | %s | Requesting: %s"):format(calloutData.FirstName or "Unknown", calloutData.LastName or "Unknown", calloutData.Description or "Unknown", units),
-    ("Caller: %s %s | %s | Requesting: %s"):format(calloutData.FirstName or "Unknown", calloutData.LastName or "Unknown", calloutData.Description or "Unknown", units),
-    ("Caller: %s %s | %s | Requesting: %s"):format(calloutData.FirstName or "Unknown", calloutData.LastName or "Unknown", calloutData.Description or "Unknown", units)
-}
+        ("Caller: %s %s | %s | Requesting: %s"):format(callFirstName, callLastName, callDesc, callUnits),
+        ("Caller: %s %s | %s | Requesting: %s"):format(callFirstName, callLastName, callDesc, callUnits),
+        ("Caller: %s %s | %s | Requesting: %s"):format(callFirstName, callLastName, callDesc, callUnits)
+    }
 
     local randomInfo = infoOptions[math.random(#infoOptions)]
 
     CreateThread(function()
         Wait(Config.WaitTimes.CalloutAccepted)
 
-        TriggerEvent('ps-dispatch:server:notify', {
-            code = 'Dispatch',
-            codeName = 'enroute',
-            title = "EnRoute",
-            icon = 'fas fa-route',
-            priority = 2,
-            message = ("%s"):format(calloutData.CalloutName or "Unknown"),
-            alertTime = 10,
-            street = ("%s %s"):format(calloutData.Postal or "Unknown", calloutData.StreetName or "Unknown"),
-            name = ("%s %s (%s) | %s"):format(
-                firstName,
-                lastName,
-                callsign,
-                job),
-            information = randomInfo,
-            jobs = Config.Dispatch.CallAccept,
-            coords = coords,
-        })
-
-        local info = ("911 CALL:\n" ..
-            "Caller: %s %s\n" ..
-            "Call: %s\n" ..
-            "%s %s\n" ..
-            "Report: %s"
-        ):format(
-            calloutData.FirstName or "Unknown",
-            calloutData.LastName or "Unknown",
-            calloutData.CalloutName or "Unknown",
-            calloutData.Postal or "Unknown", 
-            calloutData.StreetName or "Unknown",                    
-            calloutData.Description or "Unknown"
-        )
-
-        -- Print to server console for debugging
-        --print("911 Call\n" .. info)
-        Wait(2000)
-        -- Send to player chat
-        if Config.ShowCalloutInChat then
-        TriggerClientEvent("ErsIntegration:Server:PrintPedDataToChat", src, info)
+        if Config.EnableCalloutAccept then
+            TriggerEvent('ps-dispatch:server:notify', {
+                code = 'Dispatch',
+                codeName = 'enroute',
+                title = "EnRoute",
+                icon = 'fas fa-route',
+                priority = 2,
+                message = ("%s"):format(callName),
+                alertTime = 10,
+                street = ("%s %s"):format(callPostal, callStreet),
+                name = ("%s %s (%s) | %s"):format(
+                    firstName,
+                    lastName,
+                    callsign,
+                    job),
+                information = randomInfo,
+                jobs = Config.Dispatch.CallAccept,
+                coords = coords,
+            })
         end
+
+        if Config.ShowCalloutInChat then
+            local info = ("911 CALL:\n" ..
+                "Caller: %s %s\n" ..
+                "Call: %s\n" ..
+                "%s %s\n" ..
+                "Report: %s"
+            ):format(
+                callFirstName,
+                callLastName,
+                callName,
+                callPostal,
+                callStreet,
+                callDesc
+            )
+
+            TriggerClientEvent("ErsIntegration:Server:PrintPedDataToChat", src, info)
+        end
+
     end)
 end)
-
-
-
 
 --------------------------------------
 -- Callout Arrived
 --------------------------------------
 RegisterNetEvent('ErsIntegration::OnArrivedAtCallout', function(calloutData)
-    if not Config.EnableCalloutArrive then return end
+    --if not Config.EnableCalloutArrive then return end
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
     if not Player then return end
@@ -274,43 +285,51 @@ RegisterNetEvent('ErsIntegration::OnArrivedAtCallout', function(calloutData)
     local lastName = Player.PlayerData.charinfo.lastname or "Unknown"
     local callsign = Player.PlayerData.metadata.callsign or "N/A"
     local job = Player.PlayerData.job.grade.name or ""
-    --local plate = vehicleData and vehicleData.plate or "Traffic"
+
+    local callUnits = calloutData.CalloutUnitsRequired.description or "N/A"
+    local callFirstName = calloutData.FirstName or "Unknown"
+    local callLastName = calloutData.LastName or "Unknown"
+    local callName = calloutData.CalloutName or "Unknown"
+    local callPostal = calloutData.Postal or "Unknown"
+    local callStreet = calloutData.StreetName or "Unknown"
+    local callDesc = calloutData.Description or "Unknown"
 
     local infoOptions = {
-    ("%s (%s) On Scene 911 Call: %s: %s"):format(lastName, callsign, calloutData.CalloutName or "Unknown", calloutData.Description or "Unknown"),
-    ("%s (%s) On Scene 911 Call: %s: %s"):format(lastName, callsign, calloutData.CalloutName or "Unknown", calloutData.Description or "Unknown"),
-    ("%s (%s) On Scene 911 Call: %s: %s"):format(lastName, callsign, calloutData.CalloutName or "Unknown", calloutData.Description or "Unknown")
-}
+        ("%s (%s) On Scene 911 Call: %s: %s"):format(lastName, callsign, callName, callDesc),
+        ("%s (%s) On Scene 911 Call: %s: %s"):format(lastName, callsign, callName, callDesc),
+        ("%s (%s) On Scene 911 Call: %s: %s"):format(lastName, callsign, callName, callDesc),
+    }
 
     local randomInfo = infoOptions[math.random(#infoOptions)]
 
     CreateThread(function()
         Wait(Config.WaitTimes.CalloutArrived) 
 
-        TriggerEvent('ps-dispatch:server:notify', {
-            code = 'Dispatch',
-            codeName = 'onscene',
-            title = "OnsScene",
-            icon = 'fas fa-map-marker-alt',
-            priority = 2,
-            message = ("%s (%s) | On-Scene"):format(     
-                lastName,
-                callsign),
-            alertTime = 10,
-            street = ("%s %s"):format(calloutData.Postal or "Unknown", calloutData.StreetName or "Unknown"),
-            --name = ("%s %s"):format(calloutData.FirstName or "Unknown", calloutData.LastName or "Unknown"),
-            name = ("%s %s (%s) | %s"):format(
-                firstName,
-                lastName,
-                callsign,
-                job),
-            information = randomInfo,
-            jobs = Config.Dispatch.CallArrive,
-            coords = coords,
-        })
+        if Config.EnableCalloutAccept then
+            TriggerEvent('ps-dispatch:server:notify', {
+                code = 'Dispatch',
+                codeName = 'onscene',
+                title = "OnsScene",
+                icon = 'fas fa-map-marker-alt',
+                priority = 2,
+                message = ("%s (%s) | On-Scene"):format(     
+                    lastName,
+                    callsign),
+                alertTime = 10,
+                street = ("%s %s"):format(callPostal, callStreet),
+                name = ("%s %s (%s) | %s"):format(
+                    firstName,
+                    lastName,
+                    callsign,
+                    job),
+                information = randomInfo,
+                jobs = Config.Dispatch.CallArrive,
+                coords = coords,
+            })
+        end
+
     end)
 end)
-
 
 -- ------------------------------------
 -- Callout Completed before
@@ -342,7 +361,7 @@ end)
 -- Callout Completed
 --------------------------------------
 RegisterNetEvent('ErsIntegration::OnCalloutCompletedSuccesfully', function(calloutData)
-    if not Config.EnableCalloutComplete then return end
+    --if not Config.EnableCalloutComplete then return end
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
     if not Player then return end
@@ -353,62 +372,72 @@ RegisterNetEvent('ErsIntegration::OnCalloutCompletedSuccesfully', function(callo
     local lastName = Player.PlayerData.charinfo.lastname or "Unknown"
     local callsign = Player.PlayerData.metadata.callsign or "N/A"
     local job = Player.PlayerData.job.grade.name or ""
-    --local plate = vehicleData and vehicleData.plate or "Traffic"
 
     local infoOptions = {
-    ("%s (%s) Code-4 from my last Call"):format(lastName, callsign),
-    ("%s (%s) Code-4 from my last Call"):format(lastName, callsign),
-    ("%s (%s) Code-4 from my last Call"):format(lastName, callsign)
-}
+        ("%s (%s) Code-4 from my last Call"):format(lastName, callsign),
+        ("%s (%s) Show me Code-4 from my last Call"):format(lastName, callsign),
+        ("%s (%s) Show me 10-8"):format(lastName, callsign)
+    }
 
     local randomInfo = infoOptions[math.random(#infoOptions)]
 
     CreateThread(function()
 
         Wait(Config.WaitTimes.CalloutCompleted)
-        TriggerEvent('ps-dispatch:server:notify', {
-            code = 'Dispatch',
-            codeName = 'codefour',
-            title = "CodeFour",
-            icon = 'fas fa-clock',
-            priority = 2,
-            message = ("%s (%s) | Code-4"):format(     
-                lastName,
-                callsign),
-            alertTime = 10,
-            --street = ("%s %s"):format(calloutData.Postal or "Unknown", calloutData.StreetName or "Unknown"),
-            name = ("%s %s (%s) | %s"):format(
-                firstName,
-                lastName,
-                callsign,
-                job),
-            information = randomInfo,
-            jobs = Config.Dispatch.CallComplete,
-            coords = coords,
-        })
 
-        Wait(5000)
-        Player.Functions.AddMoney('bank', Config.BonusPay, 'callout-complete')
+        if Config.EnableCalloutComplete then
+            TriggerEvent('ps-dispatch:server:notify', {
+                code = 'Dispatch',
+                codeName = 'codefour',
+                title = "CodeFour",
+                icon = 'fas fa-clock',
+                priority = 2,
+                message = ("%s (%s) | Code-4"):format(lastName, callsign),
+                alertTime = 10,
+                name = ("%s %s (%s) | %s"):format(firstName, lastName, callsign, job),
+                information = randomInfo,
+                jobs = Config.Dispatch.CallComplete,
+                coords = coords,
+            })
+        end
 
-        TriggerClientEvent('ox_lib:notify', src, {
-            title = 'BONUS PAY!',
-            description = ('%s (%s) cleared the call. You received a bonus.'):format(
-                lastName, 
-                callsign),
-            type = 'success',
-            duration = 8000
-        })
+        if Config.EnableBonusPay then
+            Wait(5000)
+
+            Player.Functions.AddMoney('bank', Config.BonusPayAmount, 'callout-complete')
+
+            TriggerClientEvent('QBCore:Notify', src,
+                ('💰 BONUS PAY 💰 %s (%s) cleared the call. You received a bonus!')
+                    :format(lastName, callsign),
+                'success',
+                8000
+            )
+        end
+
     end)
 end)
 
 --------------------------------------
 -- Pullover
 --------------------------------------
+PendingPullover = {}
 
 RegisterNetEvent('ErsIntegration::OnPullover', function(pedData, vehicleData)
-    if not Config.EnablePulloverNotifications then return end
-
     local src = source
+    PendingPullover[src] = { pedData = pedData, vehicleData = vehicleData }
+
+    TriggerClientEvent('ErsIntegration:client:GetStreetAndPostal', src)
+end)
+
+RegisterNetEvent('ErsIntegration:server:ReceiveStreetAndPostal', function(streetName, postal)
+    local src = source
+    local data = PendingPullover[src]
+    if not data then return end
+
+    local pedData = data.pedData
+    local vehicleData = data.vehicleData
+    PendingPullover[src] = nil
+
     local Player = QBCore.Functions.GetPlayer(src)
     if not Player then return end
 
@@ -416,66 +445,77 @@ RegisterNetEvent('ErsIntegration::OnPullover', function(pedData, vehicleData)
     local firstName = Player.PlayerData.charinfo.firstname or "Unknown"
     local lastName = Player.PlayerData.charinfo.lastname or "Unknown"
     local callsign = Player.PlayerData.metadata.callsign or "N/A"
-    local plate = vehicleData and vehicleData.license_plate or "Traffic"
 
-    if Config.EnableRadarLock then
-        TriggerClientEvent('ersi:client:radarFrontLock', src)
+    local pedPlate = vehicleData.license_plate or "N/A"
+    local pedMake = vehicleData.make or "N/A"
+    local pedModel = vehicleData.model or "N/A"
+    local pedColor = vehicleData.color or "N/A"
+    local pedColor2 = vehicleData.color_secondary or "N/A"
+    local pedClass = vehicleData.vehicle_class or "N/A"
+    local pedOwner = vehicleData.owner_name or "N/A"
+    local pedInsurance = vehicleData.insurance and "true" or "false"
+    local pedBolo = vehicleData.bolo and "true" or "false"
+    local pedStolen = vehicleData.stolen and "true" or "false"
 
-        TriggerClientEvent('ox_lib:notify', src, {
-            title = 'ALPR LOCK',
-            description = ('%s (%s) locked plate | %s |'):format(lastName, callsign, vehicleData.license_plate or "Unknown"),
-            type = 'inform',
-            duration = 4000
-        })
-    end
-    
+    -- Thread for notifications
     CreateThread(function()
+        if Config.EnableRadarLock then
+            Wait(1000)
+            TriggerClientEvent('ersi:client:radarFrontLock', src)
+            TriggerClientEvent('QBCore:Notify', src,
+                ('🚔 ALPR LOCK 🚔 %s (%s) Locked Plate | %s |'):format(lastName, callsign, pedPlate),
+                'primary',
+                5000
+            )
+        end
+
         Wait(Config.WaitTimes.PulloverNotify)
 
-        TriggerEvent('ps-dispatch:server:notify', {
-            code = 'Dispatch',
-            codeName = 'trafficstop',
-            title = "TrafficStop",
-            icon = 'fas fa-car-side',
-            priority = 2,
-            message = ("%s (%s) | Traffic"):format(     
-                lastName,
-                callsign),
-            name = ("%s %s (%s)"):format(
-                firstName,
-                lastName,
-                callsign),
-            coords = coords,
-            alertTime = 10,
-            vehicle = ("%s %s"):format(vehicleData.make or "N/A", vehicleData.model or "N/A"),
-            plate = ("%s"):format(vehicleData.license_plate or "N/A"),
-            color = ("%s, %s"):format(vehicleData.color or "N/A", vehicleData.color_secondary or "N/A"),
-            class = ("%s"):format(vehicleData.vehicle_class or "N/A"),
-            jobs = Config.Dispatch.TrafficStop,
-            information = ("%s (%s). Show me on a Traffic Stop. - PLATE CHECK - Owner: %s | Insurance: %s | BOLO: %s | Stolen: %s |"):format(
-                lastName, 
-                callsign, 
-                -- vehicleData.license_plate or "N/A",
-                -- vehicleData.make or "N/A",
-                -- vehicleData.model or "N/A",
-                vehicleData.owner_name or "N/A",
-                vehicleData.insurance and "true" or "false",
-                vehicleData.bolo and "true" or "false",
-                vehicleData.stolen and "true" or "false"),
-        })
-        -- Wait(2000)
-
-
+        if Config.EnablePulloverNotify then
+            TriggerEvent('ps-dispatch:server:notify', {
+                code = 'Dispatch',
+                codeName = 'trafficstop',
+                title = "TrafficStop",
+                icon = 'fa-solid fa-car-on',
+                priority = 2,
+                message = ("%s (%s) | Traffic"):format(lastName, callsign),
+                name = ("%s %s (%s)"):format(firstName, lastName, callsign),
+                coords = coords,
+                street = ("%s %s"):format(postal, streetName or "Unknown"),
+                alertTime = 10,
+                vehicle = ("%s %s"):format(pedMake, pedModel),
+                plate = pedPlate,
+                color = ("%s, %s"):format(pedColor, pedColor2),
+                class = pedClass,
+                jobs = Config.Dispatch.TrafficStop,
+                information = ("%s (%s). Show me on a Traffic Stop. - PLATE CHECK - Owner: %s | Insurance: %s | BOLO: %s | Stolen: %s |"):format(
+                    lastName, callsign, pedOwner, pedInsurance, pedBolo, pedStolen)
+            })
+        end
     end)
 end)
 
 --------------------------------------
 -- Pullover Conclude
 --------------------------------------
-RegisterNetEvent('ErsIntegration::OnPulloverEnded', function(pedData, vehicleData)
-    if not Config.EnablePulloverNotifications then return end
+PendingPulloverEnd = {}
 
+RegisterNetEvent('ErsIntegration::OnPulloverEnded', function(pedData, vehicleData)
     local src = source
+    PendingPulloverEnd[src] = { pedData = pedData, vehicleData = vehicleData }
+
+    TriggerClientEvent('ErsIntegration:client:GetStreetAndPostalEnd', src)
+end)
+
+RegisterNetEvent('ErsIntegration:server:ReceiveStreetAndPostalEnd', function(streetName, postal)
+    local src = source
+    local data = PendingPulloverEnd[src]
+    if not data then return end
+
+    local pedData = data.pedData
+    local vehicleData = data.vehicleData
+    PendingPulloverEnd[src] = nil -- clear pending data
+
     local Player = QBCore.Functions.GetPlayer(src)
     if not Player then return end
 
@@ -483,124 +523,223 @@ RegisterNetEvent('ErsIntegration::OnPulloverEnded', function(pedData, vehicleDat
     local firstName = Player.PlayerData.charinfo.firstname or "Unknown"
     local lastName = Player.PlayerData.charinfo.lastname or "Unknown"
     local callsign = Player.PlayerData.metadata.callsign or "N/A"
-    local plate = vehicleData and vehicleData.license_plate or "Traffic"
+
+    local pedPlate = vehicleData.license_plate or "N/A"
+    local pedMake = vehicleData.make or "N/A"
+    local pedModel = vehicleData.model or "N/A"
+    local pedColor = vehicleData.color or "N/A"
+    local pedColor2 = vehicleData.color_secondary or "N/A"
+    local pedClass = vehicleData.vehicle_class or "N/A"
 
     CreateThread(function()
         Wait(Config.WaitTimes.PulloverEnd)
 
-        TriggerEvent('ps-dispatch:server:notify', {
-            code = 'Dispatch',
-            codeName = 'codefour',
-            title = "Code4",
-            icon = 'fas fa-car-side',
-            priority = 2,
-            message = ("%s (%s) | Code-4"):format(     
-                lastName,
-                callsign),
-            name = ("%s %s (%s)"):format(
-                firstName,
-                lastName,
-                callsign),
-            coords = coords,
-            alertTime = 10,
-            vehicle = ("%s %s"):format(vehicleData.make or "N/A", vehicleData.model or "N/A"),
-            plate = ("%s"):format(vehicleData.license_plate or "N/A"),
-            color = ("%s, %s"):format(vehicleData.color or "N/A", vehicleData.color_secondary or "N/A"),
-            class = ("%s"):format(vehicleData.vehicle_class or "N/A"),
-            jobs = Config.Dispatch.TrafficStop,
-            information = ("%s (%s). Code-4 from my last Traffic: (ID: %s %s)"):format(
-                lastName, 
-                callsign, 
-                -- vehicleData.license_plate or "N/A",
-                -- vehicleData.owner_name or "N/A",
-                -- vehicleData.make or "N/A",
-                -- vehicleData.model or "N/A",
-                pedData.FirstName or "N/A",
-                pedData.LastName or "N/A"),
-
-        })
+        if Config.EnablePulloverCode4 then
+            TriggerEvent('ps-dispatch:server:notify', {
+                code = 'Dispatch',
+                codeName = 'codefour',
+                title = "Code4",
+                icon = 'fas fa-car-side',
+                priority = 2,
+                message = ("%s (%s) | Code-4"):format(lastName, callsign),
+                name = ("%s %s (%s)"):format(firstName, lastName, callsign),
+                coords = coords,
+                street = ("%s %s"):format(postal, streetName or "Unknown"),
+                alertTime = 10,
+                jobs = Config.Dispatch.TrafficStop,
+                information = ("%s (%s). Code-4 from my last Traffic"):format(lastName, callsign),
+            })
+        end
     end)
 end)
 
---------------------------------------
--- Pursuit Start
---------------------------------------
-RegisterNetEvent('ErsIntegration::OnPursuitStarted', function(pedData)
-    if not Config.EnablePursuitNotifications then return end
+-- RegisterNetEvent('ErsIntegration::OnPulloverEnded', function(pedData, vehicleData)
+--     --if not Config.EnablePulloverNotify then return end
 
-    local src = source
-    local Player = QBCore.Functions.GetPlayer(src)
-    if not Player then return end
-
-    local coords = GetEntityCoords(GetPlayerPed(src))
-    local firstName = Player.PlayerData.charinfo.firstname or "Unknown"
-    local lastName = Player.PlayerData.charinfo.lastname or "Unknown"
-    local callsign = Player.PlayerData.metadata.callsign or "N/A"
-    -- local plate = vehicleData and vehicleData.license_plate or "Active Pursuit"
-
-    CreateThread(function()
-        Wait(Config.WaitTimes.PursuitStart)
-
-        TriggerEvent('ps-dispatch:server:notify', {
-            code = 'Dispatch',
-            codeName = 'codefour',
-            title = "Pursuit",
-            icon = 'fas fa-car',
-            priority = 2,
-            message = ("%s (%s) | Pursuit"):format(     
-                lastName,
-                callsign),
-            name = ("%s %s (%s)"):format(
-                firstName,
-                lastName,
-                callsign),
-            coords = coords,
-            -- vehicle = ("%s %s"):format(vehicleData.make or "N/A", vehicleData.model or "N/A"),
-            -- plate = ("%s"):format(vehicleData.license_plate or "N/A"),
-            -- color = ("%s, %s"):format(vehicleData.color or "N/A", vehicleData.color_secondary or "N/A"),
-            -- class = ("%s"):format(vehicleData.vehicle_class or "N/A"),
-            alertTime = 10,
-            jobs = Config.Dispatch.TrafficStop,
-            information = ("%s (%s). Show me in a Active Pursuit"):format(
-                lastName, 
-                callsign 
-                -- vehicleData.owner_name or "Unknown",
-                -- vehicleData.insurance and "true" or "false",
-                -- vehicleData.bolo and "true" or "false",
-                -- vehicleData.stolen and "true" or "false"
-            ),
-        })
-    end)
-end)
-
-
---------------------------------------
--- Pursuit Conclude
---------------------------------------
--- RegisterNetEvent('ErsIntegration::OnPursuitEnded', function(pedData, vehicleData)
 --     local src = source
 --     local Player = QBCore.Functions.GetPlayer(src)
 --     if not Player then return end
 
 --     local coords = GetEntityCoords(GetPlayerPed(src))
+--     local firstName = Player.PlayerData.charinfo.firstname or "Unknown"
 --     local lastName = Player.PlayerData.charinfo.lastname or "Unknown"
 --     local callsign = Player.PlayerData.metadata.callsign or "N/A"
---     local plate = vehicleData and vehicleData.plate or "Unknown"
 
---     -- Run asynchronously with short delay
+--     local pedPlate = vehicleData.license_plate or "N/A"
+--     local pedMake = vehicleData.make or "N/A"
+--     local pedModel = vehicleData.model or "N/A"
+--     local pedColor = vehicleData.color or "N/A"
+--     local pedColor2 = vehicleData.color_secondary or "N/A"
+--     local pedClass = vehicleData.vehicle_class or "N/A"
+
 --     CreateThread(function()
---         Wait(8000) -- 8 seconds
+--         Wait(Config.WaitTimes.PulloverEnd)
 
---         TriggerEvent('ps-dispatch:server:notify', {
---             code = 'Code-4',
---             title = "Code 4",
---             message = ("%s (%s) is Code 4 from pursuit [%s]."):format(lastName, callsign, plate),
---             coords = coords,
---             jobs = { 'police', 'sheriff' }
---         })
+--         if Config.EnablePulloverCode4 then
+--             TriggerEvent('ps-dispatch:server:notify', {
+--                 code = 'Dispatch',
+--                 codeName = 'codefour',
+--                 title = "Code4",
+--                 icon = 'fas fa-car-side',
+--                 priority = 2,
+--                 message = ("%s (%s) | Code-4"):format(     
+--                     lastName,
+--                     callsign),
+--                 name = ("%s %s (%s)"):format(
+--                     firstName,
+--                     lastName,
+--                     callsign),
+--                 coords = coords,
+--                 alertTime = 10,
+--                 -- vehicle = ("%s %s"):format(pedMake, pedModel),
+--                 -- plate = ("%s"):format(pedPlate),
+--                 -- color = ("%s, %s"):format(pedColor, pedColor2),
+--                 -- class = ("%s"):format(pedClass),
+--                 jobs = Config.Dispatch.TrafficStop,
+--                 information = ("%s (%s). Code-4 from my last Traffic"):format(
+--                     lastName, 
+--                     callsign),
 
---         -- Optionally trigger local client event if you want blip removal or cleanup
---         -- TriggerClientEvent('ps-dispatch:client:codefour', src, 'Code-4')
+--             })
+--         end
+
+--     end)
+-- end)
+
+--------------------------------------
+-- Pursuit Start
+--------------------------------------
+PendingPursuit = {}
+
+RegisterNetEvent('ErsIntegration::OnPursuitStarted', function(pedData)
+    local src = source
+    PendingPursuit[src] = { pedData = pedData }
+
+    TriggerClientEvent('ErsIntegration:client:GetStreetAndPostalPursuit', src)
+end)
+
+RegisterNetEvent('ErsIntegration:server:ReceiveStreetAndPostalPursuit', function(streetName, postal)
+    local src = source
+    local data = PendingPursuit[src]
+    if not data then return end
+
+    local pedData = data.pedData
+    PendingPursuit[src] = nil 
+
+    local Player = QBCore.Functions.GetPlayer(src)
+    if not Player then return end
+
+    local coords = GetEntityCoords(GetPlayerPed(src))
+    local firstName = Player.PlayerData.charinfo.firstname or "Unknown"
+    local lastName = Player.PlayerData.charinfo.lastname or "N/A"
+    local callsign = Player.PlayerData.metadata.callsign or "N/A"
+
+    CreateThread(function()
+        Wait(Config.WaitTimes.PursuitStart)
+
+        if Config.EnablePursuitNotify then
+            TriggerEvent('ps-dispatch:server:notify', {
+                code = 'Dispatch',
+                codeName = 'dispatch',
+                title = "Pursuit",
+                icon = 'fa-solid fa-car-on',
+                priority = 2,
+                message = ("%s (%s) | Pursuit"):format(lastName, callsign),
+                name = ("%s %s (%s)"):format(firstName, lastName, callsign),
+                coords = coords,
+                street = ("%s %s"):format(postal, streetName or "Unknown"),
+                alertTime = 10,
+                jobs = Config.Dispatch.TrafficStop,
+                information = ("%s (%s). Show me in an Active Pursuit"):format(lastName, callsign)
+            })
+        end
+    end)
+end)
+
+
+-- RegisterNetEvent('ErsIntegration::OnPursuitStarted', function(pedData)
+--     --if not Config.EnablePursuitNotify then return end
+
+--     local src = source
+--     local Player = QBCore.Functions.GetPlayer(src)
+--     if not Player then return end
+
+--     local coords = GetEntityCoords(GetPlayerPed(src))
+--     local firstName = Player.PlayerData.charinfo.firstname or "Unknown"
+--     local lastName = Player.PlayerData.charinfo.lastname or "Unknown"
+--     local callsign = Player.PlayerData.metadata.callsign or "N/A"
+
+--     CreateThread(function()
+--         Wait(Config.WaitTimes.PursuitStart)
+
+--         if Config.EnablePursuitNotify then
+--             TriggerEvent('ps-dispatch:server:notify', {
+--                 code = 'Dispatch',
+--                 codeName = 'codefour',
+--                 title = "Pursuit",
+--                 icon = 'fas fa-car',
+--                 priority = 2,
+--                 message = ("%s (%s) | Pursuit"):format(     
+--                     lastName,
+--                     callsign),
+--                 name = ("%s %s (%s)"):format(
+--                     firstName,
+--                     lastName,
+--                     callsign),
+--                 coords = coords,
+--                 alertTime = 10,
+--                 jobs = Config.Dispatch.TrafficStop,
+--                 information = ("%s (%s). Show me in a Active Pursuit"):format(
+--                     lastName, 
+--                     callsign 
+--                 ),
+--             })
+--         end
+
+--     end)
+-- end)
+
+
+--------------------------------------
+-- Pursuit Conclude
+--------------------------------------
+-- RegisterNetEvent('ErsIntegration::OnPursuitEnded', function(pedData)
+--     local src = source
+--     local Player = QBCore.Functions.GetPlayer(src)
+--     if not Player then return end
+
+--     local coords = GetEntityCoords(GetPlayerPed(src))
+--     local firstName = Player.PlayerData.charinfo.firstname or "Unknown"
+--     local lastName = Player.PlayerData.charinfo.lastname or "Unknown"
+--     local callsign = Player.PlayerData.metadata.callsign or "N/A"
+
+--     Citizen.CreateThread(function()
+--         Wait(Config.WaitTimes.PursuitStart)
+
+--         if Config.EnablePursuitCode4 then
+--             TriggerEvent('ps-dispatch:server:notify', {
+--                 code = 'Dispatch',
+--                 codeName = 'codefour',
+--                 title = "Pursuit",
+--                 icon = 'fas fa-car',
+--                 priority = 2,
+--                 message = ("%s (%s) | Code"):format(     
+--                     lastName,
+--                     callsign),
+--                 name = ("%s %s (%s)"):format(
+--                     firstName,
+--                     lastName,
+--                     callsign),
+--                 coords = coords,
+--                 alertTime = 10,
+--                 jobs = Config.Dispatch.TrafficStop,
+--                 information = ("%s (%s). Show me in a Active Pursuit"):format(
+--                     lastName, 
+--                     callsign 
+--                 ),
+--             })
+--         end
+
 --     end)
 -- end)
 
@@ -716,6 +855,7 @@ RegisterNetEvent('ErsIntegration:server:OnTowRequested', function(postal, street
         })
     end)
 end)
+
 
 RegisterNetEvent('ErsIntegration:server:OnTaxiRequested', function(postal, streetName)
     if not Config.EnableServiceRequest then return end
@@ -868,7 +1008,7 @@ RegisterNetEvent('ErsIntegration:server:OnFireRequested', function(postal, stree
     local lastName = Player.PlayerData.charinfo.lastname or "Unknown"
     local callsign = Player.PlayerData.metadata.callsign or "N/A"
 
-    CreateThread(function()
+   CreateThread(function()
         Wait(Config.WaitTimes.RequestEvents)
         TriggerEvent('ps-dispatch:server:notify', {
             code = 'Dispatch',
@@ -910,7 +1050,7 @@ RegisterNetEvent('ErsIntegration:server:OnRoadServiceRequested', function(postal
             code = 'Dispatch', 
             codeName = 'dispatch',
             title = 'RoadService',
-            icon = 'fas fa-triangle-exclamation',
+            icon = 'fas fa-broom',
             message = ("Road Service On Scene | %s"):format(
                 postal),
             name = ("Road Service Crew"),
