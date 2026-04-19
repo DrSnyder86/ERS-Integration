@@ -296,11 +296,301 @@ RegisterNetEvent('ersi:client:PlayRadioAnim', function()
     local ped = PlayerPedId()
     lib.playAnim(ped, 'random@arrests', 'generic_radio_chatter', 3.0, 3.0, 2000, 49)
 end)
+
+local phoneProp = nil
+
 RegisterNetEvent('ersi:client:PlayRadioAnimPhoneText', function()
     local ped = PlayerPedId()
-    lib.playAnim(ped, 'cellphone@', 'cellphone_text_read_base', 3.0, 3.0, 3000, 49)
+
+    -- 🔥 cleanup if already exists (prevents stacking/stuck)
+    if phoneProp and DoesEntityExist(phoneProp) then
+        DetachEntity(phoneProp, true, true)
+        DeleteEntity(phoneProp)
+        phoneProp = nil
+    end
+
+    -- Load anim
+    local dict = 'cellphone@'
+    RequestAnimDict(dict)
+    while not HasAnimDictLoaded(dict) do Wait(0) end
+
+    -- Load model
+    local model = `prop_npc_phone_02`
+    RequestModel(model)
+    while not HasModelLoaded(model) do Wait(0) end
+
+    -- Create object
+    local coords = GetEntityCoords(ped)
+    phoneProp = CreateObject(model, coords.x, coords.y, coords.z, true, true, false)
+
+    -- Attach to hand
+    local bone = GetPedBoneIndex(ped, 28422)
+
+    AttachEntityToEntity(
+        phoneProp,
+        ped,
+        bone,
+        0.02, 0.02, 0.0,   -- slightly adjusted offsets (optional)
+        0.0, 0.0, 0.0,
+        true, true, false, true, 1, true
+    )
+
+    -- Play anim
+    TaskPlayAnim(ped, dict, 'cellphone_text_read_base', 3.0, 3.0, 3000, 49, 0, false, false, false)
+
+    -- Wait duration
+    Wait(3000)
+
+    -- 🔥 safe cleanup
+    if phoneProp and DoesEntityExist(phoneProp) then
+        DetachEntity(phoneProp, true, true)
+        DeleteEntity(phoneProp)
+        phoneProp = nil
+    end
+
+    ClearPedTasks(ped)
 end)
+
+-- RegisterNetEvent('ersi:client:PlayRadioAnimPhoneTalk', function()
+--     local ped = PlayerPedId()
+
+--     -- Load anim
+--     local dict = 'cellphone@'
+--     RequestAnimDict(dict)
+--     while not HasAnimDictLoaded(dict) do Wait(0) end
+
+--     -- Load phone model
+--     local model = `prop_npc_phone_02`
+--     RequestModel(model)
+--     while not HasModelLoaded(model) do Wait(0) end
+
+--     -- Create phone
+--     local coords = GetEntityCoords(ped)
+--     local phone = CreateObject(model, coords.x, coords.y, coords.z, true, true, false)
+
+--     -- Attach to right hand
+--     local bone = GetPedBoneIndex(ped, 28422)
+
+--     AttachEntityToEntity(
+--         phone,
+--         ped,
+--         bone,
+--         0.10, 0.03, 0.0,
+--         -80.0, 0.0, 0.0,
+--         true, true, false, true, 1, true
+--     )
+
+--     -- Play call animation (phone to ear)
+--     TaskPlayAnim(ped, dict, 'cellphone_call_listen_base', 3.0, 3.0, 3000, 49, 0, false, false, false)
+
+--     -- Cleanup
+--     Wait(3000)
+
+--     DeleteObject(phone)
+--     ClearPedTasks(ped)
+-- end)
+
 RegisterNetEvent('ersi:client:PlayRadioAnimPhoneTalk', function()
     local ped = PlayerPedId()
     lib.playAnim(ped, 'cellphone@', 'cellphone_call_listen_base', 3.0, 3.0, 3000, 49)
+end)
+
+local textActive = false
+
+RegisterNetEvent('ersi:client:incomingCallTextUI', function(message)
+    PlaySoundFrontend(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", true)
+    lib.showTextUI(message, {
+        icon = 'phone',
+        style = {
+            backgroundColor = '#141517',
+            color = '#ff4d4d'
+        }
+    })
+
+    SetTimeout(8000, function()
+        lib.hideTextUI()
+    end)
+end)
+RegisterNetEvent('ersi:client:911CallTextUI', function(message)
+    PlaySoundFrontend(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", true)
+    lib.showTextUI(message, {
+        icon = 'bullhorn',
+        style = {
+            backgroundColor = '#141517',
+            color = '#ff4d4d'
+        }
+    })
+
+    SetTimeout(8000, function()
+        lib.hideTextUI()
+    end)
+end)
+RegisterNetEvent('ersi:client:CallArriveTextUI', function(message)
+    PlaySoundFrontend(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", true)
+    lib.showTextUI(message, {
+        icon = 'map-pin',
+        style = {
+            backgroundColor = '#141517',
+            color = '#e8ad09'
+        }
+    })
+
+    SetTimeout(8000, function()
+        lib.hideTextUI()
+    end)
+end)
+RegisterNetEvent('ersi:client:CallCompleteTextUI', function(message)
+    PlaySoundFrontend(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", true)
+    lib.showTextUI(message, {
+        icon = 'map-pin',
+        style = {
+            backgroundColor = '#141517',
+            color = '#e8ad09'
+        }
+    })
+
+    SetTimeout(8000, function()
+        lib.hideTextUI()
+    end)
+end)
+RegisterNetEvent('ersi:client:PulloverTextUI', function(message)
+    PlaySoundFrontend(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", true)
+    lib.showTextUI(message, {
+        icon = 'car',
+        style = {
+            backgroundColor = '#141517',
+            color = '#e8ad09'
+        }
+    })
+
+    SetTimeout(8000, function()
+        lib.hideTextUI()
+    end)
+end)
+-- Service Requests
+RegisterNetEvent('ersi:client:TextUI:ServiceRequest', function(data)
+    PlaySoundFrontend(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", true)
+    lib.showTextUI(data.message, {
+        icon = data.icon or 'bell',
+        style = {
+            backgroundColor = data.color or '#141517',
+            color = '#ffffff'
+        }
+    })
+
+    if data.duration then
+        SetTimeout(data.duration, function()
+            lib.hideTextUI()
+        end)
+    end
+end)
+
+-- PED and PED Vehicle menu
+RegisterNetEvent('ersi:client:openVehicleListMenu', function(vehicleList)
+    local options = {}
+
+    for i = 1, #vehicleList do
+        local v = vehicleList[i]
+
+        table.insert(options, {
+            title = (v.license_plate or 'UNKNOWN'),
+            description = (v.make or 'N/A') .. ' ' .. (v.model or ''),
+            icon = 'car',
+            onSelect = function()
+                TriggerEvent('ersi:client:openVehicleDetail', v)
+            end
+        })
+    end
+
+    lib.registerContext({
+        id = 'vehicle_list_menu',
+        title = 'Vehicle Records',
+        options = options
+    })
+
+    lib.showContext('vehicle_list_menu')
+end)
+RegisterNetEvent('ersi:client:openVehicleDetail', function(v)
+    lib.registerContext({
+        id = 'vehicle_detail_menu',
+        title = 'Vehicle Details',
+        options = {
+            { title = 'Owner: ' .. (v.owner_name or 'N/A'), icon = 'user' },
+            { title = 'Plate: ' .. (v.license_plate or 'N/A'), icon = 'car' },
+            { title = 'Vehicle: ' .. (v.make or 'N/A') .. ' ' .. (v.model or ''), icon = 'car-side' },
+            { title = 'Insurance: ' .. tostring(v.insurance), icon = 'shield' },
+            { title = 'Stolen: ' .. tostring(v.stolen), icon = 'skull' },
+            { title = 'BOLO: ' .. tostring(v.bolo), icon = 'triangle-exclamation' }
+        }
+    })
+
+    lib.showContext('vehicle_detail_menu')
+end)
+RegisterNetEvent('ersi:client:openPedListMenu', function(pedList)
+    local options = {}
+
+    for i = 1, #pedList do
+        local p = pedList[i]
+
+        table.insert(options, {
+            title = (p.FirstName or 'N/A') .. ' ' .. (p.LastName or ''),
+            description = p.DOB or 'No DOB',
+            icon = 'user',
+            onSelect = function()
+                TriggerEvent('ersi:client:openPedDetail', p)
+            end
+        })
+    end
+
+    lib.registerContext({
+        id = 'ped_list_menu',
+        title = 'Ped Records',
+        options = options
+    })
+
+    lib.showContext('ped_list_menu')
+end)
+
+RegisterNetEvent('ersi:client:openPedDetail', function(p)
+    lib.registerContext({
+        id = 'ped_detail_menu',
+        title = 'ID Details',
+        options = {
+            { title = 'Name: ' .. (p.FirstName or 'N/A') .. ' ' .. (p.LastName or ''), icon = 'user' },
+            { title = 'DOB: ' .. (p.DOB or 'N/A'), icon = 'calendar' },
+            { title = 'Address: ' .. (p.Address or 'N/A'), icon = 'house' },
+            { title = 'Location: ' .. (p.City or '') .. ', ' .. (p.State or ''), icon = 'map' },
+            { title = 'Warrant: ' .. tostring(p.Wanted_Person), icon = 'gavel' }
+        }
+    })
+
+    lib.showContext('ped_detail_menu')
+end)
+
+local recordTextActive = false
+
+RegisterNetEvent('ersi:client:recordAddedTextUI', function(data)
+    if recordTextActive then
+        lib.hideTextUI()
+    end
+
+    recordTextActive = true
+
+    lib.showTextUI(data.message, {
+        icon = data.icon or 'database',
+        style = {
+            backgroundColor = '#141517',
+            color = '#4caf50'
+        }
+    })
+
+    -- 🔊 play sound
+    PlaySoundFrontend(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", true)
+
+    SetTimeout(8000, function()
+        if recordTextActive then
+            lib.hideTextUI()
+            recordTextActive = false
+        end
+    end)
 end)
