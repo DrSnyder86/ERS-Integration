@@ -78,6 +78,12 @@ https://www.youtube.com/watch?v=hOujbqjlBBQ
 - Request `Ambulance` and `Coroner` when targeting a downed ped while on ERS duty.
 - Add or remove duty locations in the `ers_targets_config.lua`.
 
+### Ped and Vehicle Database Context Menu (ERS Peds and Vehicles - ox_lib)
+- Toggle via radial menu (Database)
+- Vehicle Menu - Stores last 10 vehicles interacted with
+- Ped Menu - Stores last 10 peds interacted with
+- TextUI notifications for successful entries
+ 
 ### Dispatch Chat Display (only happens on first interaction - enable/disable in config)
 - Automatic notifications in chat for peds and ped vehicles
 - Display vehicle plate info on pullover
@@ -113,8 +119,13 @@ https://www.youtube.com/watch?v=hOujbqjlBBQ
 - Radar Zoom Option. Changes default multi-zoom minimap and replaces with a wide fixed FOV.
 - Weapon crosshair. Disables default crosshair and replaces with a better looking smaller one.
 - Display qbcore.notify option when requesting a service. 
-- You can now disable all "Service Request" related notifications with one setting. (Config.EnableServiceRequestandArrive)
+- You can now disable all "Service Request" related notifications with one setting. These can be annoying depending on player count
+   - Config.EnableServiceRequestandArrive
 - Radio and Phone Animations for notifications (Requires `ox_lib`)
+   - Player does animations when sending or receiving alerts and notifications
+   - Incoming 911 Call - Player does a pull out phone animation
+   - Responding - Player does radio talk animation
+- ox_lib notifications
 
 # Installation
 ## MANUAL-INSTALL
@@ -198,7 +209,7 @@ https://github.com/DrSnyder86/ERS-Integration/tree/main
 - OR
 - qb_target                       https://github.com/qbcore-framework/qb-target
 
-- ox_lib for animations           https://github.com/overextended/ox_lib
+- ox_lib                          https://github.com/overextended/ox_lib
 
 ## Highly Recommended
 - nearest-postal                  https://github.com/DevBlocky/nearest-postal
