@@ -47,7 +47,7 @@ https://www.youtube.com/watch?v=hOujbqjlBBQ
 
 # Features
 
-QBCore & QBox Integration
+### QBCore & QBox Integration
 - Fully compatible with QBCore and QBox frameworks.
 
 Qbx-radialmenu and Qb-radialmenu Support
