@@ -13,7 +13,7 @@ Config.Jobs = { -- Job Types or names that can access the dispatch menu. If you 
     "leo",
     "ems",
     "tow",
-    "firefighter",
+    "mechanic"
 }
 
 Config.AlertCommandCooldown = 60 -- this would make the command work every 60 seconds to avoid spamming
@@ -24,6 +24,10 @@ Config.DefaultAlerts = {
     Shooting = true,
     Autotheft = false,
     Melee = false,
+    PlayerDowned = true,
+    Explosion = true,
+    OfficerDown = true,
+    EmsDown = true,
 }
 
 Config.MinOffset = 1
@@ -68,69 +72,6 @@ Config.WeaponWhitelist = {
 }
 
 Config.Blips = {
---ERS ADDON 
-    ['codefour'] = {
-        radius = 20,
-        sprite = 133,
-        color = 3,
-        scale = 0.5,
-        length = 1.0,
-        sound = 'robberysound',
-        offset = false,
-        flash = false
-    },
-    ['onscene'] = {
-        radius = 50,
-        sprite = 161,
-        color = 5,
-        scale = 1.0,
-        length = 3,
-        sound = 'robberysound',
-        offset = false,
-        flash = false
-    },
-    ['enroute'] = {
-        radius = 10,
-        sprite = 126,
-        color = 3,
-        scale = 0.5,
-        length = 0.1,
-        sound = 'robberysound',
-        offset = false,
-        flash = false
-    },
-    ['trafficstop'] = {
-        radius = 25.0,
-        sprite = 42,
-        color = 1,
-        scale = 0.5,
-        length = 1,
-        sound = 'robberysound',
-        offset = false,
-        flash = false
-    },
-	['firecall'] = {
-        radius = 25.0,
-        sprite = 833,
-        color = 1,
-        scale = 0.5,
-        length = 2,
-        sound = 'ringing',
-        offset = false,
-        flash = true
-    },
-    ['dispatch'] = {
-        radius = 10,
-        sprite = 419,
-        color = 1,
-        scale = 0.5,
-        length = 0.1,
-        sound = 'Lose_1st',
-        sound2 = 'GTAO_FM_Events_Soundset',
-        offset = false,
-        flash = false
-    },
---ERS ADDON END
     ['vehicleshots'] = { -- Need to match the codeName in alerts.lua
         radius = 0,
         sprite = 119,
@@ -185,6 +126,36 @@ Config.Blips = {
         offset = false,
         flash = false
     },
+    ['codefour'] = {
+        radius = 0,
+        sprite = 126,
+        color = 3,
+        scale = 0.5,
+        length = 0.1,
+        sound = 'robberysound',
+        offset = false,
+        flash = false
+    },
+    ['onscene'] = {
+        radius = 0,
+        sprite = 161,
+        color = 3,
+        scale = 1.5,
+        length = 1,
+        sound = 'robberysound',
+        offset = false,
+        flash = false
+    },
+    ['enroute'] = {
+        radius = 0,
+        sprite = 126,
+        color = 3,
+        scale = 0.5,
+        length = 0.1,
+        sound = 'robberysound',
+        offset = false,
+        flash = false
+    },
     ['civdead'] = {
         radius = 0,
         sprite = 126,
@@ -201,6 +172,17 @@ Config.Blips = {
         color = 1,
         scale = 1.5,
         length = 2,
+        sound = 'Lose_1st',
+        sound2 = 'GTAO_FM_Events_Soundset',
+        offset = false,
+        flash = false
+    },
+    ['dispatch'] = {
+        radius = 0,
+        sprite = 480,
+        color = 1,
+        scale = 0.5,
+        length = 0.1,
         sound = 'Lose_1st',
         sound2 = 'GTAO_FM_Events_Soundset',
         offset = false,
@@ -234,6 +216,26 @@ Config.Blips = {
         scale = 1.5,
         length = 2,
         sound = 'robberysound',
+        offset = false,
+        flash = true
+    },
+	['trafficstop'] = {
+        radius = 15.0,
+        sprite = 42,
+        color = 1,
+        scale = 0.5,
+        length = 1,
+        sound = 'robberysound',
+        offset = false,
+        flash = false
+    },
+	['firecall'] = {
+        radius = 25.0,
+        sprite = 833,
+        color = 1,
+        scale = 0.5,
+        length = 2,
+        sound = 'ringing',
         offset = false,
         flash = true
     },

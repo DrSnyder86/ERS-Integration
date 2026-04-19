@@ -1,21 +1,61 @@
-MIT License
+Copyright (c) 2026 DrSnyder
 
-Copyright (c) 2025 DrSnyder
+FiveM Script Non-Commercial License v1.0
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+Permission
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+Permission is hereby granted to any individual or entity obtaining a copy
+of this script and associated files ("ers_integration") to use, modify, and
+adapt the Software for personal or server use, subject to the conditions
+below.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+Allowed Uses
+
+You are allowed to:
+
+Use this Software on private or public FiveM servers.
+
+Modify the Software for your own server.
+
+Share modified versions for free, provided proper credit is given.
+
+Restrictions
+
+You are NOT allowed to:
+
+Sell the Software.
+
+Resell, sublicense, or redistribute the Software for money.
+
+Include the Software in paid packs, bundles, Tebex stores, or any
+monetized distribution.
+
+Claim the Software as your own work.
+
+Remove or alter this license notice.
+
+Non-Commercial Clause
+
+This Software may not be used in any commercial product, service,
+or monetized distribution without explicit written permission from
+the original author.
+
+Attribution
+
+All copies and substantial portions of the Software must include:
+
+The original copyright notice.
+
+A visible credit to the original author.
+
+No Warranty
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED. THE AUTHOR SHALL NOT BE LIABLE FOR ANY CLAIM,
+DAMAGES, OR OTHER LIABILITY ARISING FROM THE USE OF THE SOFTWARE.
+
+Termination
+
+Violation of any of these terms will automatically revoke permission
+to use the Software.
+

@@ -2,29 +2,28 @@
 -- anywhere in the table
 -- Config.Blips = {
 
-    --ERS ADDON 
     ['codefour'] = {
-        radius = 20,
-        sprite = 133,
+        radius = 0,
+        sprite = 126,
         color = 3,
         scale = 0.5,
-        length = 1.0,
+        length = 0.1,
         sound = 'robberysound',
         offset = false,
         flash = false
     },
     ['onscene'] = {
-        radius = 50,
+        radius = 0,
         sprite = 161,
-        color = 5,
-        scale = 1.0,
-        length = 3,
+        color = 3,
+        scale = 1.5,
+        length = 1,
         sound = 'robberysound',
         offset = false,
         flash = false
     },
     ['enroute'] = {
-        radius = 10,
+        radius = 0,
         sprite = 126,
         color = 3,
         scale = 0.5,
@@ -34,7 +33,7 @@
         flash = false
     },
     ['trafficstop'] = {
-        radius = 25.0,
+        radius = 15.0,
         sprite = 42,
         color = 1,
         scale = 0.5,
@@ -53,15 +52,3 @@
         offset = false,
         flash = true
     },
-    ['dispatch'] = {
-        radius = 10,
-        sprite = 419,
-        color = 1,
-        scale = 0.5,
-        length = 0.1,
-        sound = 'Lose_1st',
-        sound2 = 'GTAO_FM_Events_Soundset',
-        offset = false,
-        flash = false
-    },
---ERS ADDON END

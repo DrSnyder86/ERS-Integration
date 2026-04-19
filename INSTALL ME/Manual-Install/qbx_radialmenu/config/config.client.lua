@@ -4,129 +4,74 @@
 --==========================
          {
     id = "ers_x",
-    icon = "file-alt",
-    label = "ERS Menu",
+    icon = "clipboard-list",
+    label = "ERS",
     items = {
-        --  {
-        --     id = "ers_backup_main",
-        --     icon = "Request Backup",
-        --     label = "shield-plus",
-        --     items = {
-        --         {
-        --             id = "ers_backup_light",
-        --             label = "Light Backup",
-        --             icon = "shield-half",
-        --             onSelect = function()
-        --                 exports['night_ers']:ERS_RequestLightBackup()
-        --             end
-        --         },
-        --         {
-        --             id = "ers_backup_medium",
-        --             label = "Medium Backup",
-        --             icon = "shield",
-        --             onSelect = function()
-        --                 exports['night_ers']:ERS_RequestMediumBackup()
-        --             end
-        --         },
-        --         {
-        --             id = "ers_backup_heavy",
-        --             label = "Heavy Backup",
-        --             icon = "shield-check",
-        --             onSelect = function()
-        --                 exports['night_ers']:ERS_RequestHeavyBackup()
-        --             end
-        --         },
-        --         {
-        --             id = "ers_backup_air",
-        --             label = "Air Support",
-        --             icon = "helicopter",
-        --             onSelect = function()
-        --                 exports['night_ers']:ERS_RequestAirBackup()
-        --             end
-        --         },
-        --         {
-        --             id = "ers_backup_army",
-        --             label = "Army Backup",
-        --             icon = "swords",
-        --             onSelect = function()
-        --                 exports['night_ers']:ERS_RequestArmyBackup()
-        --             end
-        --         },
-        --     }
-        -- },
         {
             id = "ers_duty",
-            icon = "user-shield",
+            icon = "clipboard-list",
             label = "ERS Duty",
             items = {
-                { id = "toggle_police", icon = "user-shield", label = "Toggle Police Duty", onSelect = function()
-                TriggerServerEvent('ers:server:TogglePoliceShift')
-            end },
-                { id = "toggle_ambulance", icon = "user-nurse", label = "Toggle Ambulance Duty", onSelect = function()
-                TriggerServerEvent('ers:server:ToggleAmbulanceShift')
-            end },
-                { id = "toggle_fire", icon = "fire", label = "Toggle Fire Duty", onSelect = function()
-                TriggerServerEvent('ers:server:ToggleFireShift')
-            end },
-                { id = "toggle_tow", icon = "truck-pickup", label = "Toggle Tow Duty", onSelect = function()
-                TriggerServerEvent('ers:server:ToggleTowShift')
-            end },
+                { id = "toggle_police", icon = "user-shield", label = "Toggle Police Duty", server = "ers:server:TogglePoliceShift" },
+                { id = "toggle_ambulance", icon = "briefcase-medical", label = "Toggle Ambulance Duty", server = "ers:server:ToggleAmbulanceShift" },
+                { id = "toggle_fire", icon = "fire-extinguisher", label = "Toggle Fire Duty", server = "ers:server:ToggleFireShift" },
+                { id = "toggle_tow", icon = "truck", label = "Toggle Tow Duty", server = "ers:server:ToggleTowShift" },
             }
         },
         {
             id = "ers_calls",
-            icon = "user-lock",
+            icon = "list-check",
             label = "ERS Utilities",
             items = {
-                { id = "request_callout", icon = "bullhorn", label = "Request 911 Call", event = "ersi:callout:request" },
-                { id = "extra_menu", icon = "gears", label = "Extra Menu", event = "ersi:extra:menu" },
-                { id = "toggle_callouts", icon = "broadcast-tower", label = "Toggle 911 Dispatch", event = "ersi:callouts:toggle" },
-                { id = "wraith", icon = "mobile", label = "Wraith Radar", event = "wk:openRemote" },
-                { id = "mdt_toggle", icon = "tablet-alt", label = "MDT Tablet", event = "ersi:mdt:toggle" },
-                { id = "speedzone", icon = "traffic-light", label = "Traffic Control", event = "ersi:speedzone" },
+                { id = "request_callout", icon = "bell", label = "Request 911 Call", event = "callout:request" },
+                -- { id = "toggle_shift", icon = "user-clock", label = "Toggle Shift", event = "shift:toggle" },
+                { id = "toggle_callouts", icon = "clipboard-list", label = "Toggle 911 Dispatch", event = "callouts:toggle" },
+                { id = "wraith", icon = "car-side", label = "Wraith Radar", event = "wk:openRemote" },
+                { id = "mdt_toggle", icon = "tablet-alt", label = "MDT Tablet", event = "mdt:toggle" },
+                { id = "speedzone", icon = "triangle-exclamation", label = "Traffic Control", event = "custom:speedzone" },
             }
         },
         {
             id = "ers_cancel",
-            icon = 'users-slash',
+            icon = 'triangle-exclamation',
             label = 'Cancel Requests',
             items = {
-                { id = 'cancel_ambulance', icon = 'ambulance', label = 'Cancel Ambulance', event = 'ersi:call:cancelambulance' },
-                { id = 'cancel_fire', icon = 'fire', label = 'Cancel Fire Rescue', event = 'ersi:call:cancelfire' },
-                { id = 'cancel_police', icon = 'handcuffs', label = 'Cancel Police', event = 'ersi:call:cancelpolice' },
-                { id = 'cancel_coroner', icon = 'skull-crossbones', label = 'Cancel Coroner', event = 'ersi:call:cancelcoroner' },
-                { id = 'cancel_taxi', icon = 'taxi', label = 'Cancel Taxi', event = 'ersi:call:canceltaxi' },
-                { id = 'cancel_tow', icon = 'truck-pickup', label = 'Cancel Tow', event = 'ersi:call:canceltow' },
-                { id = 'cancel_mechanic', icon = 'tools', label = 'Cancel Mechanic', event = 'ersi:call:cancelmechanic' },
-                { id = 'cancel_animal_rescue', icon = 'paw', label = 'Cancel Animal Rescue', event = 'ersi:call:cancelanimalrescue' },
-                { id = 'cancel_roadservice', icon = 'broom', label = 'Cancel Road Service', event = 'ersi:call:cancelroadservice' },
+                { id = 'cancel_ambulance', icon = 'ambulance', label = 'Cancel Ambulance', event = 'call:cancelambulance' },
+                { id = 'cancel_fire', icon = 'truck', label = 'Cancel Fire Unit', event = 'call:cancelfire' },
+                { id = 'cancel_police', icon = 'shield-alt', label = 'Cancel Police', event = 'call:cancelpolice' },
+                { id = 'cancel_coroner', icon = 'skull-crossbones', label = 'Cancel Coroner', event = 'call:cancelcoroner' },
+                { id = 'cancel_taxi', icon = 'taxi', label = 'Cancel Taxi', event = 'call:canceltaxi' },
+                { id = 'cancel_tow', icon = 'truck', label = 'Cancel Tow', event = 'call:canceltow' },
+                { id = 'cancel_mechanic', icon = 'wrench', label = 'Cancel Mechanic', event = 'call:cancelmechanic' },
+                { id = 'cancel_animal_rescue', icon = 'paw', label = 'Cancel Animal Rescue', event = 'call:cancelanimalrescue' },
+                { id = 'cancel_roadservice', icon = 'truck', label = 'Cancel Road Service', event = 'call:cancelroadservice' },
             }
         },
         {
             id = "ers_request",
-            icon = 'users-cog',
+            icon = 'clipboard-list',
             label = 'ERS Services',
             items = {
-                { id = 'request_ambulance', icon = 'ambulance', label = 'Ambulance', event = 'ersi:call:ambulance' },
-                { id = 'request_police', icon = 'handcuffs', label = 'PD Transport', event = 'ersi:call:police' },
-                { id = 'request_tow', icon = 'truck-pickup', label = 'Tow', event = 'ersi:call:tow' },
-                { id = 'requestfire', icon = 'fire', label = 'Fire Rescue', event = 'ersi:call:requestfire' },
-                { id = 'request_coroner', icon = 'skull-crossbones', label = 'Coroner', event = 'ersi:call:coroner' },
-                { id = 'request_mechanic', icon = 'tools', label = 'Mechanic', event = 'ersi:call:mechanic' },
-                { id = 'request_roadservice', icon = 'broom', label = 'Road Service', event = 'ersi:call:roadservice' },
-                { id = 'request_taxi', icon = 'taxi', label = 'Taxi', event = 'ersi:call:taxi' },
-                { id = 'request_animal_rescue', icon = 'paw', label = 'Animal Rescue', event = 'ersi:call:animalrescue' },
+                { id = 'request_ambulance', icon = 'ambulance', label = 'Ambulance', event = 'call:ambulance' },
+                { id = 'request_police', icon = 'shield-alt', label = 'PD Transport', event = 'call:police' },
+                { id = 'request_tow', icon = 'truck', label = 'Tow', event = 'call:tow' },
+                { id = 'requestfire', icon = 'truck', label = 'Fire Unit', event = 'custom:requestfire' },
+                { id = 'request_coroner', icon = 'skull-crossbones', label = 'Coroner', event = 'call:coroner' },
+                { id = 'request_mechanic', icon = 'wrench', label = 'Mechanic', event = 'call:mechanic' },
+                { id = 'request_roadservice', icon = 'truck', label = 'Road Service', event = 'call:roadservice' },
+                { id = 'request_taxi', icon = 'taxi', label = 'Taxi', event = 'call:taxi' },
+                { id = 'request_animal_rescue', icon = 'paw', label = 'Animal Rescue', event = 'call:animalrescue' },
             }
         },
         {
             id = "ers_state",
-            icon = 'wifi',
+            icon = 'list-check',
             label = 'State Dispatch',
             items = {
                 { id = 'trafficStop', icon = 'car-side', label = '10-11', event = 'ps-dispatch:client:trafficstop' },
                 { id = 'emergencyButton', icon = 'bell', label = '10-99', event = 'ps-dispatch:client:officerbackup' },
-                { id = 'fireCall', icon = 'fire', label = 'FIRE', event = 'ps-dispatch:client:firecall' },
-                { id = 'enroute', icon = 'car-alt', label = '10-97', event = 'ps-dispatch:client:enroute' },
+                { id = 'fireCall', icon = 'bell', label = 'FIRE', event = 'ps-dispatch:client:firecall' },
+                { id = 'enroute', icon = 'bell', label = '10-97', event = 'ps-dispatch:client:enroute' },
                 { id = 'onscene', icon = 'bell', label = '10-23', event = 'ps-dispatch:client:onscene' },
                 { id = 'codefour', icon = 'bell', label = 'Code-4', event = 'ps-dispatch:client:codefour' },
             }
@@ -136,6 +81,4 @@
 --==========================
 -- ERS STUFF END
 --==========================
-
             
-
