@@ -1,6 +1,8 @@
 local QBCore = exports['qb-core']:GetCoreObject()
 local Config = Config or {}
 
+local vehicleCache = {}
+local pedCache = {}
 -- Crosshair
 local on = true
 
@@ -102,22 +104,81 @@ end)
 --     }
 
 -- end)
+RegisterNetEvent('ersi:server:getVehicleOwner', function(plate)
+    local src = source
+
+    plate = plate:match("^%s*(.-)%s*$")
+
+    exports.oxmysql:single([[
+        SELECT p.charinfo
+        FROM player_vehicles v
+        JOIN players p ON p.citizenid = v.citizenid
+        WHERE v.plate = ?
+    ]], { plate }, function(result)
+
+        if result and result.charinfo then
+            local charinfo = json.decode(result.charinfo)
+
+            TriggerClientEvent('chat:addMessage', src, {
+                color = { 0, 150, 255 },
+                multiline = true,
+                args = {
+                    'DISPATCH',
+                    ('Owner: %s %s | Plate: %s')
+                        :format(charinfo.firstname, charinfo.lastname, plate)
+                }
+            })
+        else
+            TriggerClientEvent('chat:addMessage', src, {
+                color = { 255, 0, 0 },
+                args = {
+                    'DISPATCH',
+                    ('No owner found for plate: %s'):format(plate)
+                }
+            })
+        end
+    end)
+end)
 ---------------------------
 -- Plate check
 ---------------------------
 RegisterServerEvent("ErsIntegration::OnFirstVehicleInteraction")
 AddEventHandler("ErsIntegration::OnFirstVehicleInteraction", function(src, vehicleData, context)
-
     if context ~= "on_pullover" then return end
+
+    vehicleCache[src] = vehicleCache[src] or {}
+
+    local exists = false
+
+    for _, v in ipairs(vehicleCache[src]) do
+        if v.license_plate == vehicleData.license_plate then
+            exists = true
+            break
+        end
+    end
+
+    if not exists then
+        table.insert(vehicleCache[src], vehicleData)
+
+        -- keep only last 10
+        if #vehicleCache[src] > 10 then
+            table.remove(vehicleCache[src], 1)
+        end
+    end
+    TriggerClientEvent('ersi:client:recordAddedTextUI', src, {
+        message = ('DATABASE ENTRY: %s'):format(vehicleData.license_plate or 'UNKNOWN'),
+        icon = 'car'
+    })
 
     if not Config.ShowPlateInChat then return end
 
     CreateThread(function()
         Wait(5000)
+
         local info = ("Vehicle Check:\n" ..
             "Owner: %s\n" ..
             "Plate: %s\n" ..
-            "Vehicle %s %s\n" ..
+            "Vehicle: %s %s\n" ..
             "Insurance: %s\n" ..
             "Stolen: %s\n" ..
             "BOLO: %s"
@@ -139,12 +200,40 @@ end)
 ------------------------
 RegisterServerEvent("ErsIntegration::OnFirstNPCInteraction")
 AddEventHandler("ErsIntegration::OnFirstNPCInteraction", function(src, pedData, context)
-    
+
+    pedCache[src] = pedCache[src] or {}
+
+    local exists = false
+
+    for _, p in ipairs(pedCache[src]) do
+        if p.FirstName == pedData.FirstName and p.LastName == pedData.LastName then
+            exists = true
+            break
+        end
+    end
+
+    if not exists then
+        table.insert(pedCache[src], pedData)
+
+        -- keep only last 10
+        if #pedCache[src] > 10 then
+            table.remove(pedCache[src], 1)
+        end
+    end
+
+    TriggerClientEvent('ersi:client:recordAddedTextUI', src, {
+        message = ('DATABASE ENTRY: %s %s'):format(
+            pedData.FirstName or 'N/A',
+            pedData.LastName or ''
+        ),
+        icon = 'user'
+    })
 
     if not Config.ShowLicenseInChat then return end
 
     CreateThread(function()
         Wait(5000)
+
         local info = ("ID CHECK:\n" ..
             "Name: %s %s\n" ..
             "DOB: %s\n" ..
@@ -165,6 +254,31 @@ AddEventHandler("ErsIntegration::OnFirstNPCInteraction", function(src, pedData, 
         TriggerClientEvent("ErsIntegration:Server:PrintPedDataToChat", src, info)
     end)
 end)
+
+RegisterNetEvent('ersi:server:getVehicleMenuData', function()
+    local src = source
+    local data = vehicleCache[src] or {}
+
+    table.sort(data, function(a, b)
+        return (a.license_plate or '') < (b.license_plate or '')
+    end)
+
+    TriggerClientEvent('ersi:client:openVehicleListMenu', src, data)
+end)
+
+RegisterNetEvent('ersi:server:getPedMenuData', function()
+    local src = source
+    local data = pedCache[src] or {}
+
+    table.sort(data, function(a, b)
+        local nameA = (a.FirstName or '') .. (a.LastName or '')
+        local nameB = (b.FirstName or '') .. (b.LastName or '')
+        return nameA < nameB
+    end)
+
+    TriggerClientEvent('ersi:client:openPedListMenu', src, data)
+end)
+
 --------------------------------------
 -- Callout Offered
 --------------------------------------
@@ -201,6 +315,10 @@ RegisterNetEvent('ErsIntegration::OnIsOfferedCallout', function(calloutData)
     CreateThread(function()
         if Config.EnableRadioAnim then
             TriggerClientEvent('ersi:client:PlayRadioAnimPhoneText', src)
+        end
+
+        if Config.ShowTextUI then
+            TriggerClientEvent('ersi:client:incomingCallTextUI', src, 'Incoming 911 Call')
         end
 
         if Config.ShowCallInChat then
@@ -299,9 +417,27 @@ RegisterNetEvent('ErsIntegration::OnAcceptedCalloutOffer', function(calloutData)
 
             TriggerClientEvent("ErsIntegration:Server:PrintPedDataToChat", src, info)
         end
+        if Config.ShowlibNotify then
+            TriggerClientEvent('ox_lib:notify', src, {
+                    title = '911 Call',
+                    description = ('%s | %s %s')
+                        :format(
+                        callName,
+                        callPostal,
+                        callStreet
+                    ),
+                    type = 'success',
+                    duration = 8000,
+                    icon = 'bullhorn'
+                })
+        end
 
         if Config.EnableRadioAnim then
             TriggerClientEvent('ersi:client:PlayRadioAnim', src)
+        end
+
+        if Config.ShowTextUI then
+            TriggerClientEvent('ersi:client:911CallTextUI', src, '911 Call')
         end
 
         Wait(Config.WaitTimes.CalloutAccepted)
@@ -367,16 +503,27 @@ RegisterNetEvent('ErsIntegration::OnArrivedAtCallout', function(calloutData)
 
     CreateThread(function()
         Wait(Config.WaitTimes.Updates)
-        if Config.EnableCallArriveUpdate then
-            if Config.EnableRadioAnim then
+        if Config.EnableRadioAnim then
             TriggerClientEvent('ersi:client:PlayRadioAnim', src)
         end
-            TriggerClientEvent('QBCore:Notify', src,
-                    ('%s (%s) to Dispatch. Show me Code 4 @ %s %s.')
-                        :format(lastName, callsign, callPostal, callStreet),
-                    'success',
-                    4000
-                )
+        if Config.ShowlibNotify then
+            TriggerClientEvent('ox_lib:notify', src, {
+                    title = 'Dispatch',
+                    description = ('%s (%s)| On Scene %s %s')
+                        :format(
+                        lastName,
+                        callsign,
+                        callPostal,
+                        callStreet
+                    ),
+                    type = 'success',
+                    duration = 8000,
+                    icon = 'map-pin'
+                })
+        end
+        if Config.ShowTextUI then
+            -- trigger text UI on client
+            TriggerClientEvent('ersi:client:CallArriveTextUI', src, 'On Scene')
         end
         Wait(Config.WaitTimes.CalloutArrived) 
 
@@ -410,12 +557,14 @@ RegisterNetEvent('ErsIntegration::OnArrivedAtCallout', function(calloutData)
 
             Player.Functions.AddMoney(Config.BonusPayDepositType, Config.BonusPayAmountCallArrive, 'callout-complete')
 
-            TriggerClientEvent('QBCore:Notify', src,
-                ('💰 BONUS PAY 💰 %s (%s) arrived at call. You received a bonus!')
+            TriggerClientEvent('ox_lib:notify', src, {
+                title = 'Bonus Pay',
+                description = ('%s (%s) arrived at the call. You received a bonus!')
                     :format(lastName, callsign),
-                'success',
-                8000
-            )
+                type = 'success',
+                duration = 8000,
+                icon = 'coins'
+            })
         end
     end)
 end)
@@ -474,15 +623,20 @@ RegisterNetEvent('ErsIntegration::OnCalloutCompletedSuccesfully', function(callo
         if Config.EnableRadioAnim then
             TriggerClientEvent('ersi:client:PlayRadioAnim', src)
         end
-        if Config.EnableCallCompleteUpdate then
-            TriggerClientEvent('QBCore:Notify', src,
-                    ('%s (%s) to Dispatch. Show me Code 4 @ %s %s.')
-                        :format(lastName, callsign, postal, streetName),
-                    'success',
-                    4000
-                )
+        if Config.ShowlibNotify then
+            TriggerClientEvent('ox_lib:notify', src, {
+                title = 'Dispatch',
+                description = ('%s (%s) to Dispatch. Code 4 at %s %s.')
+                    :format(lastName, callsign, postal, streetName),
+                type = 'success',
+                duration = 4000,
+                icon = 'radio'
+            })
         end
-
+        if Config.ShowTextUI then
+            -- trigger text UI on client
+            TriggerClientEvent('ersi:client:CallCompleteTextUI', src, 'Call Complete')
+        end
         Wait(Config.WaitTimes.CalloutCompleted)
 
         
@@ -511,12 +665,14 @@ RegisterNetEvent('ErsIntegration::OnCalloutCompletedSuccesfully', function(callo
 
             Player.Functions.AddMoney('bank', Config.BonusPayAmountCallComplete, 'callout-complete')
 
-            TriggerClientEvent('QBCore:Notify', src,
-                ('💰 BONUS PAY 💰 %s (%s) cleared the call. You received a bonus!')
+            TriggerClientEvent('ox_lib:notify', src, {
+                title = 'Bonus Pay',
+                description = ('%s (%s) cleared the call. You received a bonus!')
                     :format(lastName, callsign),
-                'success',
-                8000
-            )
+                type = 'success',
+                duration = 8000,
+                icon = 'coins'
+            })
         end
 
     end)
@@ -564,26 +720,36 @@ RegisterNetEvent('ErsIntegration:server:ReceiveStreetAndPostal', function(street
 
     -- Thread for notifications
     CreateThread(function()
-        if Config.EnableTrafficUpdate then
-            if Config.EnableRadioAnim then
+        if Config.EnableRadioAnim then
                 TriggerClientEvent('ersi:client:PlayRadioAnim', src)
             end
-            TriggerClientEvent('QBCore:Notify', src,
-                    ('%s (%s) to Dispatch. Show me on a Traffic Stop @ %s %s with a %s %s. Plate # %s')
-                        :format(lastName, callsign, postal, streetName, pedColor, pedModel, pedPlate),
-                    'success',
-                    4000
-                )
+        if Config.ShowlibNotify then
+            
+            TriggerClientEvent('ox_lib:notify', src, {
+                title = 'Dispatch - Traffic Stop',
+                description = ('%s (%s) to Dispatch. Traffic stop at %s %s with a %s %s. Plate: %s')
+                    :format(lastName, callsign, postal, streetName, pedColor, pedModel, pedPlate),
+                type = 'success',
+                duration = 4000,
+                icon = 'car'
+            })
         end
 
         if Config.EnableRadarLock then
             Wait(1000)
             TriggerClientEvent('ersi:client:radarFrontLock', src)
-            TriggerClientEvent('QBCore:Notify', src,
-                ('🚔 ALPR LOCK 🚔 %s (%s) Locked Plate | %s |'):format(lastName, callsign, pedPlate),
-                'primary',
-                5000
-            )
+            TriggerClientEvent('ox_lib:notify', src, {
+                title = 'ALPR Lock',
+                description = ('%s (%s) Locked Plate: %s')
+                    :format(lastName, callsign, pedPlate),
+                type = 'primary',
+                duration = 5000,
+                icon = 'car'
+            })
+        end
+        if Config.ShowTextUI then
+            -- trigger text UI on client
+            TriggerClientEvent('ersi:client:PulloverTextUI', src, 'Traffic Stop')
         end
 
         Wait(Config.WaitTimes.PulloverNotify)
@@ -618,12 +784,14 @@ RegisterNetEvent('ErsIntegration:server:ReceiveStreetAndPostal', function(street
 
             Player.Functions.AddMoney('bank', Config.BonusPayAmountTrafficStop, 'callout-complete')
 
-            TriggerClientEvent('QBCore:Notify', src,
-                ('💰 BONUS PAY 💰 %s (%s) initiated a stop. You received a bonus!')
+            TriggerClientEvent('ox_lib:notify', src, {
+                title = 'Bonus Pay',
+                description = ('%s (%s) initiated a traffic stop. You received a bonus!')
                     :format(lastName, callsign),
-                'success',
-                8000
-            )
+                type = 'success',
+                duration = 8000,
+                icon = 'coins'
+            })
         end
     end)
 end)
@@ -771,7 +939,7 @@ RegisterNetEvent('ErsIntegration:server:ReceiveStreetAndPostalPursuit', function
     local callsign = Player.PlayerData.metadata.callsign or "N/A"
 
     CreateThread(function()
-        if Config.EnablePursuitUpdate then
+        if Config.ShowlibNotify then
             if Config.EnableRadioAnim then
                 TriggerClientEvent('ersi:client:PlayRadioAnimPhoneTalk', src)
             end
@@ -911,14 +1079,24 @@ RegisterNetEvent('ErsIntegration:server:OnCoronerRequested', function(postal, st
 
     CreateThread(function()
         if Config.EnableCoronerRequest then
-            TriggerClientEvent('QBCore:Notify', src,
-                    ('%s (%s) to Dispatch. Requesting Coroner Services @ %s %s')
-                        :format(lastName, callsign, postal, streetName),
-                    'success',
-                    4000
-                )
+            TriggerClientEvent('ox_lib:notify', src, {
+                title = 'Dispatch - Coroner Request',
+                description = ('%s (%s) requesting coroner services @ %s %s')
+                    :format(lastName, callsign, postal, streetName),
+                type = 'success',
+                duration = 4000,
+                icon = 'fas fa-skull-crossbones'
+            })
         end
 
+        if Config.ShowTextUI then
+            TriggerClientEvent('ersi:client:TextUI:ServiceRequest', src, {
+                message = 'Coroner services requested',
+                icon = 'fas fa-skull-crossbones',
+                color = '#8b0000',
+                duration = 8000
+            })
+        end
         Wait(Config.WaitTimes.RequestEvents) 
         
         if Config.EnableCoronerArrive then
@@ -961,13 +1139,23 @@ RegisterNetEvent('ErsIntegration:server:OnMechanicRequested', function(postal, s
 
     CreateThread(function()
         if Config.EnableMechanicRequest then
-            TriggerClientEvent('QBCore:Notify', src,
-                    ('%s (%s) to Dispatch. Requesting a Mechanic @ %s %s')
-                        :format(lastName, callsign, postal, streetName),
-                    'success',
-                    4000
-                )
-            end
+            TriggerClientEvent('ox_lib:notify', src, {
+                title = 'Dispatch - Mechanic Request',
+                description = ('%s (%s) requesting mechanic services @ %s %s')
+                    :format(lastName, callsign, postal, streetName),
+                type = 'success',
+                duration = 4000,
+                icon = 'fas fa-tools'
+            })
+        end
+        if Config.ShowTextUI then
+            TriggerClientEvent('ersi:client:TextUI:ServiceRequest', src, {
+                message = 'Mechanic requested',
+                icon = 'fas fa-tools',
+                color = '#f39c12',
+                duration = 8000
+            })
+        end
         Wait(Config.WaitTimes.RequestEvents)
         if Config.EnableMechanicArrive then
             if Config.EnableRadioAnim then
@@ -1011,13 +1199,23 @@ RegisterNetEvent('ErsIntegration:server:OnTowRequested', function(postal, street
 
     CreateThread(function()
         if Config.EnableTowRequest then
-            TriggerClientEvent('QBCore:Notify', src,
-                    ('%s (%s) to Dispatch. Requesting a Tow Truck @ %s %s')
-                        :format(lastName, callsign, postal, streetName),
-                    'success',
-                    4000
-                )
-            end
+            TriggerClientEvent('ox_lib:notify', src, {
+                title = 'Dispatch - Tow Request',
+                description = ('%s (%s) requesting tow truck @ %s %s')
+                    :format(lastName, callsign, postal, streetName),
+                type = 'success',
+                duration = 4000,
+                icon = 'fas fa-truck-pickup'
+            })
+        end
+        if Config.ShowTextUI then
+            TriggerClientEvent('ersi:client:TextUI:ServiceRequest', src, {
+                message = 'Tow Truck Requested',
+                icon = 'fas fa-truck-pickup',
+                color = '#f39c12',
+                duration = 8000
+            })
+        end
         Wait(Config.WaitTimes.RequestEvents)
         if Config.EnableTowArrive then
             if Config.EnableRadioAnim then
@@ -1060,13 +1258,23 @@ RegisterNetEvent('ErsIntegration:server:OnTaxiRequested', function(postal, stree
 
     CreateThread(function()
         if Config.EnableTaxiRequest then
-            TriggerClientEvent('QBCore:Notify', src,
-                    ('%s (%s) to Dispatch. Requesting a Taxi Service @ %s %s')
-                        :format(lastName, callsign, postal, streetName),
-                    'success',
-                    4000
-                )
-            end
+            TriggerClientEvent('ox_lib:notify', src, {
+                title = 'Dispatch - Taxi Request',
+                description = ('%s (%s) requesting taxi service @ %s %s')
+                    :format(lastName, callsign, postal, streetName),
+                type = 'success',
+                duration = 4000,
+                icon = 'fa-solid fa-taxi'
+            })
+        end
+        if Config.ShowTextUI then
+            TriggerClientEvent('ersi:client:TextUI:ServiceRequest', src, {
+                message = 'Taxi Requested',
+                icon = 'fa-solid fa-taxi',
+                color = '#f39c12',
+                duration = 8000
+            })
+        end
         Wait(Config.WaitTimes.RequestEvents)
         if Config.EnableTaxiArrive then
             if Config.EnableRadioAnim then
@@ -1108,13 +1316,23 @@ RegisterNetEvent('ErsIntegration:server:OnPoliceRequested', function(postal, str
 
     CreateThread(function()
         if Config.EnableTransportRequest then
-            TriggerClientEvent('QBCore:Notify', src,
-                    ('%s (%s) to Dispatch. Send a Police Transport to %s %s for a individual.')
-                        :format(lastName, callsign, postal, streetName),
-                    'success',
-                    4000
-                )
-            end
+            TriggerClientEvent('ox_lib:notify', src, {
+                title = 'Dispatch - Transport Request',
+                description = ('%s (%s) to Dispatch. Send a Police Transport to %s %s for a individual.')
+                    :format(lastName, callsign, postal, streetName),
+                type = 'success',
+                duration = 4000,
+                icon = 'fa-solid fa-car-on'
+            })
+        end
+        if Config.ShowTextUI then
+            TriggerClientEvent('ersi:client:TextUI:ServiceRequest', src, {
+                message = 'Police Transport Requested',
+                icon = 'fa-solid fa-car-on',
+                color = '#2c3e50',
+                duration = 8000
+            })
+        end
         Wait(Config.WaitTimes.RequestEvents)
         if Config.EnableTransportArrive then
             if Config.EnableRadioAnim then
@@ -1156,13 +1374,23 @@ RegisterNetEvent('ErsIntegration:server:OnAnimalRescueRequested', function(posta
 
     CreateThread(function()
         if Config.EnableAnimalRescueRequest then
-            TriggerClientEvent('QBCore:Notify', src,
-                    ('%s (%s) to Dispatch. Animal Rescue is needed immediately @ %s %s')
-                        :format(lastName, callsign, postal, streetName),
-                    'success',
-                    4000
-                )
-            end
+            TriggerClientEvent('ox_lib:notify', src, {
+                title = 'Dispatch - Animal Rescue',
+                description = ('%s (%s) to Dispatch. Animal Rescue is needed immediately @ %s %s')
+                    :format(lastName, callsign, postal, streetName),
+                type = 'success',
+                duration = 4000,
+                icon = 'fa-solid fa-paw'
+            })
+        end
+        if Config.ShowTextUI then
+            TriggerClientEvent('ersi:client:TextUI:ServiceRequest', src, {
+                message = 'Animal Rescue Requested',
+                icon = 'fa-solid fa-paw',
+                color = '#f39c12',
+                duration = 8000
+            })
+        end
         Wait(Config.WaitTimes.RequestEvents)
         if Config.EnableAnimalRescueArrive then
             if Config.EnableRadioAnim then
@@ -1204,13 +1432,23 @@ RegisterNetEvent('ErsIntegration:server:OnAmbulanceRequested', function(postal, 
 
     CreateThread(function()
         if Config.EnableAmbulanceRequest then
-            TriggerClientEvent('QBCore:Notify', src,
-                    ('%s (%s) to Dispatch. EMS needed immediately @ %s %s')
-                        :format(lastName, callsign, postal, streetName),
-                    'success',
-                    4000
-                )
-            end
+            TriggerClientEvent('ox_lib:notify', src, {
+                title = 'Dispatch - EMS Request',
+                description = ('%s (%s) to Dispatch. EMS needed immediately @ %s %s')
+                    :format(lastName, callsign, postal, streetName),
+                type = 'success',
+                duration = 4000,
+                icon = 'fas fa-ambulance'
+            })
+        end
+        if Config.ShowTextUI then
+            TriggerClientEvent('ersi:client:TextUI:ServiceRequest', src, {
+                message = 'EMS Requested',
+                icon = 'fas fa-ambulance',
+                color = '#1e90ff',
+                duration = 8000
+            })
+        end
         Wait(Config.WaitTimes.RequestEvents)
         if Config.EnableAmbulanceArrive then
             if Config.EnableRadioAnim then
@@ -1252,13 +1490,23 @@ RegisterNetEvent('ErsIntegration:server:OnFireRequested', function(postal, stree
 
    CreateThread(function()
         if Config.EnableFireRequest then
-            TriggerClientEvent('QBCore:Notify', src,
-                    ('%s (%s) to Dispatch. Send Fire Rescue to %s %s')
-                        :format(lastName, callsign, postal, streetName),
-                    'success',
-                    4000
-                )
-            end
+            TriggerClientEvent('ox_lib:notify', src, {
+                title = 'Dispatch - Fire Rescue',
+                description = ('%s (%s) to Dispatch. Send Fire Rescue to %s %s')
+                    :format(lastName, callsign, postal, streetName),
+                type = 'success',
+                duration = 4000,
+                icon = 'fas fa-fire-flame-curved'
+            })
+        end
+        if Config.ShowTextUI then
+            TriggerClientEvent('ersi:client:TextUI:ServiceRequest', src, {
+                message = 'Fire Rescue Requested',
+                icon = 'fas fa-fire-flame-curved',
+                color = '#f31212',
+                duration = 8000
+            })
+        end
         Wait(Config.WaitTimes.RequestEvents)
         if Config.EnableFireArrive then 
             if Config.EnableRadioAnim then
@@ -1300,13 +1548,23 @@ RegisterNetEvent('ErsIntegration:server:OnRoadServiceRequested', function(postal
 
     CreateThread(function()
         if Config.EnableRoadServiceRequest then
-            TriggerClientEvent('QBCore:Notify', src,
-                    ('%s (%s) to Dispatch. I need a Road Crew @ %s %s. We got a mess!')
-                        :format(lastName, callsign, postal, streetName),
-                    'success',
-                    4000
-                )
-            end
+            TriggerClientEvent('ox_lib:notify', src, {
+                title = 'Dispatch - Road Crew',
+                description = ('%s (%s) to Dispatch. I need a Road Crew @ %s %s. We got a mess!')
+                    :format(lastName, callsign, postal, streetName),
+                type = 'success',
+                duration = 4000,
+                icon = 'fas fa-broom'
+            })
+        end
+        if Config.ShowTextUI then
+            TriggerClientEvent('ersi:client:TextUI:ServiceRequest', src, {
+                message = 'Road Service Requested',
+                icon = 'fas fa-broom',
+                color = '#f39c12',
+                duration = 8000
+            })
+        end
         Wait(Config.WaitTimes.RequestEvents) 
         if Config.EnableRoadServiceArrive then
             if Config.EnableRadioAnim then
