@@ -57,10 +57,39 @@ Qbx-radialmenu and Qb-radialmenu Support
 - Radial menu functions used to trigger dispatch response events.
 
 ERS Submenu (qb/qbx-radialmenu)
-- Duty Menu - Toggle police, ambulance, fire amd tow jobs specifically.
-- Utility Menu - Request callouts, toggle callouts, wraith radar remote, open mdt, speedzone menu.
-- Cancel Request Menu - Cancel service requests.
-- ERS Services Menu - Request ambulance, tow, coroner etc.
+- Duty Menu 
+   - Police
+   - Ambulance
+   - Fire
+   - Tow
+- Utility Menu 
+   - Request callouts
+   - Toggle callouts
+   - Wraith radar remote
+   - Open mdt
+   - Speedzone menu
+   - Object Menu
+   - State Dispatch (ps-dispatch)
+- Cancel Request Menu
+   - Ambulance
+   - Fire
+   - PD Transport
+   - Tow
+   - Coroner
+   - Mechanic
+   - Road Service
+   - Taxi
+   - Animal Rescue
+- Services Request Menu 
+   - Ambulance
+   - Fire
+   - PD Transport
+   - Tow
+   - Coroner
+   - Mechanic
+   - Road Service
+   - Taxi
+   - Animal Rescue
 
 PS-Dispatch Integration
 - Ps-dispatch simulates a dispatcher on service requests and certain events notifying of arrivals and calls giving a bit more immersion for players.
@@ -148,7 +177,7 @@ OR
 
 - Drag and drop the `ers_integration` script in your resourse folder.
 
-# Configuration `ers_integration_config.lua` & `ers_targets_config.lua`
+# Configuration (`ers_integration_config.lua` & `ers_targets_config.lua`)
 - Change and add target duty locations for jobs in `ers_targets_config.lua` file
 - Dispatch response and delay times (time in between ERS events and ps-dispatch events)
 - Bonus bank money reward amount
@@ -187,22 +216,23 @@ https://github.com/DrSnyder86/ERS-Integration/tree/main
 - Qb-core or Qbox framework
 - Emergency Response Simulator    https://store.nights-software.com/category/ersgamemode
 - Ps-dispatch                     https://github.com/Project-Sloth/ps-dispatch
-- 
+
 - qb-radialmenu                   https://github.com/qbcore-framework/qb-radialmenu
 - OR
 - qbx-radialmenu                  https://github.com/Qbox-project/qbx_radialmenu
-- 
+
 - ox_target                       https://github.com/overextended/ox_target
 - OR
 - qb_target                       https://github.com/qbcore-framework/qb-target
-- 
-- ox_lib (animations/notify)      https://github.com/overextended/ox_lib
+
+- ox_lib for animations           https://github.com/overextended/ox_lib
 
 ## Highly Recommended
 - nearest-postal                  https://github.com/DevBlocky/nearest-postal
 - Wk-wars2x Radar                 https://github.com/WolfKnight98/wk_wars2x
 - ps-mdt                          https://github.com/Project-Sloth/ps-mdt
-- Alternate ps-dispatch           https://github.com/dineshrana8939-oss/PS-Dispatch-with-Audio-dispatches-
+- ps-dispatch (alternate)         https://github.com/dineshrana8939-oss/PS-Dispatch-with-Audio-dispatches-
+- qbox_target_features            https://github.com/DrSnyder86/qbox_target_features
 
 ### License
 For an updated license, check the ``License`` file. That file will always overrule anything mentioned in the ``readme.md``
