@@ -44,7 +44,7 @@ Config.EnableFireArrive         = true  -- Fire request arrival
 Config.EnableRoadServiceArrive  = true  -- Road Service request arrival
 
 -- Service Request Notifications -- (Client - Only you can see)
--- Display a notification to dispatch requesting services (Displays character name, callsign, service requested and location with postal. Uses qbcore.notify)
+-- Display a notification to dispatch requesting services (Displays character name, callsign, service requested and location with postal. Uses ox_lib.notify)
 Config.EnableCoronerRequest      = true
 Config.EnableMechanicRequest     = true
 Config.EnableTowRequest          = true
@@ -55,11 +55,14 @@ Config.EnableAmbulanceRequest    = true
 Config.EnableFireRequest         = true
 Config.EnableRoadServiceRequest  = true
 
--- Location update notification to dispatch (qbcore.notify)
-Config.EnableTrafficUpdate       = true -- Update to dispatch when initiating a traffic stop
-Config.EnablePursuitUpdate       = true -- Update to dispatch when a pursuit is started
-Config.EnableCallCompleteUpdate  = true -- Update to dispatch when call is complete
-Config.EnableCallArriveUpdate    = true -- Update to dispatch when you arrive near call
+-- Extra Notifications--
+-- ox_lib notify
+Config.ShowlibNotify = true
+-- ox_lib textui
+Config.ShowTextUI    = true
+-- Play radio and phone animations for 'Ps-dispatch Alert Notifications' and 'ox_lib.notify' options.
+-- Requires 'ox_lib'. Only way I could get it to work atm.
+Config.EnableRadioAnim = true
 
 
 -- Display Callout, Ped & Vehicle info in chat. 
@@ -68,6 +71,8 @@ Config.ShowCallInChat    = true  -- Show 911 call (ERS calls display as incoming
 Config.ShowCalloutInChat = true  -- Show callout info (Callout accept displayed as 911 call)
 Config.ShowLicenseInChat = true  -- Show license check (when you interact with a ped)
 Config.ShowPlateInChat   = true  -- Show plate check (when a vehicle is pulled over)
+
+
 
 -- This determines which jobs ('QB' jobs not 'ERS') will receive dispatch notifications.
 -- Ps-dispatch uses job types for certain jobs. `LEO` for police, bcso and sasp. `EMS` for ambulance.
@@ -107,10 +112,6 @@ Config.WaitTimes = {
 }
 
 -- EXTRA FEATURES --
-
--- Play radio and phone animations for 'Ps-dispatch Alert Notifications' and 'QBCore:Notify' options.
--- Requires 'ox_lib'. Only way I could get it to work atm.
-Config.EnableRadioAnim = true
 
 -- Wraith radar auto plate lock (whether or not front plate reader auto locks on pullovers)
 Config.EnableRadarLock = true 
