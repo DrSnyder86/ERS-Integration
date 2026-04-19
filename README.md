@@ -11,8 +11,7 @@
         \ V /| |_ ___) |
          \_/ |_(_)____/ 
 
-# GAMEPLAY ENHANCEMENTS FOR "EMERGENCY RESPONSE SIMULATOR"
-
+## GAMEPLAY ENHANCEMENTS FOR "EMERGENCY RESPONSE SIMULATOR"
 ## DOWNLOAD `CODE` FOR UP TO DATE VERSION
 Screenshots
 
@@ -40,7 +39,7 @@ https://r2.fivemanage.com/image/1qierHolZa8R.png
 
 https://r2.fivemanage.com/image/WrJ0Nzh0mL4W.png
 
-##Demo (Needs updated)
+## Demo (needs updated)
 
 https://www.youtube.com/watch?v=hOujbqjlBBQ
 
@@ -50,13 +49,13 @@ https://www.youtube.com/watch?v=hOujbqjlBBQ
 ### QBCore & QBox Integration
 - Fully compatible with QBCore and QBox frameworks.
 
-Qbx-radialmenu and Qb-radialmenu Support
+### Qbx-radialmenu and Qb-radialmenu Support
 - Includes radial menu functions for quick access to commands and actions. 
 - Players can easily trigger key functions without memorizing chat commands.
 - Players can request or cancel services while inside of a vehicle. 
 - Radial menu functions used to trigger dispatch response events.
 
-ERS Submenu (qb/qbx-radialmenu)
+### ERS Submenu (qb/qbx-radialmenu)
 - Duty Menu 
    - Police
    - Ambulance
@@ -91,7 +90,7 @@ ERS Submenu (qb/qbx-radialmenu)
    - Taxi
    - Animal Rescue
 
-PS-Dispatch Integration
+### PS-Dispatch Integration
 - Ps-dispatch simulates a dispatcher on service requests and certain events notifying of arrivals and calls giving a bit more immersion for players.
 - Persistent dispatch notifications for all players.
 - Traffic stops, accepted callouts, callout arrivals and pursuits all trigger dispatch events with player location and data.
@@ -99,20 +98,20 @@ PS-Dispatch Integration
 - Uses Player details `Character Name`, `Callsign` and `Job` in dispatch events
 - Added `Tow` and `Fire` jobs to receive dispatch events (callouts and request events)
 
-QB-target/Ox-target Support
+### QB-target/Ox-target Support
 - Go on/off duty for services at configurable points using ox-target or qb-target.
 - Request `Tow` or `Mechanic` when targeting a vehicle while on ERS duty.
 - Request `Ambulance` and `Coroner` when targeting a downed ped while on ERS duty.
 - Add or remove duty locations in the `ers_targets_config.lua`.
 
-Dispatch Chat Display (only happens on first interaction - enable/disable in config)
+### Dispatch Chat Display (only happens on first interaction - enable/disable in config)
 - Automatic notifications in chat for peds and ped vehicles
 - Display vehicle plate info on pullover
 - Display ped ID info ()
 - Callout offers display as Incoming 911 calls
 - Accepted callouts display as 911 Call
 
-Inventory Item Support (qb_inventory and ox_inventory items)
+### Inventory Item Support (qb_inventory and ox_inventory items)
 - Use your ERS tools as items. 
 - Currently supports the `Stretcher`, `Fire Hose`, `Broom`, `MDT`, and `Wraith Radar Remote`.
    - Stretcher    - uses same as `stretcher` command
@@ -121,21 +120,21 @@ Inventory Item Support (qb_inventory and ox_inventory items)
    - MDT          - opens any MDT that uses `mdt` command
    - Wraith Radar - use your radar remote as item
 
-Player Rewards (enable/disable in `ers_integration_config.lua`)
+### Player Rewards (enable/disable in `ers_integration_config.lua`)
 - Awards players with automatic bank/cash payment bonus on completion of scene cleanup. Giving player incentive to clean-up their scenes.
 - Added player rewards for arriving at a callout
 - Add reward option for initiating a traffic stop
 
-Traffic Stops
+### Traffic Stops
 - When used with `Wk_wars2x` radar the front plate will lock automatically. (enable/disable in config)
 - Sends dispatch alert with vehicle info when a stop is initiated.
 - Plate check displayed in chat.
 
-Postal
+### Postal
 - Nearest postal is now displayed in dispatch request and arrival events.
 - Postal appears in address line for dispatch and chat events.
 
-New Features (enable/disable in `ers_integration_config.lua`)
+## New Features (enable/disable in `ers_integration_config.lua`)
 - Persistent flashlight option. Works for flashlight and weapon lights. Light will remain on until turned off.
 - Radar Zoom Option. Changes default multi-zoom minimap and replaces with a wide fixed FOV.
 - Weapon crosshair. Disables default crosshair and replaces with a better looking smaller one.
