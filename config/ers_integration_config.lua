@@ -61,7 +61,6 @@ Config.ShowlibNotify = true
 -- ox_lib textui
 Config.ShowTextUI    = true
 -- Play radio and phone animations for 'Ps-dispatch Alert Notifications' and 'ox_lib.notify' options.
--- Requires 'ox_lib'. Only way I could get it to work atm.
 Config.EnableRadioAnim = true
 
 
