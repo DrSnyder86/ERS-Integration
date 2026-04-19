@@ -1,13 +1,22 @@
+███████╗██████╗ ███████╗        ██╗███╗   ██╗████████╗███████╗ ██████╗ ██████╗  █████╗ ████████╗██╗ ██████╗ ███╗   ██╗
+██╔════╝██╔══██╗██╔════╝        ██║████╗  ██║╚══██╔══╝██╔════╝██╔════╝ ██╔══██╗██╔══██╗╚══██╔══╝██║██╔═══██╗████╗  ██║
+█████╗  ██████╔╝███████╗        ██║██╔██╗ ██║   ██║   █████╗  ██║  ███╗██████╔╝███████║   ██║   ██║██║   ██║██╔██╗ ██║
+██╔══╝  ██╔══██╗╚════██║        ██║██║╚██╗██║   ██║   ██╔══╝  ██║   ██║██╔══██╗██╔══██║   ██║   ██║██║   ██║██║╚██╗██║
+███████╗██║  ██║███████║███████╗██║██║ ╚████║   ██║   ███████╗╚██████╔╝██║  ██║██║  ██║   ██║   ██║╚██████╔╝██║ ╚████║
+╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝╚═╝╚═╝  ╚═══╝   ╚═╝   ╚══════╝ ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝
+       _   ____  
+__   _/ | | ___| 
+\ \ / / | |___ \ 
+ \ V /| |_ ___) |
+  \_/ |_(_)____/ 
 
 # ERS integration script for QB-core created to be used with 'Emergency Response Simulator' by [nightssoftware](https://store.nights-software.com/)
 
 ## DOWNLOAD `CODE` FOR UP TO DATE VERSION
-
 Screenshots
 
-<div class="slideshow-container">
 https://r2.fivemanage.com/image/wDPMJQBfuG5D.png
-   
+
 https://r2.fivemanage.com/image/ZwJqks3kjwuq.png
 
 https://r2.fivemanage.com/image/z752VMUMlrtR.png
@@ -29,11 +38,11 @@ https://r2.fivemanage.com/image/W4mzQipRcAS5.png
 https://r2.fivemanage.com/image/1qierHolZa8R.png
 
 https://r2.fivemanage.com/image/WrJ0Nzh0mL4W.png
-</div>
 
 Demo
 
 https://www.youtube.com/watch?v=hOujbqjlBBQ
+
 
 # Features
 
@@ -51,7 +60,6 @@ ERS Submenu (qb/qbx-radialmenu)
 - Utility Menu - Request callouts, toggle callouts, wraith radar remote, open mdt, speedzone menu.
 - Cancel Request Menu - Cancel service requests.
 - ERS Services Menu - Request ambulance, tow, coroner etc.
-- Pursuit Backup Menu - Request pursuit backup
 
 PS-Dispatch Integration
 - Ps-dispatch simulates a dispatcher on service requests and certain events notifying of arrivals and calls giving a bit more immersion for players.
@@ -63,15 +71,16 @@ PS-Dispatch Integration
 
 QB-target/Ox-target Support
 - Go on/off duty for services at configurable points using ox-target or qb-target.
-- Request `Tow` or `Mechanic` when targeting a vehicle while on duty.
-- Request `Ambulance` and `Coroner` when targeting a downed ped while on duty.
-- Add or remove duty locations in the `config.lua`.
+- Request `Tow` or `Mechanic` when targeting a vehicle while on ERS duty.
+- Request `Ambulance` and `Coroner` when targeting a downed ped while on ERS duty.
+- Add or remove duty locations in the `ers_targets_config.lua`.
 
 Dispatch Chat Display (only happens on first interaction - enable/disable in config)
 - Automatic notifications in chat for peds and ped vehicles
-- Display vehicle plate info when you interact
-- Display ped ID info when you interact
-- Callout offers displayed as Incoming 911 calls
+- Display vehicle plate info on pullover
+- Display ped ID info ()
+- Callout offers display as Incoming 911 calls
+- Accepted callouts display as 911 Call
 
 Inventory Item Support (qb_inventory and ox_inventory items)
 - Use your ERS tools as items. 
@@ -82,16 +91,27 @@ Inventory Item Support (qb_inventory and ox_inventory items)
    - MDT          - opens any MDT that uses `mdt` command
    - Wraith Radar - use your radar remote as item
 
-Player Rewards
-- Awards players with automatic bank payment bonus on completion of scene cleanup. Giving player incentive to clean-up their scenes.
-- Adjust reward amount in `config.lua`.
+Player Rewards (enable/disable in `ers_integration_config.lua`)
+- Awards players with automatic bank/cash payment bonus on completion of scene cleanup. Giving player incentive to clean-up their scenes.
+- Added player rewards for arriving at a callout
+- Add reward option for initiating a traffic stop
 
 Traffic Stops
 - When used with `Wk_wars2x` radar the front plate will lock automatically. (enable/disable in config)
-- Sends dispatch alert when a stop is initiated.
+- Sends dispatch alert with vehicle info when a stop is initiated.
+- Plate check displayed in chat.
 
 Postal
 - Nearest postal is now displayed in dispatch request and arrival events.
+- Postal appears in address line for dispatch and chat events.
+
+New Features (enable/disable in `ers_integration_config.lua`)
+- Persistent flashlight option. Works for flashlight and weapon lights. Light will remain on until turned off.
+- Radar Zoom Option. Changes default multi-zoom minimap and replaces with a wide fixed FOV.
+- Weapon crosshair. Disables default crosshair and replaces with a better looking smaller one.
+- Display qbcore.notify option when requesting a service. 
+- You can now disable all "Service Request" related notifications with one setting. (Config.EnableServiceRequestandArrive)
+- Radio and Phone Animations for notifications (Requires `ox_lib`)
 
 # Installation
 ## MANUAL-INSTALL
@@ -114,7 +134,7 @@ OR
 ## REPLACE-INSTALL
 - Make a backup as usual
 ### Ps-dispatch
-- Replace the following in `ps-dispatch` with the files provoded in the  `REPLACE-INSTALL` Folder.
+- Replace the following in `ps-dispatch` with the files provided in the  `REPLACE-INSTALL` Folder.
    - ps-dispatch/shared/config.lua
 
 ### Radialmenu
@@ -127,9 +147,9 @@ OR
 
 - Drag and drop the `ers_integration` script in your resourse folder.
 
-# Configuration `config.lua`
-- Change and add target duty locations for jobs in config file
-- Dispatch response and delay times (ps-dispatch events)
+# Configuration `ers_integration_config.lua` & `ers_targets_config.lua`
+- Change and add target duty locations for jobs in `ers_targets_config.lua` file
+- Dispatch response and delay times (time in between ERS events and ps-dispatch events)
 - Bonus bank money reward amount
 - Enable/Disable specific dispatch notification options
 
@@ -138,10 +158,25 @@ OR
 - Supports `qb` and `ox` inventories.
 
 ## UPDATE
-- Removed ox_lib as dependency
+- Enhanced code
+- Added seperate config for target options
+- You can now enable/disable all dispatch service request notifications specifically
+- Moved radialmenu items to jobmenu items
+
+# UPDATING FROM VERSION 1.4
+- Replace entire ers_integration script!
+- No need to change anything in ps-dispatch. Nothing was changed
+- Replace the radial menu configs for the new layout (ERS menu moved to job menu).
+
 # Known Bugs
 - Dispatch will display arrival event when the player requests a service even if the request is denied
-- Pursuit Backup Radial Menu Functions not implemented yet (skip installing this)
+
+# Credits
+## Crosshair
+- I updated code from a old server of mine. No author was listed in the manifest. Credit for original code goes to them.
+
+## Minimap zoom
+- Same goes for this code. I modified some old code from a server of mine. No idea where I originally got it.
 
 # Download - Use this link for the latest release and features
 https://github.com/DrSnyder86/ERS-Integration/tree/main
@@ -154,20 +189,25 @@ https://github.com/DrSnyder86/ERS-Integration/tree/main
 - qb-radialmenu                   https://github.com/qbcore-framework/qb-radialmenu
 - OR
 - qbx-radialmenu                  https://github.com/Qbox-project/qbx_radialmenu
+- ox_target                       https://github.com/overextended/ox_target
+- OR
+- qb_target                       https://github.com/qbcore-framework/qb-target
 
-## Recommended
+## Highly Recommended
 - nearest-postal                  https://github.com/DevBlocky/nearest-postal
 - Wk-wars2x Radar                 https://github.com/WolfKnight98/wk_wars2x
 - ps-mdt                          https://github.com/Project-Sloth/ps-mdt
+- ox_lib for animations           https://github.com/overextended/ox_lib
+- Alternate ps-dispatch           https://github.com/dineshrana8939-oss/PS-Dispatch-with-Audio-dispatches-
 
 ### License
 For an updated license, check the ``License`` file. That file will always overrule anything mentioned in the ``readme.md``
 
 ers_integration - DrSnyder
 
-Copyright © 2025 DrSnyder. All rights reserved.
+Copyright © 2026 DrSnyder. All rights reserved.
 
-You can use and edit this code to your liking as long as you don't ever claim it to be your own code and always provide proper credit. You're not allowed to sell ers_integration or any code you take from it. If you want to release your own version of qb_ers_integration, you have to link the original GitHub repo, or release it via a Forked repo.
+You can use and edit this code to your liking as long as you don't ever claim it to be your own code and always provide proper credit. You're not allowed to sell ers_integration or any code you take from it. If you want to release your own version of ers_integration, you have to link the original GitHub repo, or release it via a Forked repo.
 
          ██████╗ ██████╗ ███████╗███╗   ██╗██╗   ██╗██████╗ ███████╗██████╗ 
          ██╔══██╗██╔══██╗██╔════╝████╗  ██║╚██╗ ██╔╝██╔══██╗██╔════╝██╔══██╗
@@ -175,8 +215,6 @@ You can use and edit this code to your liking as long as you don't ever claim it
          ██║  ██║██╔══██╗╚════██║██║╚██╗██║  ╚██╔╝  ██║  ██║██╔══╝  ██╔══██╗
          ██████╔╝██║  ██║███████║██║ ╚████║   ██║   ██████╔╝███████╗██║  ██║
          ╚═════╝ ╚═╝  ╚═╝╚══════╝╚═╝  ╚═══╝   ╚═╝   ╚═════╝ ╚══════╝╚═╝  ╚═╝
-
-
 
 
 
