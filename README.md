@@ -11,7 +11,7 @@
         \ V /| |_ ___) |
          \_/ |_(_)____/ 
 
-# ERS integration script for QB-core created to be used with 'Emergency Response Simulator' by [nightssoftware](https://store.nights-software.com/)
+# GAMEPLAY ENHANCEMENTS FOR "EMERGENCY RESPONSE SIMULATOR"
 
 ## DOWNLOAD `CODE` FOR UP TO DATE VERSION
 Screenshots
@@ -40,7 +40,7 @@ https://r2.fivemanage.com/image/1qierHolZa8R.png
 
 https://r2.fivemanage.com/image/WrJ0Nzh0mL4W.png
 
-Demo
+##Demo (Needs updated)
 
 https://www.youtube.com/watch?v=hOujbqjlBBQ
 
@@ -187,18 +187,21 @@ https://github.com/DrSnyder86/ERS-Integration/tree/main
 - Qb-core or Qbox framework
 - Emergency Response Simulator    https://store.nights-software.com/category/ersgamemode
 - Ps-dispatch                     https://github.com/Project-Sloth/ps-dispatch
+- 
 - qb-radialmenu                   https://github.com/qbcore-framework/qb-radialmenu
 - OR
 - qbx-radialmenu                  https://github.com/Qbox-project/qbx_radialmenu
+- 
 - ox_target                       https://github.com/overextended/ox_target
 - OR
 - qb_target                       https://github.com/qbcore-framework/qb-target
+- 
+- ox_lib (animations/notify)      https://github.com/overextended/ox_lib
 
 ## Highly Recommended
 - nearest-postal                  https://github.com/DevBlocky/nearest-postal
 - Wk-wars2x Radar                 https://github.com/WolfKnight98/wk_wars2x
 - ps-mdt                          https://github.com/Project-Sloth/ps-mdt
-- ox_lib for animations           https://github.com/overextended/ox_lib
 - Alternate ps-dispatch           https://github.com/dineshrana8939-oss/PS-Dispatch-with-Audio-dispatches-
 
 ### License
