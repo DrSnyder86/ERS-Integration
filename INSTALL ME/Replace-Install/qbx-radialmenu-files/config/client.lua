@@ -299,9 +299,16 @@ return {
                 label = 'Emergency Button',
                 event = 'police:client:SendPoliceEmergencyAlert',
             },
-            { id = "toggle_police", icon = "user-shield", label = "PoliceDuty", onSelect = function()
+             {
+                id = "ers_duty",
+                icon = "user-clock",
+                label = "ERS Duty",
+                items = {
+                    { id = "toggle_police", icon = "user-shield", label = "Police Duty", onSelect = function()
                     TriggerServerEvent('ers:server:TogglePoliceShift')
                 end },
+                }
+            },
             {
                 id = "ers_calls",
                 icon = "user-lock",
