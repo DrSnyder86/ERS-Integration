@@ -57,12 +57,12 @@ https://www.youtube.com/watch?v=hOujbqjlBBQ
 
 ### ERS Submenu (QB/QBX Radial Menu)
 
-| **Menu**                 | **Options**                                                                                   |
-|--------------------------|-----------------------------------------------------------------------------------------------|
-| **Duty Menu**            | Police, Ambulance, Fire, Tow                                                                  |
-| **Utility Menu**         | Request Callouts, Toggle Callouts, Wraith Radar Remote, Open MDT, Speedzone Menu, Object Menu |    
-| **Cancel Request Menu**  | Ambulance, Fire, PD Transport, Tow, Coroner, Mechanic, Road Service, Taxi, Animal Rescue      |
-| **Services Request Menu**| Ambulance, Fire, PD Transport, Tow, Coroner, Mechanic, Road Service, Taxi, Animal Rescue      |
+| **Menu**                 | **Options**                                                                                                       |
+|--------------------------|-------------------------------------------------------------------------------------------------------------------|
+| **Duty Menu**            | Police, Ambulance, Fire, Tow                                                                                      |
+| **Utility Menu**         | Request Callouts, Toggle Callouts, Wraith Radar Remote, Open MDT, Speedzone Menu, Object Menu, Dispatch, Database |    
+| **Cancel Request Menu**  | Ambulance, Fire, PD Transport, Tow, Coroner, Mechanic, Road Service, Taxi, Animal Rescue                          |
+| **Services Request Menu**| Ambulance, Fire, PD Transport, Tow, Coroner, Mechanic, Road Service, Taxi, Animal Rescue                          |
 
 ### PS-Dispatch Integration
 - Ps-dispatch simulates a dispatcher on service requests and certain events notifying of arrivals and calls giving a bit more immersion for players.
