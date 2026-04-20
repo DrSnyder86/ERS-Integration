@@ -23,6 +23,39 @@
             icon = "list-check",
             label = "ERS Utilities",
             items = {
+                { id = "request_callout", icon = "bullhorn", label = "Request Call", event = "ersi:callout:request" },
+                    --{ id = "extra_menu", icon = "gears", label = "Extra Menu", event = "ersi:extra:menu" },
+                    { id = "open_dispatch", icon = "fas fa-bell", label = "State Dispatch", event = 'ersi:dispatch:open' },	
+                    {
+                        id = 'police_tools',
+                        label = 'Database',
+                        icon = 'wifi',
+
+                        onSelect = function()
+                            lib.registerContext({
+                                id = 'police_main_menu',
+                                title = 'DATABASE',
+                                options = {
+                                    {
+                                        title = 'Plate Check History',
+                                        icon = 'car',
+                                        onSelect = function()
+                                            TriggerServerEvent('ersi:server:getVehicleMenuData')
+                                        end
+                                    },
+                                    {
+                                        title = 'ID Check History',
+                                        icon = 'id-card',
+                                        onSelect = function()
+                                            TriggerServerEvent('ersi:server:getPedMenuData')
+                                        end
+                                    }
+                                }
+                            })
+
+                            lib.showContext('police_main_menu')
+                        end
+                    },
                 { id = "request_callout", icon = "bell", label = "Request 911 Call", event = "callout:request" },
                 -- { id = "toggle_shift", icon = "user-clock", label = "Toggle Shift", event = "shift:toggle" },
                 { id = "toggle_callouts", icon = "clipboard-list", label = "Toggle 911 Dispatch", event = "callouts:toggle" },
