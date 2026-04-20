@@ -1,3 +1,4 @@
+-- ERS_INTEGRATION 1.5 RADIAL CONFIG
 Config = {}
 Config.Keybind = 'F1'           -- FiveM Keyboard, this is registered keymapping, so needs changed in keybindings if player already has this mapped.
 Config.Toggle = false           -- use toggle mode. False requires hold of key
