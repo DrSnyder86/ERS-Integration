@@ -1,4 +1,4 @@
-
+-- ERS_INTEGRATION 1.5 RADIALMENU CONFIG
 local bags = {[40] = true, [41] = true, [44] = true, [45] = true}
 
 return {
