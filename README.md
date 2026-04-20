@@ -39,6 +39,18 @@ https://r2.fivemanage.com/image/1qierHolZa8R.png
 
 https://r2.fivemanage.com/image/WrJ0Nzh0mL4W.png
 
+https://r2.fivemanage.com/image/S3kn59Fh4Tv1.png
+
+https://r2.fivemanage.com/image/MvTBq3iNxCZe.png
+
+https://r2.fivemanage.com/image/n6INupb7B1JM.png
+
+https://r2.fivemanage.com/image/PKYU2OwvD9et.png
+
+https://r2.fivemanage.com/image/pxaRRuzffpzC.png
+
+https://r2.fivemanage.com/image/UtSxJQKTJq9g.png
+
 ## Demo (needs updated)
 
 https://www.youtube.com/watch?v=hOujbqjlBBQ
@@ -57,12 +69,12 @@ https://www.youtube.com/watch?v=hOujbqjlBBQ
 
 ### ERS Submenu (QB/QBX Radial Menu)
 
-| **Menu**                 | **Options**                                                                                                       |
-|--------------------------|-------------------------------------------------------------------------------------------------------------------|
-| **Duty Menu**            | Police, Ambulance, Fire, Tow                                                                                      |
-| **Utility Menu**         | Request Callouts, Toggle Callouts, Wraith Radar Remote, Open MDT, Speedzone Menu, Object Menu, Dispatch, Database |    
-| **Cancel Request Menu**  | Ambulance, Fire, PD Transport, Tow, Coroner, Mechanic, Road Service, Taxi, Animal Rescue                          |
-| **Services Request Menu**| Ambulance, Fire, PD Transport, Tow, Coroner, Mechanic, Road Service, Taxi, Animal Rescue                          |
+| **Menu**                 | **Options**                                                                                   |
+|--------------------------|-----------------------------------------------------------------------------------------------|
+| **Duty Menu**            | Police, Ambulance, Fire, Tow                                                                  |
+| **Utility Menu**         | Request Callouts, Toggle Callouts, Wraith Radar Remote, Open MDT, Speedzone Menu, Object Menu |    
+| **Cancel Request Menu**  | Ambulance, Fire, PD Transport, Tow, Coroner, Mechanic, Road Service, Taxi, Animal Rescue      |
+| **Services Request Menu**| Ambulance, Fire, PD Transport, Tow, Coroner, Mechanic, Road Service, Taxi, Animal Rescue      |
 
 ### PS-Dispatch Integration
 - Ps-dispatch simulates a dispatcher on service requests and certain events notifying of arrivals and calls giving a bit more immersion for players.
