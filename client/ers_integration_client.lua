@@ -594,3 +594,33 @@ RegisterNetEvent('ersi:client:recordAddedTextUI', function(data)
         end
     end)
 end)
+
+RegisterNetEvent('ersi:client:openPoliceDatabaseMenu', function()
+    exports['qb-menu']:openMenu({
+        {
+            header = 'DATABASE',
+            isMenuHeader = true
+        },
+        {
+            header = 'Plate Check History',
+            icon = 'fa-solid fa-car',
+            params = {
+                event = 'ersi:client:plateCheckHistory'
+            }
+        },
+        {
+            header = 'ID Check History',
+            icon = 'fa-solid fa-id-card',
+            params = {
+                event = 'ersi:client:idCheckHistory'
+            }
+        }
+    })
+end)
+RegisterNetEvent('ersi:client:plateCheckHistory', function()
+    TriggerServerEvent('ersi:server:getVehicleMenuData')
+end)
+
+RegisterNetEvent('ersi:client:idCheckHistory', function()
+    TriggerServerEvent('ersi:server:getPedMenuData')
+end)
