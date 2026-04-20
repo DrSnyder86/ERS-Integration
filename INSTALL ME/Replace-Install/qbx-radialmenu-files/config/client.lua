@@ -348,7 +348,7 @@ return {
                     { id = "open_dispatch", icon = "fas fa-bell", label = "State Dispatch", event = 'ersi:dispatch:open' },	
                     { id = "toggle_callouts", icon = "broadcast-tower", label = "Toggle Calls", event = "ersi:callouts:toggle" },
                     { id = "wraith", icon = "mobile", label = "Wraith Radar", event = "wk:openRemote" },
-                    --{ id = "mdt_toggle", icon = "tablet-alt", label = "MDT Tablet", event = "ersi:mdt:toggle" },
+                    { id = "mdt_toggle", icon = "tablet-alt", label = "MDT Tablet", event = "ersi:mdt:toggle" },
                     { id = "speedzone", icon = "traffic-light", label = "Speed Zone", event = "ersi:speedzone" },
                     { id = "placeobjects", icon = "triangle-exclamation", label = "Objects", event = "ersi:placeobjects" },
                 }
