@@ -13,49 +13,6 @@
     title = 'ERS',
     icon = 'clipboard-list',
     items = {
-        -- {
-        --     id = "ers_backup_main",
-        --     title = "Request Backup",
-        --     icon = "shield-plus",
-        --     type = "submenu",
-        --     items = {
-        --         {
-        --             id = "ers_backup_light",
-        --             title = "Light Backup",
-        --             icon = "shield-half",
-        --             type = "client",
-        --             export = "ERS_RequestLightBackup"
-        --         },
-        --         {
-        --             id = "ers_backup_medium",
-        --             title = "Medium Backup",
-        --             icon = "shield",
-        --             type = "client",
-        --             export = "ERS_RequestMediumBackup"
-        --         },
-        --         {
-        --             id = "ers_backup_heavy",
-        --             title = "Heavy Backup",
-        --             icon = "shield-check",
-        --             type = "client",
-        --             export = "ERS_RequestHeavyBackup"
-        --         },
-        --         {
-        --             id = "ers_backup_air",
-        --             title = "Air Support",
-        --             icon = "helicopter",
-        --             type = "client",
-        --             export = "ERS_RequestAirBackup"
-        --         },
-        --         {
-        --             id = "ers_backup_army",
-        --             title = "Army Backup",
-        --             icon = "swords",
-        --             type = "client",
-        --             export = "ERS_RequestArmyBackup"
-        --         },
-        --     }
-        -- },
         {
             id = 'ers_duty',
             title = 'ERS Duty',
@@ -72,6 +29,14 @@
             title = 'ERS Utilities',
             icon = 'list-check',
             items = {
+                {
+                    id = 'police_database',
+                    title = 'Database',
+                    icon = 'wifi',
+                    type = 'client',
+                    event = 'ersi:client:openPoliceDatabaseMenu',
+                    shouldClose = true
+                },
                 { id = 'request_callout', title = 'Request 911 Call', icon = 'bell', type = 'client', event = 'ersi:callout:request', shouldClose = true },
                 { id = 'toggle_callouts', title = 'Toggle 911 Dispatch', icon = 'clipboard-list', type = 'client', event = 'ersi:callouts:toggle', shouldClose = true },
                 { id = 'wraith', title = 'Wraith Radar', icon = 'car-side', type = 'client', event = 'wk:openRemote', shouldClose = true },
