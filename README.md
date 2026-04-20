@@ -170,7 +170,7 @@ OR
 
 - Drag and drop the `ers_integration` script in your resourse folder.
 
-# Configuration (`ers_integration_config.lua` & `ers_targets_config.lua`)
+## Configuration (`ers_integration_config.lua` & `ers_targets_config.lua`)
 - Change and add target duty locations for jobs in `ers_targets_config.lua` file
 - Dispatch response and delay times (time in between ERS events and ps-dispatch events)
 - Bonus bank money reward amount
@@ -186,22 +186,22 @@ OR
 - You can now enable/disable all dispatch service request notifications specifically
 - Moved radialmenu items to jobmenu items
 
-# UPDATING FROM VERSION 1.4
+## UPDATING FROM VERSION 1.4
 - Replace entire ers_integration script!
 - No need to change anything in ps-dispatch. Nothing was changed
 - Replace the radial menu configs for the new layout (ERS menu moved to job menu).
 
-# Known Bugs
+## Known Bugs
 - Dispatch will display arrival event when the player requests a service even if the request is denied
 
-# Credits
-## Crosshair
+## Credits
+### Crosshair
 - I updated code from a old server of mine. No author was listed in the manifest. Credit for original code goes to them.
 
-## Minimap zoom
+### Minimap zoom
 - Same goes for this code. I modified some old code from a server of mine. No idea where I originally got it.
 
-# Download - Use this link for the latest release and features
+## Download - Use this link for the latest release and features
 https://github.com/DrSnyder86/ERS-Integration/tree/main
 
 
