@@ -67,14 +67,11 @@ https://www.youtube.com/watch?v=hOujbqjlBBQ
 - Players can request or cancel services while inside of a vehicle. 
 - Radial menu functions used to trigger dispatch response events.
 
-### ERS Submenu (QB/QBX Radial Menu)
-
-| **Menu**                 | **Options**                                                                                   |
-|--------------------------|-----------------------------------------------------------------------------------------------|
-| **Duty Menu**            | Police, Ambulance, Fire, Tow                                                                  |
-| **Utility Menu**         | Request Callouts, Toggle Callouts, Wraith Radar Remote, Open MDT, Speedzone Menu, Object Menu |    
-| **Cancel Request Menu**  | Ambulance, Fire, PD Transport, Tow, Coroner, Mechanic, Road Service, Taxi, Animal Rescue      |
-| **Services Request Menu**| Ambulance, Fire, PD Transport, Tow, Coroner, Mechanic, Road Service, Taxi, Animal Rescue      |
+### ERS Submenu (qb/qbx-radialmenu)
+- Duty Menu - Toggle police, ambulance, fire amd tow jobs specifically.
+- Utility Menu - Request callouts, toggle callouts, wraith radar remote, open mdt, speedzone menu.
+- Cancel Request Menu - Cancel service requests.
+- ERS Services Menu - Request ambulance, tow, coroner etc.
 
 ### PS-Dispatch Integration
 - Ps-dispatch simulates a dispatcher on service requests and certain events notifying of arrivals and calls giving a bit more immersion for players.
