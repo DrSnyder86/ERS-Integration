@@ -135,6 +135,7 @@ https://www.youtube.com/watch?v=hOujbqjlBBQ
    - Incoming 911 Call - Player does a pull out phone animation
    - Responding - Player does radio talk animation
 - ox_lib notifications
+- Ped and Vehicle Database Menu
 
 # Installation
 ## MANUAL-INSTALL
@@ -219,14 +220,15 @@ https://github.com/DrSnyder86/ERS-Integration/tree/main
 - qb_target                       https://github.com/qbcore-framework/qb-target
 
 - ox_lib                          https://github.com/overextended/ox_lib
+- nearest-postal                  https://github.com/DevBlocky/nearest-postal
 
 ## Highly Recommended
-- nearest-postal                  https://github.com/DevBlocky/nearest-postal
 - Wk-wars2x Radar                 https://github.com/WolfKnight98/wk_wars2x
 - ps-mdt                          https://github.com/Project-Sloth/ps-mdt
-- ps-dispatch (alternate)         https://github.com/dineshrana8939-oss/PS-Dispatch-with-Audio-dispatches-
-- qbox_target_features            https://github.com/DrSnyder86/qbox_target_features
-
+- ps-dispatch (UI edit with dispatch audio) https://github.com/dineshrana8939-oss/PS-Dispatch-with-Audio-dispatches-
+- nearest-postal (UI edit) DrSnyder86/nearest_postal: Postal edit that removes the "Nearest Postal" display. Optional edit for Improved font and display.
+- qbox_target_features https://github.com/DrSnyder86/qbox_target_features
+- 
 ### License
 For an updated license, check the ``License`` file. That file will always overrule anything mentioned in the ``readme.md``
 
