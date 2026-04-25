@@ -16,7 +16,7 @@ Config = Config or {}
 
 -- Enable/Disable Features      = true/false
 
--- Ps-dispatch Alert Notifications -- (Server - Everybody can see)
+-- PS-DISPATCH ALERT NOTIFICATIONS -- (Server - Everybody can see)
 -- Ps-dispatch Callout Notifications
 Config.EnableCalloutOffer    = false  -- Callout offer
 Config.EnableCalloutAccept   = true  -- Callout accept
@@ -25,7 +25,7 @@ Config.EnableCalloutComplete = true  -- Callout complete
 
 -- Ps-dispatch Traffic Notifications
 Config.EnablePulloverNotify = true  -- Dispatch Pullover event
-Config.EnablePulloverCode4  = true  -- Pullover Code-4
+Config.EnablePulloverCode4  = false  -- Pullover Code-4
 Config.EnablePursuitNotify  = true  -- Pursuit started
 
 -- Enable/Diasble all Service Request and Service Arrival events regardless of the settings below.
@@ -34,28 +34,28 @@ Config.EnableServiceRequestandArrive = true
 
 -- Ps-dispatch Service Arrival Notifications 
 Config.EnableCoronerArrive      = true  -- Coroner request arrival
-Config.EnableMechanicArrive     = true  -- Mechanic request arrival
-Config.EnableTowArrive          = true  -- Tow request arrival
-Config.EnableTaxiArrive         = true  -- Taxi request arrival
+Config.EnableMechanicArrive     = false  -- Mechanic request arrival
+Config.EnableTowArrive          = false  -- Tow request arrival
+Config.EnableTaxiArrive         = false  -- Taxi request arrival
 Config.EnableTransportArrive    = true  -- PD Transport request arrival
-Config.EnableAnimalRescueArrive = true  -- Animal Rescue request arrival
+Config.EnableAnimalRescueArrive = false  -- Animal Rescue request arrival
 Config.EnableAmbulanceArrive    = true  -- Ambulance request arrival
 Config.EnableFireArrive         = true  -- Fire request arrival
-Config.EnableRoadServiceArrive  = true  -- Road Service request arrival
+Config.EnableRoadServiceArrive  = false  -- Road Service request arrival
 
 -- Service Request Notifications -- (Client - Only you can see)
 -- Display a notification to dispatch requesting services (Displays character name, callsign, service requested and location with postal. Uses ox_lib.notify)
 Config.EnableCoronerRequest      = true
-Config.EnableMechanicRequest     = true
-Config.EnableTowRequest          = true
-Config.EnableTaxiRequest         = true
+Config.EnableMechanicRequest     = false
+Config.EnableTowRequest          = false
+Config.EnableTaxiRequest         = false
 Config.EnableTransportRequest    = true
-Config.EnableAnimalRescueRequest = true
+Config.EnableAnimalRescueRequest = false
 Config.EnableAmbulanceRequest    = true
 Config.EnableFireRequest         = true
-Config.EnableRoadServiceRequest  = true
+Config.EnableRoadServiceRequest  = false
 
--- Extra Notifications--
+-- EXTRA NOTIFICATIONS --
 -- ox_lib notify
 Config.ShowlibNotify = true
 -- ox_lib textui
@@ -63,15 +63,13 @@ Config.ShowTextUI    = true
 -- Play radio and phone animations for 'Ps-dispatch Alert Notifications' and 'ox_lib.notify' options.
 Config.EnableRadioAnim = true
 
-
+-- CHAT DISPATCH --
 -- Display Callout, Ped & Vehicle info in chat. 
 -- This happens in callout events and and when you interact with peds or vehicles through ERS.
 Config.ShowCallInChat    = true  -- Show 911 call (ERS calls display as incoming 911 calls)
 Config.ShowCalloutInChat = true  -- Show callout info (Callout accept displayed as 911 call)
 Config.ShowLicenseInChat = true  -- Show license check (when you interact with a ped)
 Config.ShowPlateInChat   = true  -- Show plate check (when a vehicle is pulled over)
-
-
 
 -- This determines which jobs ('QB' jobs not 'ERS') will receive dispatch notifications.
 -- Ps-dispatch uses job types for certain jobs. `LEO` for police, bcso and sasp. `EMS` for ambulance.
@@ -86,7 +84,7 @@ Config.Dispatch = {
     
 }
 
--- Player Rewards ( CAUTION : MAY BE EXPLOITED )
+-- PLAYER REWARDS ( CAUTION : MAY BE EXPLOITED )
 Config.EnableBonusPayCallArrive   = true -- Bonus pay on arriving at a callout (may be exploited)
 Config.EnableBonusPayCallComplete = true -- Bonus pay for completing a callout (this is triggered when all tasks in a callout are completed)
 Config.EnableBonusPayTrafficStop  = true -- Bonus pay for initiating a traffic stop (may be exploited)
@@ -95,7 +93,7 @@ Config.BonusPayAmountCallComplete = 5000 -- Callout Complete bonus amount
 Config.BonusPayAmountTrafficStop  = 1000 -- Traffic stop bonus amount
 Config.BonusPayDepositType        = bank  -- Deposit type (`bank`, `cash`)
 
--- Ps-dispatch Wait Times (in milliseconds - 10000 = 10 Seconds)(Time in between ERS dispatch events and ps-dispatch events)(Simulates reaction and response times)
+-- Ps-dispatch Wait Times (in milliseconds - 10000 = 10 Seconds)(Time in between ERS dispatch events and ps-dispatch events)(Simulates reaction/response times)
 -- This is the amount of time it takes for ps-dispatch to respond to the event.
 -- Set to 0 (ZERO) for no delay
 Config.WaitTimes = {
@@ -114,6 +112,9 @@ Config.WaitTimes = {
 
 -- Wraith radar auto plate lock (whether or not front plate reader auto locks on pullovers)
 Config.EnableRadarLock = true 
+
+-- ENABLE/DISABLE EXTRA FEATURES (Includes the three settings below)
+Config.EnableAll = false
 
 -- Minimap fixed radar zoom. Removes vanilla GTA multi zoom minimap and remains in a higher FOV on foot and in vehicle.
 Config.EnableRadarZoom = true
