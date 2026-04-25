@@ -49,7 +49,21 @@
                                         onSelect = function()
                                             TriggerServerEvent('ersi:server:getPedMenuData')
                                         end
-                                    }
+                                    },
+                                    {
+                                        title = 'Callout History',
+                                        icon = 'bullhorn',
+                                        onSelect = function()
+                                            TriggerServerEvent('ersi:server:getCalloutMenuData')
+                                        end
+                                    },
+                                    {
+                                        title = 'ERS Personnel',
+                                        icon = 'users',
+                                        onSelect = function()
+                                            TriggerServerEvent('ersi:server:getERSPlayers')
+                                        end
+                                    },
                                 }
                             })
 
