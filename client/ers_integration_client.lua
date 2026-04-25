@@ -175,98 +175,6 @@ exports('ERS_RequestArmyBackup', function()
     ERS_RequestOrCancelPursuitBackupByType("army")
 end)
 
----------------------------------------
----- Weapon Flashlight Persistence ---
----------------------------------------
-CreateThread(function()
-    local lastState = nil
-
-    while true do
-        Wait(1000) 
-
-        if Config.EnableFlashlightWhileMoving ~= lastState then
-            SetFlashLightKeepOnWhileMoving(Config.EnableFlashlightWhileMoving)
-            lastState = Config.EnableFlashlightWhileMoving
-        end
-    end
-end)
-
----------------------------------------
----- Radar Zoom ---
----------------------------------------
-
-if not Config.EnableRadarZoom then return end
-
-local function UpdateRadarZoom()
-    local ped = PlayerPedId()
-    local zoom = IsPedInAnyVehicle(ped, false) and 1200 or 1000
-    SetRadarZoom(zoom)
-    return zoom
-end
-
-SetMapZoomDataLevel(0, 1.8, 0.9, 0.08, 0.0, 0.0)
-
-local lastZoom = UpdateRadarZoom()
-
-AddEventHandler('playerSpawned', function()
-    lastZoom = UpdateRadarZoom()
-end)
-
-CreateThread(function()
-    while true do
-        Wait(500)
-        local targetZoom = UpdateRadarZoom()
-        if targetZoom ~= lastZoom then
-            lastZoom = targetZoom
-            SetRadarZoom(targetZoom)
-        end
-    end
-end)
-
----------------------------------------
----- Crosshair ---
----------------------------------------
-if not Config.EnableCrosshair then
-    return
-end
-
-local crosshairEnabled = true
-
-CreateThread(function()
-    while true do
-        local sleep = 500
-
-        if crosshairEnabled and IsAimCamActive() then
-            sleep = 0
-            HideHudComponentThisFrame(14)
-            drawCrosshair()
-        end
-
-        Wait(sleep)
-    end
-end)
-
-RegisterNetEvent('cl:update_c', function(bool)
-    crosshairEnabled = bool
-end)
-
-RegisterCommand('togglecrosshair', function()
-    crosshairEnabled = not crosshairEnabled
-
-    TriggerEvent('chat:addMessage', {
-        color = {255, 255, 255},
-        multiline = false,
-        args = {"Crosshair", crosshairEnabled and "Enabled" or "Disabled"}
-    })
-end, false)
-
-CreateThread(function()
-    TriggerEvent('chat:addSuggestion', '/togglecrosshair', 'Toggle crosshair on or off')
-end)
-
-function drawCrosshair()
-    DrawRect(0.5, 0.5, 0.001, 0.001, 255, 255, 255, 255)
-end
 
 ---------------------------------------
 ---- Notifications and Animations ---
@@ -302,7 +210,6 @@ local phoneProp = nil
 RegisterNetEvent('ersi:client:PlayRadioAnimPhoneText', function()
     local ped = PlayerPedId()
 
-    -- 🔥 cleanup if already exists (prevents stacking/stuck)
     if phoneProp and DoesEntityExist(phoneProp) then
         DetachEntity(phoneProp, true, true)
         DeleteEntity(phoneProp)
@@ -330,18 +237,15 @@ RegisterNetEvent('ersi:client:PlayRadioAnimPhoneText', function()
         phoneProp,
         ped,
         bone,
-        0.02, 0.02, 0.0,   -- slightly adjusted offsets (optional)
+        0.02, 0.02, 0.0,   
         0.0, 0.0, 0.0,
         true, true, false, true, 1, true
     )
 
-    -- Play anim
     TaskPlayAnim(ped, dict, 'cellphone_text_read_base', 3.0, 3.0, 3000, 49, 0, false, false, false)
 
-    -- Wait duration
     Wait(3000)
 
-    -- 🔥 safe cleanup
     if phoneProp and DoesEntityExist(phoneProp) then
         DetachEntity(phoneProp, true, true)
         DeleteEntity(phoneProp)
@@ -485,142 +389,4 @@ RegisterNetEvent('ersi:client:TextUI:ServiceRequest', function(data)
     end
 end)
 
--- PED and PED Vehicle menu
-RegisterNetEvent('ersi:client:openVehicleListMenu', function(vehicleList)
-    local options = {}
 
-    for i = 1, #vehicleList do
-        local v = vehicleList[i]
-
-        table.insert(options, {
-            title = (v.license_plate or 'UNKNOWN'),
-            description = (v.make or 'N/A') .. ' ' .. (v.model or ''),
-            icon = 'car',
-            onSelect = function()
-                TriggerEvent('ersi:client:openVehicleDetail', v)
-            end
-        })
-    end
-
-    lib.registerContext({
-        id = 'vehicle_list_menu',
-        title = 'Vehicle Records',
-        options = options
-    })
-
-    lib.showContext('vehicle_list_menu')
-end)
-RegisterNetEvent('ersi:client:openVehicleDetail', function(v)
-    lib.registerContext({
-        id = 'vehicle_detail_menu',
-        title = 'Vehicle Details',
-        options = {
-            { title = 'Owner: ' .. (v.owner_name or 'N/A'), icon = 'user' },
-            { title = 'Plate: ' .. (v.license_plate or 'N/A'), icon = 'car' },
-            { title = 'Vehicle: ' .. (v.make or 'N/A') .. ' ' .. (v.model or ''), icon = 'car-side' },
-            { title = 'Insurance: ' .. tostring(v.insurance), icon = 'shield' },
-            { title = 'Stolen: ' .. tostring(v.stolen), icon = 'skull' },
-            { title = 'BOLO: ' .. tostring(v.bolo), icon = 'triangle-exclamation' }
-        }
-    })
-
-    lib.showContext('vehicle_detail_menu')
-end)
-RegisterNetEvent('ersi:client:openPedListMenu', function(pedList)
-    local options = {}
-
-    for i = 1, #pedList do
-        local p = pedList[i]
-
-        table.insert(options, {
-            title = (p.FirstName or 'N/A') .. ' ' .. (p.LastName or ''),
-            description = p.DOB or 'No DOB',
-            icon = 'user',
-            onSelect = function()
-                TriggerEvent('ersi:client:openPedDetail', p)
-            end
-        })
-    end
-
-    lib.registerContext({
-        id = 'ped_list_menu',
-        title = 'Ped Records',
-        options = options
-    })
-
-    lib.showContext('ped_list_menu')
-end)
-
-RegisterNetEvent('ersi:client:openPedDetail', function(p)
-    lib.registerContext({
-        id = 'ped_detail_menu',
-        title = 'ID Details',
-        options = {
-            { title = 'Name: ' .. (p.FirstName or 'N/A') .. ' ' .. (p.LastName or ''), icon = 'user' },
-            { title = 'DOB: ' .. (p.DOB or 'N/A'), icon = 'calendar' },
-            { title = 'Address: ' .. (p.Address or 'N/A'), icon = 'house' },
-            { title = 'Location: ' .. (p.City or '') .. ', ' .. (p.State or ''), icon = 'map' },
-            { title = 'Warrant: ' .. tostring(p.Wanted_Person), icon = 'gavel' }
-        }
-    })
-
-    lib.showContext('ped_detail_menu')
-end)
-
-local recordTextActive = false
-
-RegisterNetEvent('ersi:client:recordAddedTextUI', function(data)
-    if recordTextActive then
-        lib.hideTextUI()
-    end
-
-    recordTextActive = true
-
-    lib.showTextUI(data.message, {
-        icon = data.icon or 'database',
-        style = {
-            backgroundColor = '#141517',
-            color = '#4caf50'
-        }
-    })
-
-    -- 🔊 play sound
-    PlaySoundFrontend(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", true)
-
-    SetTimeout(8000, function()
-        if recordTextActive then
-            lib.hideTextUI()
-            recordTextActive = false
-        end
-    end)
-end)
-
-RegisterNetEvent('ersi:client:openPoliceDatabaseMenu', function()
-    exports['qb-menu']:openMenu({
-        {
-            header = 'DATABASE',
-            isMenuHeader = true
-        },
-        {
-            header = 'Plate Check History',
-            icon = 'fa-solid fa-car',
-            params = {
-                event = 'ersi:client:plateCheckHistory'
-            }
-        },
-        {
-            header = 'ID Check History',
-            icon = 'fa-solid fa-id-card',
-            params = {
-                event = 'ersi:client:idCheckHistory'
-            }
-        }
-    })
-end)
-RegisterNetEvent('ersi:client:plateCheckHistory', function()
-    TriggerServerEvent('ersi:server:getVehicleMenuData')
-end)
-
-RegisterNetEvent('ersi:client:idCheckHistory', function()
-    TriggerServerEvent('ersi:server:getPedMenuData')
-end)
