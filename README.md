@@ -92,6 +92,10 @@ https://www.youtube.com/watch?v=hOujbqjlBBQ
 - Vehicle Menu - Stores last 10 vehicles interacted with
 - Ped Menu - Stores last 10 peds interacted with
 - TextUI notifications for successful entries
+
+### Callout History & Personnel Menu
+- Callout History - Displays up to last 10 callouts responded to
+- Personnel Menu - Displays a list of players that were on duty with ERS and what calls they responded to with data
  
 ### Dispatch Chat Display (only happens on first interaction - enable/disable in config)
 - Automatic notifications in chat for peds and ped vehicles
