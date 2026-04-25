@@ -338,7 +338,21 @@ return {
                                         onSelect = function()
                                             TriggerServerEvent('ersi:server:getPedMenuData')
                                         end
-                                    }
+                                    },
+                                    {
+                                        title = 'Callout History',
+                                        icon = 'bullhorn',
+                                        onSelect = function()
+                                            TriggerServerEvent('ersi:server:getCalloutMenuData')
+                                        end
+                                    },
+                                    {
+                                        title = 'ERS Personnel',
+                                        icon = 'users',
+                                        onSelect = function()
+                                            TriggerServerEvent('ersi:server:getERSPlayers')
+                                        end
+                                    },
                                 }
                             })
 
@@ -497,6 +511,50 @@ return {
                 label = "Utilities",
                 items = {
                     { id = "request_callout", icon = "bullhorn", label = "Request Call", event = "ersi:callout:request" },
+                    {
+                        id = 'police_tools',
+                        label = 'Database',
+                        icon = 'wifi',
+
+                        onSelect = function()
+                            lib.registerContext({
+                                id = 'police_main_menu',
+                                title = 'DATABASE',
+                                options = {
+                                    {
+                                        title = 'Plate Check History',
+                                        icon = 'car',
+                                        onSelect = function()
+                                            TriggerServerEvent('ersi:server:getVehicleMenuData')
+                                        end
+                                    },
+                                    {
+                                        title = 'ID Check History',
+                                        icon = 'id-card',
+                                        onSelect = function()
+                                            TriggerServerEvent('ersi:server:getPedMenuData')
+                                        end
+                                    },
+                                    {
+                                        title = 'Callout History',
+                                        icon = 'bullhorn',
+                                        onSelect = function()
+                                            TriggerServerEvent('ersi:server:getCalloutMenuData')
+                                        end
+                                    },
+                                    {
+                                        title = 'ERS Personnel',
+                                        icon = 'users',
+                                        onSelect = function()
+                                            TriggerServerEvent('ersi:server:getERSPlayers')
+                                        end
+                                    },
+                                }
+                            })
+
+                            lib.showContext('police_main_menu')
+                        end
+                    },
                     --{ id = "extra_menu", icon = "gears", label = "Extra Menu", event = "ersi:extra:menu" },
                     { id = "toggle_callouts", icon = "broadcast-tower", label = "Toggle Dispatch", event = "ersi:callouts:toggle" },
                     { id = "wraith", icon = "mobile", label = "Wraith Radar", event = "wk:openRemote" },
@@ -593,6 +651,51 @@ return {
                 label = "Utilities",
                 items = {
                     { id = "request_callout", icon = "bullhorn", label = "Request Call", event = "ersi:callout:request" },
+                    { id = "open_dispatch", icon = "fas fa-bell", label = "State Dispatch", event = 'ersi:dispatch:open' },	
+                    {
+                        id = 'police_tools',
+                        label = 'Database',
+                        icon = 'wifi',
+
+                        onSelect = function()
+                            lib.registerContext({
+                                id = 'police_main_menu',
+                                title = 'DATABASE',
+                                options = {
+                                    {
+                                        title = 'Plate Check History',
+                                        icon = 'car',
+                                        onSelect = function()
+                                            TriggerServerEvent('ersi:server:getVehicleMenuData')
+                                        end
+                                    },
+                                    {
+                                        title = 'ID Check History',
+                                        icon = 'id-card',
+                                        onSelect = function()
+                                            TriggerServerEvent('ersi:server:getPedMenuData')
+                                        end
+                                    },
+                                    {
+                                        title = 'Callout History',
+                                        icon = 'bullhorn',
+                                        onSelect = function()
+                                            TriggerServerEvent('ersi:server:getCalloutMenuData')
+                                        end
+                                    },
+                                    {
+                                        title = 'ERS Personnel',
+                                        icon = 'users',
+                                        onSelect = function()
+                                            TriggerServerEvent('ersi:server:getERSPlayers')
+                                        end
+                                    },
+                                }
+                            })
+
+                            lib.showContext('police_main_menu')
+                        end
+                    },
                     --{ id = "extra_menu", icon = "gears", label = "Extra Menu", event = "ersi:extra:menu" },
                     { id = "toggle_callouts", icon = "broadcast-tower", label = "Toggle Dispatch", event = "ersi:callouts:toggle" },
                     { id = "wraith", icon = "mobile", label = "Wraith Radar", event = "wk:openRemote" },
@@ -664,10 +767,10 @@ return {
         },
         tow = {
             {
-    id = "ers_x",
-    icon = "file-alt",
-    label = "ERS Menu",
-    items = {
+        id = "ers_x",
+        icon = "file-alt",
+        label = "ERS Menu",
+        items = {
             {
                 id = "ers_duty",
                 icon = "user-clock",
@@ -685,6 +788,50 @@ return {
                 label = "Utilities",
                 items = {
                     { id = "request_callout", icon = "bullhorn", label = "Request Call", event = "ersi:callout:request" },
+                    {
+                        id = 'police_tools',
+                        label = 'Database',
+                        icon = 'wifi',
+
+                        onSelect = function()
+                            lib.registerContext({
+                                id = 'police_main_menu',
+                                title = 'DATABASE',
+                                options = {
+                                    {
+                                        title = 'Plate Check History',
+                                        icon = 'car',
+                                        onSelect = function()
+                                            TriggerServerEvent('ersi:server:getVehicleMenuData')
+                                        end
+                                    },
+                                    {
+                                        title = 'ID Check History',
+                                        icon = 'id-card',
+                                        onSelect = function()
+                                            TriggerServerEvent('ersi:server:getPedMenuData')
+                                        end
+                                    },
+                                    {
+                                        title = 'Callout History',
+                                        icon = 'bullhorn',
+                                        onSelect = function()
+                                            TriggerServerEvent('ersi:server:getCalloutMenuData')
+                                        end
+                                    },
+                                    {
+                                        title = 'ERS Personnel',
+                                        icon = 'users',
+                                        onSelect = function()
+                                            TriggerServerEvent('ersi:server:getERSPlayers')
+                                        end
+                                    },
+                                }
+                            })
+
+                            lib.showContext('police_main_menu')
+                        end
+                    },
                     --{ id = "extra_menu", icon = "gears", label = "Extra Menu", event = "ersi:extra:menu" },
                     { id = "toggle_callouts", icon = "broadcast-tower", label = "Toggle Dispatch", event = "ersi:callouts:toggle" },
                     { id = "wraith", icon = "mobile", label = "Wraith Radar", event = "wk:openRemote" },
