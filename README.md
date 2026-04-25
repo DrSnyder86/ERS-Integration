@@ -195,6 +195,9 @@ OR
 ## Known Bugs
 - Dispatch will display arrival event when the player requests a service even if the request is denied
 
+## 1.5 PATCH 
+- Fixed coding error related to config settings
+
 ## Credits
 ### Crosshair
 - I updated code from a old server of mine. No author was listed in the manifest. Credit for original code goes to them.
