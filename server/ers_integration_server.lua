@@ -3,6 +3,9 @@ local Config = Config or {}
 
 local vehicleCache = {}
 local pedCache = {}
+local callCache = {}
+local ERSPlayers = {}
+
 -- Crosshair
 local on = true
 
@@ -17,128 +20,115 @@ RegisterCommand('global_ctoggle', function()
 end)
 
 -- ===========================================
--- Save Steering Angle 
--- ===========================================
--- RegisterNetEvent("savedSteering:syncAngle", function(netId, angle)
---     local vehicle = NetworkGetEntityFromNetworkId(netId)
---     if vehicle and DoesEntityExist(vehicle) then
---         Entity(vehicle).state:set("savedSteeringAngle", angle, true)
---     end
--- end)
-
--- ===========================================
 -- TARGET DUTY Toggle 
 -- ===========================================
+-- local function toggleShift(src, shiftType, displayName)
+--     local isOnShift = exports['night_ers']:getIsPlayerOnShift(src)
+--     local activeType = exports['night_ers']:getPlayerActiveServiceType(src)
+
+--     if isOnShift and activeType == shiftType then
+--         -- End the shift
+--         exports['night_ers']:toggleShift(src, shiftType)
+--         TriggerClientEvent('QBCore:Notify', src, displayName .. " duty ended!", "success")
+--         return
+--     end
+
+--     exports['night_ers']:toggleShift(src, shiftType)
+--     TriggerClientEvent('QBCore:Notify', src, displayName .. " duty started!", "success")
+-- end
+
 local function toggleShift(src, shiftType, displayName)
     local isOnShift = exports['night_ers']:getIsPlayerOnShift(src)
     local activeType = exports['night_ers']:getPlayerActiveServiceType(src)
 
+    local Player = QBCore.Functions.GetPlayer(src)
+    if not Player then return end
+
+    local fullName = ("%s %s"):format(
+        Player.PlayerData.charinfo.firstname or "Unknown",
+        Player.PlayerData.charinfo.lastname or "Unknown"
+    )
+
     if isOnShift and activeType == shiftType then
-        -- End the shift
+        -- end shift
         exports['night_ers']:toggleShift(src, shiftType)
-        TriggerClientEvent('QBCore:Notify', src, displayName .. " duty ended!", "success")
+
+        ERSPlayers[src] = ERSPlayers[src] or {}
+        ERSPlayers[src].name = fullName
+        ERSPlayers[src].job = shiftType
+        ERSPlayers[src].active = false
+        ERSPlayers[src].callouts = ERSPlayers[src].callouts or {}
+
+        TriggerClientEvent('ox_lib:notify', src, {
+            title = 'Duty',
+            description = displayName .. ' duty ended',
+            type = 'success',
+            icon = 'user-clock'
+        })
+
         return
     end
 
+    -- start shift
     exports['night_ers']:toggleShift(src, shiftType)
-    TriggerClientEvent('QBCore:Notify', src, displayName .. " duty started!", "success")
+
+    ERSPlayers[src] = ERSPlayers[src] or {}
+    ERSPlayers[src].name = fullName
+    ERSPlayers[src].job = shiftType
+    ERSPlayers[src].active = true
+    ERSPlayers[src].callouts = ERSPlayers[src].callouts or {}
+
+    TriggerClientEvent('ox_lib:notify', src, {
+        title = 'Duty',
+        description = displayName .. ' duty started',
+        type = 'success',
+        icon = 'user-clock'
+    })
 end
 
 -- ===========================================
 -- RADIAL DUTY TOGGLE
 -- ===========================================
-RegisterNetEvent('ers:server:TogglePoliceShift', function()
-    local src = source
-    local shiftType = "police"  
-
-    exports['night_ers']:toggleShift(src, shiftType)
-end)
-
-RegisterNetEvent('ers:server:ToggleAmbulanceShift', function()
-    local src = source
-    local shiftType = "ambulance"  
-
-    exports['night_ers']:toggleShift(src, shiftType)
-end)
-
-RegisterNetEvent('ers:server:ToggleFireShift', function()
-    local src = source
-    local shiftType = "fire"  
-
-    exports['night_ers']:toggleShift(src, shiftType)
-end)
-
-RegisterNetEvent('ers:server:ToggleTowShift', function()
-    local src = source
-    local shiftType = "tow"  
-
-    exports['night_ers']:toggleShift(src, shiftType)
-end)
-
--- Target plate check
--- lib.callback.register('police:server:vinCheck', function(source, plate)
-
---     local result = MySQL.single.await(
---         'SELECT citizenid, plate, vehicle FROM player_vehicles WHERE plate = ?',
---         {plate}
---     )
-
---     if not result then return nil end
-
---     local player = MySQL.single.await(
---         'SELECT charinfo FROM players WHERE citizenid = ?',
---         {result.citizenid}
---     )
-
---     local owner = "Unknown"
-
---     if player then
---         local charinfo = json.decode(player.charinfo)
---         owner = charinfo.firstname .. " " .. charinfo.lastname
---     end
-
---     return {
---         owner = owner,
---         plate = result.plate,
---         vehicle = result.vehicle
---     }
-
--- end)
--- RegisterNetEvent('ersi:server:getVehicleOwner', function(plate)
+-- RegisterNetEvent('ers:server:TogglePoliceShift', function()
 --     local src = source
+--     local shiftType = "police"  
 
---     plate = plate:match("^%s*(.-)%s*$")
-
---     exports.oxmysql:single([[
---         SELECT p.charinfo
---         FROM player_vehicles v
---         JOIN players p ON p.citizenid = v.citizenid
---         WHERE v.plate = ?
---     ]], { plate }, function(result)
-
---         if result and result.charinfo then
---             local charinfo = json.decode(result.charinfo)
-
---             TriggerClientEvent('chat:addMessage', src, {
---                 color = { 0, 150, 255 },
---                 multiline = true,
---                 args = {
---                     'DISPATCH',
---                     ('Owner: %s %s | Plate: %s')
---                         :format(charinfo.firstname, charinfo.lastname, plate)
---                 }
---             })
---         else
---             TriggerClientEvent('chat:addMessage', src, {
---                 color = { 255, 0, 0 },
---                 args = {
---                     'DISPATCH',
---                     ('No owner found for plate: %s'):format(plate)
---                 }
---             })
---         end
---     end)
+--     exports['night_ers']:toggleShift(src, shiftType)
 -- end)
+
+-- RegisterNetEvent('ers:server:ToggleAmbulanceShift', function()
+--     local src = source
+--     local shiftType = "ambulance"  
+
+--     exports['night_ers']:toggleShift(src, shiftType)
+-- end)
+
+-- RegisterNetEvent('ers:server:ToggleFireShift', function()
+--     local src = source
+--     local shiftType = "fire"  
+
+--     exports['night_ers']:toggleShift(src, shiftType)
+-- end)
+
+-- RegisterNetEvent('ers:server:ToggleTowShift', function()
+--     local src = source
+--     local shiftType = "tow"  
+
+--     exports['night_ers']:toggleShift(src, shiftType)
+-- end)
+RegisterNetEvent('ers:server:TogglePoliceShift', function()
+    toggleShift(source, "police", "Police")
+end)
+RegisterNetEvent('ers:server:ToggleAmbulanceShift', function()
+    toggleShift(source, "ambulance", "Ambulance")
+end)
+RegisterNetEvent('ers:server:ToggleFireShift', function()
+    toggleShift(source, "fire", "Fire")
+end)
+RegisterNetEvent('ers:server:ToggleTowShift', function()
+    toggleShift(source, "tow", "Tow")
+end)
+
 ---------------------------
 -- Plate check
 ---------------------------
@@ -166,7 +156,7 @@ AddEventHandler("ErsIntegration::OnFirstVehicleInteraction", function(src, vehic
         end
     end
     TriggerClientEvent('ersi:client:recordAddedTextUI', src, {
-        message = ('DATABASE ENTRY: %s'):format(vehicleData.license_plate or 'UNKNOWN'),
+        message = ('VEHICLE DATABASE: %s'):format(vehicleData.license_plate or 'UNKNOWN'),
         icon = 'car'
     })
 
@@ -222,7 +212,7 @@ AddEventHandler("ErsIntegration::OnFirstNPCInteraction", function(src, pedData, 
     end
 
     TriggerClientEvent('ersi:client:recordAddedTextUI', src, {
-        message = ('DATABASE ENTRY: %s %s'):format(
+        message = ('ID DATABASE: %s %s'):format(
             pedData.FirstName or 'N/A',
             pedData.LastName or ''
         ),
@@ -312,6 +302,34 @@ RegisterNetEvent('ErsIntegration::OnIsOfferedCallout', function(calloutData)
 
     local randomInfo = infoOptions[math.random(#infoOptions)]
 
+    callCache[src] = callCache[src] or {}
+
+    local exists = false
+    for i, c in ipairs(callCache[src]) do
+        if c.callName == callName and c.callPostal == callPostal then
+            callCache[src][i] = calloutData -- update existing
+            exists = true
+            break
+        end
+    end
+
+    if not exists then
+        table.insert(callCache[src], {
+            callName = callName,
+            callFirstName = callFirstName,
+            callLastName = callLastName,
+            callPostal = callPostal,
+            callStreet = callStreet,
+            callDesc = callDesc,
+            callUnits = callUnits
+        })
+
+        -- keep only last 10
+        if #callCache[src] > 10 then
+            table.remove(callCache[src], 1)
+        end
+    end
+
     CreateThread(function()
         if Config.EnableRadioAnim then
             TriggerClientEvent('ersi:client:PlayRadioAnimPhoneText', src)
@@ -367,6 +385,19 @@ RegisterNetEvent('ErsIntegration::OnIsOfferedCallout', function(calloutData)
     end)
 end)
 
+RegisterNetEvent('ersi:server:getCalloutMenuData', function()
+    local src = source
+    local data = callCache[src] or {}
+
+    -- newest first
+    local reversed = {}
+    for i = #data, 1, -1 do
+        table.insert(reversed, data[i])
+    end
+
+    TriggerClientEvent('ersi:client:openCalloutListMenu', src, reversed)
+end)
+
 --------------------------------------
 -- Callout Accepted
 --------------------------------------
@@ -398,6 +429,33 @@ RegisterNetEvent('ErsIntegration::OnAcceptedCalloutOffer', function(calloutData)
     }
 
     local randomInfo = infoOptions[math.random(#infoOptions)]
+
+    ERSPlayers[src] = ERSPlayers[src] or {
+        name = GetPlayerName(src),
+        job = job,
+        active = true,
+        callouts = {}
+    }
+
+    local vehicle = GetVehiclePedIsIn(GetPlayerPed(src), false)
+    local vehicleName = "On Foot"
+
+    if vehicle ~= 0 then
+        vehicleName = GetDisplayNameFromVehicleModel(GetEntityModel(vehicle))
+    end
+
+    table.insert(ERSPlayers[src].callouts, {
+        callName = callName,
+        caller = ("%s %s"):format(callFirstName, callLastName),
+        location = ("%s %s"):format(callPostal, callStreet),
+        description = callDesc,
+        vehicle = vehicleName,
+        time = os.date("%H:%M:%S")
+    })
+
+    if #ERSPlayers[src].callouts > 10 then
+        table.remove(ERSPlayers[src].callouts, 1)
+    end
 
     CreateThread(function()
         if Config.ShowCalloutInChat then
@@ -467,6 +525,34 @@ RegisterNetEvent('ErsIntegration::OnAcceptedCalloutOffer', function(calloutData)
         end
 
     end)
+end)
+
+-- MENU STUFF
+RegisterNetEvent('ersi:server:getERSPlayers', function()
+    local src = source
+
+    local list = {}
+
+    for playerId, data in pairs(ERSPlayers) do
+        table.insert(list, {
+            id = playerId,
+            name = data.name,
+            job = data.job,
+            active = data.active
+        })
+    end
+
+    TriggerClientEvent('ersi:client:openERSPlayerList', src, list)
+end)
+
+RegisterNetEvent('ersi:server:getPlayerCallouts', function(targetId)
+    local src = source
+
+    local data = ERSPlayers[targetId]
+
+    if not data then return end
+
+    TriggerClientEvent('ersi:client:openPlayerCallouts', src, data.callouts, data.name)
 end)
 
 --------------------------------------
@@ -857,58 +943,7 @@ RegisterNetEvent('ErsIntegration:server:ReceiveStreetAndPostalEnd', function(str
     end)
 end)
 
--- RegisterNetEvent('ErsIntegration::OnPulloverEnded', function(pedData, vehicleData)
---     --if not Config.EnablePulloverNotify then return end
 
---     local src = source
---     local Player = QBCore.Functions.GetPlayer(src)
---     if not Player then return end
-
---     local coords = GetEntityCoords(GetPlayerPed(src))
---     local firstName = Player.PlayerData.charinfo.firstname or "Unknown"
---     local lastName = Player.PlayerData.charinfo.lastname or "Unknown"
---     local callsign = Player.PlayerData.metadata.callsign or "N/A"
-
---     local pedPlate = vehicleData.license_plate or "N/A"
---     local pedMake = vehicleData.make or "N/A"
---     local pedModel = vehicleData.model or "N/A"
---     local pedColor = vehicleData.color or "N/A"
---     local pedColor2 = vehicleData.color_secondary or "N/A"
---     local pedClass = vehicleData.vehicle_class or "N/A"
-
---     CreateThread(function()
---         Wait(Config.WaitTimes.PulloverEnd)
-
---         if Config.EnablePulloverCode4 then
---             TriggerEvent('ps-dispatch:server:notify', {
---                 code = 'Dispatch',
---                 codeName = 'codefour',
---                 title = "Code4",
---                 icon = 'fas fa-car-side',
---                 priority = 2,
---                 message = ("%s (%s) | Code-4"):format(     
---                     lastName,
---                     callsign),
---                 name = ("%s %s (%s)"):format(
---                     firstName,
---                     lastName,
---                     callsign),
---                 coords = coords,
---                 alertTime = 10,
---                 -- vehicle = ("%s %s"):format(pedMake, pedModel),
---                 -- plate = ("%s"):format(pedPlate),
---                 -- color = ("%s, %s"):format(pedColor, pedColor2),
---                 -- class = ("%s"):format(pedClass),
---                 jobs = Config.Dispatch.TrafficStop,
---                 information = ("%s (%s). Code-4 from my last Traffic"):format(
---                     lastName, 
---                     callsign),
-
---             })
---         end
-
---     end)
--- end)
 
 --------------------------------------
 -- Pursuit Start
@@ -975,47 +1010,7 @@ RegisterNetEvent('ErsIntegration:server:ReceiveStreetAndPostalPursuit', function
 end)
 
 
--- RegisterNetEvent('ErsIntegration::OnPursuitStarted', function(pedData)
---     --if not Config.EnablePursuitNotify then return end
 
---     local src = source
---     local Player = QBCore.Functions.GetPlayer(src)
---     if not Player then return end
-
---     local coords = GetEntityCoords(GetPlayerPed(src))
---     local firstName = Player.PlayerData.charinfo.firstname or "Unknown"
---     local lastName = Player.PlayerData.charinfo.lastname or "Unknown"
---     local callsign = Player.PlayerData.metadata.callsign or "N/A"
-
---     CreateThread(function()
---         Wait(Config.WaitTimes.PursuitStart)
-
---         if Config.EnablePursuitNotify then
---             TriggerEvent('ps-dispatch:server:notify', {
---                 code = 'Dispatch',
---                 codeName = 'codefour',
---                 title = "Pursuit",
---                 icon = 'fas fa-car',
---                 priority = 2,
---                 message = ("%s (%s) | Pursuit"):format(     
---                     lastName,
---                     callsign),
---                 name = ("%s %s (%s)"):format(
---                     firstName,
---                     lastName,
---                     callsign),
---                 coords = coords,
---                 alertTime = 10,
---                 jobs = Config.Dispatch.TrafficStop,
---                 information = ("%s (%s). Show me in a Active Pursuit"):format(
---                     lastName, 
---                     callsign 
---                 ),
---             })
---         end
-
---     end)
--- end)
 
 
 --------------------------------------
