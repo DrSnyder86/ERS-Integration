@@ -15,25 +15,143 @@
 ## DOWNLOAD `CODE` FOR UP TO DATE VERSION
 Screenshots
 
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;">
-    <img src="https://r2.fivemanage.com/image/ZwJqks3kjwuq.png" style="width:100%;border-radius:10px;">
-    <img src="https://r2.fivemanage.com/image/z752VMUMlrtR.png" style="width:100%;border-radius:10px;">
-    <img src="https://r2.fivemanage.com/image/QMMW4wpxlADj.png" style="width:100%;border-radius:10px;">
-    <img src="https://r2.fivemanage.com/image/aAbsN9yUfpy4.png" style="width:100%;border-radius:10px;">
-    <img src="https://r2.fivemanage.com/image/RV1KmWlwlwFH.png" style="width:100%;border-radius:10px;">
-    <img src="https://r2.fivemanage.com/image/P5BWm1F9g9xP.png" style="width:100%;border-radius:10px;">
-    <img src="https://r2.fivemanage.com/image/7MPsQ37En2oE.png" style="width:100%;border-radius:10px;">
-    <img src="https://r2.fivemanage.com/image/LBqHlcZ3Tkyv.png" style="width:100%;border-radius:10px;">
-    <img src="https://r2.fivemanage.com/image/W4mzQipRcAS5.png" style="width:100%;border-radius:10px;">
-    <img src="https://r2.fivemanage.com/image/1qierHolZa8R.png" style="width:100%;border-radius:10px;">
-    <img src="https://r2.fivemanage.com/image/WrJ0Nzh0mL4W.png" style="width:100%;border-radius:10px;">
-    <img src="https://r2.fivemanage.com/image/S3kn59Fh4Tv1.png" style="width:100%;border-radius:10px;">
-    <img src="https://r2.fivemanage.com/image/MvTBq3iNxCZe.png" style="width:100%;border-radius:10px;">
-    <img src="https://r2.fivemanage.com/image/n6INupb7B1JM.png" style="width:100%;border-radius:10px;">
-    <img src="https://r2.fivemanage.com/image/PKYU2OwvD9et.png" style="width:100%;border-radius:10px;">
-    <img src="https://r2.fivemanage.com/image/pxaRRuzffpzC.png" style="width:100%;border-radius:10px;">
-    <img src="https://r2.fivemanage.com/image/UtSxJQKTJq9g.png" style="width:100%;border-radius:10px;">
+<div class="screenshot-slideshow">
+    <button class="slide-btn prev" onclick="changeSlide(-1)">❮</button>
+
+    <img class="slide active" src="https://r2.fivemanage.com/image/ZwJqks3kjwuq.png">
+    <img class="slide" src="https://r2.fivemanage.com/image/z752VMUMlrtR.png">
+    <img class="slide" src="https://r2.fivemanage.com/image/QMMW4wpxlADj.png">
+    <img class="slide" src="https://r2.fivemanage.com/image/aAbsN9yUfpy4.png">
+    <img class="slide" src="https://r2.fivemanage.com/image/RV1KmWlwlwFH.png">
+    <img class="slide" src="https://r2.fivemanage.com/image/P5BWm1F9g9xP.png">
+    <img class="slide" src="https://r2.fivemanage.com/image/7MPsQ37En2oE.png">
+    <img class="slide" src="https://r2.fivemanage.com/image/LBqHlcZ3Tkyv.png">
+    <img class="slide" src="https://r2.fivemanage.com/image/W4mzQipRcAS5.png">
+    <img class="slide" src="https://r2.fivemanage.com/image/1qierHolZa8R.png">
+    <img class="slide" src="https://r2.fivemanage.com/image/WrJ0Nzh0mL4W.png">
+    <img class="slide" src="https://r2.fivemanage.com/image/S3kn59Fh4Tv1.png">
+    <img class="slide" src="https://r2.fivemanage.com/image/MvTBq3iNxCZe.png">
+    <img class="slide" src="https://r2.fivemanage.com/image/n6INupb7B1JM.png">
+    <img class="slide" src="https://r2.fivemanage.com/image/PKYU2OwvD9et.png">
+    <img class="slide" src="https://r2.fivemanage.com/image/pxaRRuzffpzC.png">
+    <img class="slide" src="https://r2.fivemanage.com/image/UtSxJQKTJq9g.png">
+
+    <button class="slide-btn next" onclick="changeSlide(1)">❯</button>
+
+    <div class="slide-counter">
+        <span id="currentSlide">1</span> / <span id="totalSlides">17</span>
+    </div>
 </div>
+
+<style>
+.screenshot-slideshow {
+    position: relative;
+    width: 100%;
+    max-width: 1100px;
+    margin: 25px auto;
+    overflow: hidden;
+    border-radius: 14px;
+    background: #111;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+}
+
+.screenshot-slideshow .slide {
+    display: none;
+    width: 100%;
+    height: auto;
+    border-radius: 14px;
+}
+
+.screenshot-slideshow .slide.active {
+    display: block;
+    animation: fadeSlide 0.35s ease-in-out;
+}
+
+@keyframes fadeSlide {
+    from {
+        opacity: 0.45;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.slide-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.55);
+    color: white;
+    border: none;
+    font-size: 34px;
+    padding: 12px 18px;
+    cursor: pointer;
+    border-radius: 10px;
+    z-index: 5;
+    transition: background 0.2s ease;
+}
+
+.slide-btn:hover {
+    background: rgba(0,0,0,0.85);
+}
+
+.slide-btn.prev {
+    left: 15px;
+}
+
+.slide-btn.next {
+    right: 15px;
+}
+
+.slide-counter {
+    position: absolute;
+    bottom: 12px;
+    right: 15px;
+    background: rgba(0,0,0,0.65);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+}
+</style>
+
+<script>
+let slideIndex = 0;
+const slides = document.querySelectorAll(".screenshot-slideshow .slide");
+const currentSlideText = document.getElementById("currentSlide");
+const totalSlidesText = document.getElementById("totalSlides");
+
+totalSlidesText.textContent = slides.length;
+
+function showSlide(index) {
+    slides.forEach(slide => slide.classList.remove("active"));
+
+    if (index >= slides.length) {
+        slideIndex = 0;
+    }
+
+    if (index < 0) {
+        slideIndex = slides.length - 1;
+    }
+
+    slides[slideIndex].classList.add("active");
+    currentSlideText.textContent = slideIndex + 1;
+}
+
+function changeSlide(direction) {
+    slideIndex += direction;
+    showSlide(slideIndex);
+}
+
+// Auto-slide every 5 seconds
+setInterval(() => {
+    slideIndex++;
+    showSlide(slideIndex);
+}, 5000);
+
+showSlide(slideIndex);
+</script>
 
 ## Demo (needs updated)
 
