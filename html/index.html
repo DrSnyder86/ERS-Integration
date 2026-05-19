@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ERS Database</title>
+
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+</head>
+<body>
+    <div id="app" class="hidden">
+        <div class="mdt">
+            <!-- Close Button -->
+            <button id="closeBtn" title="Close">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <!-- Top Bar -->
+            <div class="topbar">
+                <div class="topbar-left">
+                    <div class="topbar-icon">
+                        <i class="fa-solid fa-globe"></i>
+                    </div>
+
+                    <div class="topbar-text">
+                        <h1>NCIC Database</h1>
+                        <p>MOBILE DATA TERMINAL</p>
+                    </div>
+                </div>
+
+                <div id="tabletAlert" class="tablet-alert hidden">
+                    <div class="tablet-alert-title">
+                        <i class="fa-solid fa-bullhorn"></i>
+                        <span id="tabletAlertTitle">INCOMING 911 CALL</span>
+                        <i class="fa-solid fa-bullhorn"></i>
+                    </div>
+
+                    <div id="tabletAlertBody" class="tablet-alert-body">
+                        Awaiting details...
+                    </div>
+
+                    <div class="tablet-alert-hint">
+                        <i class="fa-solid fa-hand-pointer"></i>
+                        <span>CLICK TO ACCEPT</span>
+                        <i class="fa-solid fa-hand-pointer"></i>
+                    </div>
+                </div>
+
+                <!-- Status Window -->
+                <div class="tablet-status">
+                    <div class="status-top">
+                        <span id="tabletTime">--:--</span>
+
+                        <div class="status-connection">
+                            <span class="power-light"></span>
+                            <span>ONLINE</span>
+                        </div>
+                    </div>
+
+                    <div class="status-user">
+                        <div class="status-user-row">
+                            <span id="tabletCharacter">Unknown</span>
+                            <span id="tabletCallsign">N/A</span>
+                        </div>
+
+                        <div class="status-unit">
+                            <i id="tabletStatusIcon" class="fa-solid fa-circle"></i>
+                            <span id="tabletStatusText">10-8</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="tabs">
+                <button class="tab" data-tab="peds">
+                    <i class="fa-solid fa-user"></i> PROFILES
+                </button>
+
+                <button class="tab" data-tab="vehicles">
+                    <i class="fa-solid fa-car"></i> VEHICLES
+                </button>
+
+                <button class="tab" data-tab="callouts">
+                    <i class="fa-solid fa-bullhorn"></i> CALLS
+                </button>
+
+                <button class="tab active" data-tab="home">
+                    <i class="fa-solid fa-house"></i> HOME
+                </button>
+
+                <button class="tab" data-tab="reports">
+                    <i class="fa-solid fa-file-lines"></i> REPORTS
+                </button>
+
+                <button class="tab" data-tab="personnel">
+                    <i class="fa-solid fa-users"></i> PERSONNEL
+                </button>
+
+                <button class="tab" data-tab="services">
+                    <i class="fa-solid fa-screwdriver-wrench"></i> SERVICES
+                </button>
+            </div>
+
+            <!-- Search -->
+            <div class="search-row">
+                <input id="search" placeholder="Search records..." />
+
+                <button id="refreshDataBtn" title="Refresh Data">
+                    <i class="fa-solid fa-rotate"></i>
+                </button>
+            </div>
+
+            <!-- Main Content -->
+            <div id="content"></div>
+
+            <!-- Profile Picture Modal -->
+            <div id="profilePicModal" class="content-modal hidden">
+                <div class="modal-box">
+                    <h2>
+                        <i class="fa-solid fa-image"></i>
+                        Update Profile Picture
+                    </h2>
+
+                    <div class="profile-picture-editor-frame" id="profilePictureEditorFrame">
+                        <img id="profilePicPreview" class="profile-picture-editor-img hidden" src="" draggable="false" />
+                        <div id="profilePicNoPreview" class="no-profile-img">No Preview</div>
+                    </div>
+
+                    <div class="photo-zoom-row">
+                        <i class="fa-solid fa-magnifying-glass-minus"></i>
+
+                        <input
+                            type="range"
+                            id="profilePictureZoomSlider"
+                            min="100"
+                            max="250"
+                            step="5"
+                            value="100"
+                        />
+
+                        <i class="fa-solid fa-magnifying-glass-plus"></i>
+                    </div>
+
+                    <small class="photo-position-hint">
+                        <i class="fa-solid fa-arrows-up-down-left-right"></i>
+                        Drag image to adjust
+                    </small>
+
+                    <input id="profilePicInput" placeholder="Paste image URL..." />
+
+                    <div class="modal-actions">
+                        <button id="saveProfilePicBtn">Save</button>
+                        <button id="cancelProfilePicBtn">Cancel</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FOB Decode Modal -->
+            <div id="decodeModal" class="content-modal hidden">
+                <div class="modal-box decode-modal-box">
+                    <h2>
+                        <i class="fa-solid fa-barcode"></i>
+                        FOB Decode
+                    </h2>
+
+                    <div id="decodeVehicleList" class="decode-vehicle-list">
+                        <div class="grid-item full">Scanning nearby vehicles...</div>
+                    </div>
+
+                    <div id="decodeConfirmBox" class="decode-confirm-box hidden">
+                        <div class="decode-confirm-icon">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        </div>
+
+                        <div class="decode-confirm-text">
+                            <strong>Confirm Decode</strong>
+                            <span id="decodeConfirmPlate">Are you sure you want to decode this vehicle?</span>
+                        </div>
+
+                        <div class="decode-confirm-actions">
+                            <button id="confirmDecodeBtn">
+                                <i class="fa-solid fa-check"></i>
+                                Decode
+                            </button>
+
+                            <button id="cancelConfirmDecodeBtn">
+                                <i class="fa-solid fa-xmark"></i>
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="decodeProgressBox" class="decode-progress-box hidden">
+                        <div class="decode-spinner">
+                            <i class="fa-solid fa-microchip"></i>
+                        </div>
+
+                        <div class="decode-progress-text">
+                            Decoding vehicle security...
+                        </div>
+
+                        <div class="decode-progress-track">
+                            <div id="decodeProgressFill" class="decode-progress-fill"></div>
+                        </div>
+                    </div>
+
+                    <div class="modal-actions">
+                        <button id="cancelDecodeBtn">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Background Modal -->
+            <div id="backgroundModal" class="content-modal hidden">
+                <div class="modal-box">
+                    <h2>
+                        <i class="fa-solid fa-image"></i>
+                        Set Tablet Background
+                    </h2>
+
+                    <div class="background-editor-frame" id="backgroundEditorFrame">
+                        <img id="backgroundPreview" class="background-editor-img hidden" src="" draggable="false" />
+                        <div id="backgroundNoPreview" class="no-profile-img">No Preview</div>
+                    </div>
+
+                    <div class="photo-zoom-row">
+                        <i class="fa-solid fa-magnifying-glass-minus"></i>
+
+                        <input
+                            type="range"
+                            id="backgroundZoomSlider"
+                            min="100"
+                            max="250"
+                            step="5"
+                            value="100"
+                        />
+
+                        <i class="fa-solid fa-magnifying-glass-plus"></i>
+                    </div>
+
+                    <small class="photo-position-hint">
+                        <i class="fa-solid fa-arrows-up-down-left-right"></i>
+                        Drag background to adjust
+                    </small>
+
+                    <input id="backgroundInput" placeholder="Paste background image URL..." />
+
+                    <div class="modal-actions">
+                        <button id="saveBackgroundBtn">Save</button>
+                        <button id="cancelBackgroundBtn">Cancel</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Photo Viewer Modal -->
+            <div id="photoViewerModal" class="content-modal hidden">
+                <div class="photo-viewer-box">
+                    <button id="closePhotoViewerBtn" class="photo-viewer-close">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+
+                    <img id="photoViewerImage" src="" />
+
+                    <div id="photoViewerCaption" class="photo-viewer-caption"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="script.js"></script>
+</body>
+</html>
