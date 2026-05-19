@@ -196,12 +196,6 @@ OR
 - Item tables and images located in `INSTALL ME/Optional Items/items.lua`.
 - Supports `qb` and `ox` inventories.
 
-## UPDATE
-- Enhanced code
-- Added seperate config for target options
-- You can now enable/disable all dispatch service request notifications specifically
-- Moved radialmenu items to jobmenu items
-
 ## UPDATING FROM VERSION 1.5
 - Replace entire ers_integration script!
 - No need to change anything in ps-dispatch. Nothing was changed
