@@ -30,6 +30,14 @@
             icon = 'list-check',
             items = {
                 {
+                    id = 'ersi_database_ui',
+                    title = 'MDT Database',
+                    icon = 'tablet-alt',
+                    type = 'client',
+                    event = 'ersi:client:openFullDatabaseUI',
+                    shouldClose = true
+                },
+                {
                     id = 'police_database',
                     title = 'Database',
                     icon = 'wifi',
