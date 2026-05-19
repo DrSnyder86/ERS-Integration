@@ -175,6 +175,10 @@ OR
 
 - Drag and drop the `ers_integration` script in your resourse folder.
 
+### SQL Database
+- Import the ers_database sql.
+- ers_integration/sql/ers_database.sql
+  
 ## Configuration (`ers_integration_config.lua` & `ers_targets_config.lua`)
 - Change and add target duty locations for jobs in `ers_targets_config.lua` file
 - Dispatch response and delay times (time in between ERS events and ps-dispatch events)
@@ -191,16 +195,12 @@ OR
 - You can now enable/disable all dispatch service request notifications specifically
 - Moved radialmenu items to jobmenu items
 
-## UPDATING FROM VERSION 1.4
+## UPDATING FROM VERSION 1.5
 - Replace entire ers_integration script!
 - No need to change anything in ps-dispatch. Nothing was changed
-- Replace the radial menu configs for the new layout (ERS menu moved to job menu).
-
+  
 ## Known Bugs
 - Dispatch will display arrival event when the player requests a service even if the request is denied
-
-## 1.5 PATCH 
-- Fixed coding error related to config settings
 
 ## Credits
 ### Crosshair
