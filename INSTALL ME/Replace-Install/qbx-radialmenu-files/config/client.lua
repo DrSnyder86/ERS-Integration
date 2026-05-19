@@ -315,6 +315,15 @@ return {
                 label = "Utilities",
                 items = {
                     { id = "request_callout", icon = "bullhorn", label = "Request Call", event = "ersi:callout:request" },
+                    { id = "open_dispatch", icon = "fas fa-bell", label = "State Dispatch", event = 'ersi:dispatch:open' },	
+                    {
+                        id = 'ersi_database_ui',
+                        label = 'MDT DATA',
+                        icon = 'tablet-screen-button',
+                        onSelect = function()
+                            TriggerEvent('ersi:client:openFullDatabaseUI')
+                        end
+                    },
                     {
                         id = 'police_tools',
                         label = 'Database',
