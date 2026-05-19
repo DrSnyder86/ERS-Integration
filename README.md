@@ -71,6 +71,29 @@ https://www.youtube.com/watch?v=hOujbqjlBBQ
 - Request `Ambulance` and `Coroner` when targeting a downed ped while on ERS duty.
 - Add or remove duty locations in the `ers_targets_config.lua`.
 
+### MDT Database Tablet UI 
+### MDT Database Tablet UI - TABS
+- Full functional MDT Tablet
+- Profiles Tab - View NPC and Player Data
+- Vehicles - Lookup NPC and Player Vehicle Information
+- Calls - Shows a list of accepted callouts with data
+- Reports - Create reports and attach NPC's, Players, Evidence Photos and Charges
+- Personnel - View online on duty ers personnel
+- Services -  Request and Cancel NPC Services
+
+### MDT Database Tablet UI - Additional Functions
+- Dispatch - Shows all Ps-dispatch events
+- Request Call 
+- Toggle Calls 
+- Complete Call
+- Speedzone - Open Speedzone Menu
+- Place Object - Open Object Menu
+- Vehicle Decoder - Custom Vehicle Unlock Tool
+  - Displays a list of nearby vehicles
+  - Select vehicle for decoding
+  - Decoder will unlock the vehicle
+- Wallpaper - Upload a custom image url
+
 ### Ped and Vehicle Database Context Menu (ERS Peds and Vehicles - ox_lib)
 - Toggle via radial menu (Database)
 - Vehicle Menu - Stores last 10 vehicles interacted with
