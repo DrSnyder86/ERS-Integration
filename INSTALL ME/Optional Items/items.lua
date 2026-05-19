@@ -1,6 +1,16 @@
 -- ox_inventory
 -- ox_inventory/data/items.lua
-
+	['ers_tablet'] = {
+        label = 'ERS Tablet',
+        weight = 1000,
+        stack = false,
+        close = true,
+        description = 'Emergency Response System mobile data terminal.',
+        client = {
+            event = 'ersi:client:useDatabaseTablet'
+        }
+    },
+	
     ['mdt_tablet'] = {
 		label = 'MDT Tablet',
 		weight = 500,
@@ -37,6 +47,21 @@
 
 -- qb-inventory
 -- qb-core/shared/items.lua
+
+ers_tablet = {
+    name = 'ers_tablet',
+    label = 'ERS Tablet',
+    weight = 500,
+    type = 'item',
+    image = 'ers_tablet.png',
+    unique = false,
+    useable = true,
+    shouldClose = true,
+    description = 'Emergency Response System mobile data terminal.',
+    client = {
+        event = 'ersi:client:useDatabaseTablet'
+    }
+},
 
 mdt_tablet = {
     name = 'mdt_tablet',
