@@ -72,7 +72,6 @@ https://www.youtube.com/watch?v=hOujbqjlBBQ
 - Request `Ambulance` and `Coroner` when targeting a downed ped while on ERS duty.
 - Add or remove duty locations in the `ers_targets_config.lua`.
 
-### MDT Database Tablet UI 
 ### MDT Database Tablet UI - TABS
 - Full functional MDT Tablet
 - Profiles Tab - View NPC and Player Data
