@@ -9,14 +9,47 @@
 -- \ \ / / | |___ \ 
 --  \ V /| |_ ___) |
 --   \_/ |_(_)____/ 
--- ===============================================================================================================
--- CONFIGURATION FILE FOR ERS_INTEGRATION v1.5-- GAMEPLAY ENHANCEMENTS FOR "EMERGENCY RESPONSE SIMULATOR"
+-- =======================================================================================================================
+-- -- CONFIGURATION FILE FOR ERS_INTEGRATION v1.6-- GAMEPLAY ENHANCEMENTS FOR "EMERGENCY RESPONSE SIMULATOR v1.8.3"
+-- -- Enable/Disable Features = true/false
+Config = Config or {} 
 
-Config = Config or {}
+-- -- ERS TABLET FEATURES --
+Config.TabletItem = {
+    enabled     = true, -- Use ERS tablet as item ( item tables provided in 'INSTALL ME' folder )
+    itemName    = 'ers_tablet' -- Item name that toggles the tablet UI ( must match item name in qb/ox_inventory )
+}
+-- Job/Lock - Jobs with tablet access
+Config.TabletJobLock = {
+    enabled = true,
 
--- Enable/Disable Features      = true/false
+    jobs = {
+        police      = true,
+        sheriff     = true,
+        ambulance   = true,
+        fire        = true,
+        tow         = true,
+        -- add more jobs...
+    }
+}
+-- Show location on Personnel Card in tablet
+Config.PersonnelLocation = {
+    enabled = true,
+    updateInterval = 60000, -- 60 seconds
+    showPostal = true
+}
+-- Display player profiles in tablet. If false, displays NPC only profiles.
+Config.PlayerProfiles = {
+    enabled = true,
+    playersTable = 'players' -- SQL player data table name
+}
+-- Display player vehicles in tablet. If false, displays NPC only vehicles.
+Config.PlayerVehicles = {
+    enabled = true,
+    vehiclesTable = 'player_vehicles' -- SQL player vehicle data table name
+}
 
--- PS-DISPATCH ALERT NOTIFICATIONS -- (Server - Everybody can see)
+-- -- PS-DISPATCH ALERT NOTIFICATIONS -- -- ( Server - Everybody can see )
 -- Ps-dispatch Callout Notifications
 Config.EnableCalloutOffer    = false  -- Callout offer
 Config.EnableCalloutAccept   = true  -- Callout accept
@@ -43,8 +76,8 @@ Config.EnableAmbulanceArrive    = true  -- Ambulance request arrival
 Config.EnableFireArrive         = true  -- Fire request arrival
 Config.EnableRoadServiceArrive  = false  -- Road Service request arrival
 
--- Service Request Notifications -- (Client - Only you can see)
--- Display a notification to dispatch requesting services (Displays character name, callsign, service requested and location with postal. Uses ox_lib.notify)
+-- -- Service Request Notifications -- -- ( Client - Only you can see. ox_lib.notify )
+-- Display a notification to dispatch requesting services (Displays character name, callsign, service requested and location with postal.
 Config.EnableCoronerRequest      = true
 Config.EnableMechanicRequest     = false
 Config.EnableTowRequest          = false
@@ -55,7 +88,7 @@ Config.EnableAmbulanceRequest    = true
 Config.EnableFireRequest         = true
 Config.EnableRoadServiceRequest  = false
 
--- EXTRA NOTIFICATIONS --
+-- -- EXTRA NOTIFICATIONS --
 -- ox_lib notify
 Config.ShowlibNotify = true
 -- ox_lib textui
@@ -113,8 +146,8 @@ Config.WaitTimes = {
 -- Wraith radar auto plate lock (whether or not front plate reader auto locks on pullovers)
 Config.EnableRadarLock = true 
 
--- ENABLE/DISABLE EXTRA FEATURES (Includes the three settings below)
-Config.EnableAll = false
+-- ENABLE/DISABLE EXTRA FEATURES
+Config.EnableAll = true
 
 -- Minimap fixed radar zoom. Removes vanilla GTA multi zoom minimap and remains in a higher FOV on foot and in vehicle.
 Config.EnableRadarZoom = true
