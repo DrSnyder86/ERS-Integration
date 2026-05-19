@@ -11,10 +11,18 @@
 --   \_/ |_(_)____/ 
 
 fx_version 'cerulean'  game 'gta5'
-author 'DrSnyder'  name "ers_integration"  version '1.5'
+author 'DrSnyder'  name "ers_integration"  version '1.6'
 description 'ERS Integration for QB-Core & QBOX using qbx-radialmenu/qb-radailmenu + ps-dispatch'
 repository 'https://github.com/DrSnyder86/ERS-Integration'
 license ''
+
+ui_page 'html/index.html'
+
+files {
+    'html/index.html',
+    'html/style.css',
+    'html/script.js',
+}
 
 shared_scripts {
     'config/*.lua'
@@ -33,4 +41,5 @@ server_scripts {
 dependencies {
     'qb-core',
     'ps-dispatch',
+    'oxmysql',
 }
