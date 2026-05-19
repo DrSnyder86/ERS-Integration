@@ -46,6 +46,8 @@ RegisterNetEvent('ersi:dispatch:open', function() ExecuteCommand('dispatch') end
 RegisterNetEvent('ersi:callout:request', function() ExecuteCommand('requestcallout') end)
 RegisterNetEvent('ersi:shift:toggle', function() ExecuteCommand('toggleshift') end)
 RegisterNetEvent('ersi:callouts:toggle', function() ExecuteCommand('togglecallouts') end)
+RegisterNetEvent('ersi:callouts:accept', function() ExecuteCommand('acceptcallout') end)
+RegisterNetEvent('ersi:callouts:complete', function() ExecuteCommand('completecallout') end)
 RegisterNetEvent('ersi:speedzone', function() ExecuteCommand('speedzones') end)
 RegisterNetEvent('ersi:placeobjects', function() ExecuteCommand('placeobjects') end)
 
