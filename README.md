@@ -15,38 +15,6 @@
 ## DOWNLOAD `CODE` FOR UP TO DATE VERSION
 Screenshots
 
-<p align="center">
-  <img src="https://r2.fivemanage.com/image/V7AInPUQnHJm.jpg" width="32%" alt="Freight Dispatch UI" />
-  <img src="https://r2.fivemanage.com/image/koGBHenopjcv.jpg" width="32%" alt="Company Progress" />
-  <img src="https://r2.fivemanage.com/image/O4QPR3R8rJdm.jpg" width="32%" alt="Company Garage" />   
-</p>
-<p align="center">
-  <img src="https://r2.fivemanage.com/image/V7AInPUQnHJm.jpg" width="32%" alt="Freight Dispatch UI" />
-  <img src="https://r2.fivemanage.com/image/koGBHenopjcv.jpg" width="32%" alt="Company Progress" />
-  <img src="https://r2.fivemanage.com/image/O4QPR3R8rJdm.jpg" width="32%" alt="Company Garage" />   
-</p>
-<p align="center">
-  <img src="https://r2.fivemanage.com/image/V7AInPUQnHJm.jpg" width="32%" alt="Freight Dispatch UI" />
-  <img src="https://r2.fivemanage.com/image/koGBHenopjcv.jpg" width="32%" alt="Company Progress" />
-  <img src="https://r2.fivemanage.com/image/O4QPR3R8rJdm.jpg" width="32%" alt="Company Garage" />   
-</p>
-<p align="center">
-  <img src="https://r2.fivemanage.com/image/V7AInPUQnHJm.jpg" width="32%" alt="Freight Dispatch UI" />
-  <img src="https://r2.fivemanage.com/image/koGBHenopjcv.jpg" width="32%" alt="Company Progress" />
-  <img src="https://r2.fivemanage.com/image/O4QPR3R8rJdm.jpg" width="32%" alt="Company Garage" />   
-</p>
-<p align="center">
-  <img src="https://r2.fivemanage.com/image/V7AInPUQnHJm.jpg" width="32%" alt="Freight Dispatch UI" />
-  <img src="https://r2.fivemanage.com/image/koGBHenopjcv.jpg" width="32%" alt="Company Progress" />
-  <img src="https://r2.fivemanage.com/image/O4QPR3R8rJdm.jpg" width="32%" alt="Company Garage" />   
-</p>
-<p align="center">
-  <img src="https://r2.fivemanage.com/image/V7AInPUQnHJm.jpg" width="32%" alt="Freight Dispatch UI" />
-  <img src="https://r2.fivemanage.com/image/koGBHenopjcv.jpg" width="32%" alt="Company Progress" />
-  <img src="https://r2.fivemanage.com/image/O4QPR3R8rJdm.jpg" width="32%" alt="Company Garage" />   
-</p>
-
-
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;">
     <img src="https://r2.fivemanage.com/image/ZwJqks3kjwuq.png" style="width:100%;border-radius:10px;">
     <img src="https://r2.fivemanage.com/image/z752VMUMlrtR.png" style="width:100%;border-radius:10px;">
