@@ -15,24 +15,24 @@
 ## DOWNLOAD `CODE` FOR UP TO DATE VERSION
 Screenshots
 
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;">
-    <img src="https://r2.fivemanage.com/image/ZwJqks3kjwuq.png" style="width:100%;border-radius:10px;">
-    <img src="https://r2.fivemanage.com/image/z752VMUMlrtR.png" style="width:100%;border-radius:10px;">
-    <img src="https://r2.fivemanage.com/image/QMMW4wpxlADj.png" style="width:100%;border-radius:10px;">
-    <img src="https://r2.fivemanage.com/image/aAbsN9yUfpy4.png" style="width:100%;border-radius:10px;">
-    <img src="https://r2.fivemanage.com/image/RV1KmWlwlwFH.png" style="width:100%;border-radius:10px;">
-    <img src="https://r2.fivemanage.com/image/P5BWm1F9g9xP.png" style="width:100%;border-radius:10px;">
-    <img src="https://r2.fivemanage.com/image/7MPsQ37En2oE.png" style="width:100%;border-radius:10px;">
-    <img src="https://r2.fivemanage.com/image/LBqHlcZ3Tkyv.png" style="width:100%;border-radius:10px;">
-    <img src="https://r2.fivemanage.com/image/W4mzQipRcAS5.png" style="width:100%;border-radius:10px;">
-    <img src="https://r2.fivemanage.com/image/1qierHolZa8R.png" style="width:100%;border-radius:10px;">
-    <img src="https://r2.fivemanage.com/image/WrJ0Nzh0mL4W.png" style="width:100%;border-radius:10px;">
-    <img src="https://r2.fivemanage.com/image/S3kn59Fh4Tv1.png" style="width:100%;border-radius:10px;">
-    <img src="https://r2.fivemanage.com/image/MvTBq3iNxCZe.png" style="width:100%;border-radius:10px;">
-    <img src="https://r2.fivemanage.com/image/n6INupb7B1JM.png" style="width:100%;border-radius:10px;">
-    <img src="https://r2.fivemanage.com/image/PKYU2OwvD9et.png" style="width:100%;border-radius:10px;">
-    <img src="https://r2.fivemanage.com/image/pxaRRuzffpzC.png" style="width:100%;border-radius:10px;">
-    <img src="https://r2.fivemanage.com/image/UtSxJQKTJq9g.png" style="width:100%;border-radius:10px;">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;max-width:900px;margin:0 auto;">
+    <img src="https://r2.fivemanage.com/image/ZwJqks3kjwuq.png" style="width:100%;max-width:220px;border-radius:10px;margin:auto;">
+    <img src="https://r2.fivemanage.com/image/z752VMUMlrtR.png" style="width:100%;max-width:220px;border-radius:10px;margin:auto;">
+    <img src="https://r2.fivemanage.com/image/QMMW4wpxlADj.png" style="width:100%;max-width:220px;border-radius:10px;margin:auto;">
+    <img src="https://r2.fivemanage.com/image/aAbsN9yUfpy4.png" style="width:100%;max-width:220px;border-radius:10px;margin:auto;">
+    <img src="https://r2.fivemanage.com/image/RV1KmWlwlwFH.png" style="width:100%;max-width:220px;border-radius:10px;margin:auto;">
+    <img src="https://r2.fivemanage.com/image/P5BWm1F9g9xP.png" style="width:100%;max-width:220px;border-radius:10px;margin:auto;">
+    <img src="https://r2.fivemanage.com/image/7MPsQ37En2oE.png" style="width:100%;max-width:220px;border-radius:10px;margin:auto;">
+    <img src="https://r2.fivemanage.com/image/LBqHlcZ3Tkyv.png" style="width:100%;max-width:220px;border-radius:10px;margin:auto;">
+    <img src="https://r2.fivemanage.com/image/W4mzQipRcAS5.png" style="width:100%;max-width:220px;border-radius:10px;margin:auto;">
+    <img src="https://r2.fivemanage.com/image/1qierHolZa8R.png" style="width:100%;max-width:220px;border-radius:10px;margin:auto;">
+    <img src="https://r2.fivemanage.com/image/WrJ0Nzh0mL4W.png" style="width:100%;max-width:220px;border-radius:10px;margin:auto;">
+    <img src="https://r2.fivemanage.com/image/S3kn59Fh4Tv1.png" style="width:100%;max-width:220px;border-radius:10px;margin:auto;">
+    <img src="https://r2.fivemanage.com/image/MvTBq3iNxCZe.png" style="width:100%;max-width:220px;border-radius:10px;margin:auto;">
+    <img src="https://r2.fivemanage.com/image/n6INupb7B1JM.png" style="width:100%;max-width:220px;border-radius:10px;margin:auto;">
+    <img src="https://r2.fivemanage.com/image/PKYU2OwvD9et.png" style="width:100%;max-width:220px;border-radius:10px;margin:auto;">
+    <img src="https://r2.fivemanage.com/image/pxaRRuzffpzC.png" style="width:100%;max-width:220px;border-radius:10px;margin:auto;">
+    <img src="https://r2.fivemanage.com/image/UtSxJQKTJq9g.png" style="width:100%;max-width:220px;border-radius:10px;margin:auto;">
 </div>
 
 ## Demo (needs updated)
