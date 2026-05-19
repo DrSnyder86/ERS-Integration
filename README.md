@@ -182,6 +182,7 @@ OR
 ## UPDATING FROM VERSION 1.5
 - Replace entire ers_integration script!
 - No need to change anything in ps-dispatch. Nothing was changed
+- ers_targets_config updated duty coords - Otherwise unchanged
   
 ## Known Bugs
 - Dispatch will display arrival event when the player requests a service even if the request is denied
