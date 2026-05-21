@@ -196,10 +196,10 @@ OR
 - No need to change anything in ps-dispatch. Nothing was changed
 - ers_targets_config updated duty coords - Otherwise unchanged
   
-## Known Bugs
+### Known Bugs
 - Dispatch will display arrival event when the player requests a service even if the request is denied
 
-## Credits
+### Credits
 ### Crosshair
 - I updated code from a old server of mine. No author was listed in the manifest. Credit for original code goes to them.
 
