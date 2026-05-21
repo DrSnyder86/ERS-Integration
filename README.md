@@ -104,7 +104,7 @@ https://www.youtube.com/watch?v=hOujbqjlBBQ
 - Ped Menu - Stores last 10 peds interacted with
 - TextUI notifications for successful entries
 
-### Callout History & Personnel Menu
+### Callout History & Personnel Context Menu
 - Callout History - Displays up to last 10 callouts responded to
 - Personnel Menu - Displays a list of players that were on duty with ERS and what calls they responded to with data
  
@@ -117,12 +117,13 @@ https://www.youtube.com/watch?v=hOujbqjlBBQ
 
 ### Inventory Item Support (qb_inventory and ox_inventory items)
 - Use your ERS tools as items. 
-- Currently supports the `Stretcher`, `Fire Hose`, `Broom`, `MDT`, and `Wraith Radar Remote`.
+- Currently supports the `MDT Database`, `Stretcher`, `Fire Hose`, `Broom`, `MDT`, and `Wraith Radar Remote`.
    - Stretcher    - uses same as `stretcher` command
    - Fire Hose    - uses same as `hose` command
    - Broom        - uses same as `broom` command
    - MDT          - opens any MDT that uses `mdt` command
    - Wraith Radar - use your radar remote as item
+   - ERS Tablet   - opens mdt database ui
 
 ### Player Rewards (enable/disable in `ers_integration_config.lua`)
 - Awards players with automatic bank/cash payment bonus on completion of scene cleanup. Giving player incentive to clean-up their scenes.
