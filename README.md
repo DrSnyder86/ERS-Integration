@@ -191,7 +191,7 @@ OR
 - Item tables and images located in `INSTALL ME/Optional Items/items.lua`.
 - Supports `qb` and `ox` inventories.
 
-## UPDATING FROM VERSION 1.5
+### UPDATING FROM VERSION 1.5
 - Replace entire ers_integration script!
 - No need to change anything in ps-dispatch. Nothing was changed
 - ers_targets_config updated duty coords - Otherwise unchanged
