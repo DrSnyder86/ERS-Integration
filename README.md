@@ -77,7 +77,6 @@ https://www.youtube.com/watch?v=hOujbqjlBBQ
 - Add or remove duty locations in the `ers_targets_config.lua`.
 
 ### MDT Database Tablet UI - TABS
-- Full functional MDT Tablet
 - Profiles Tab - View NPC and Player Data
 - Vehicles - Lookup NPC and Player Vehicle Information
 - Calls - Shows a list of accepted callouts with data
