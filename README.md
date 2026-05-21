@@ -138,19 +138,10 @@ https://www.youtube.com/watch?v=hOujbqjlBBQ
 - Nearest postal is now displayed in dispatch request and arrival events.
 - Postal appears in address line for dispatch and chat events.
 
-## New Features (enable/disable in `ers_integration_config.lua`)
+### Extra Features
 - Persistent flashlight option. Works for flashlight and weapon lights. Light will remain on until turned off.
 - Radar Zoom Option. Changes default multi-zoom minimap and replaces with a wide fixed FOV.
 - Weapon crosshair. Disables default crosshair and replaces with a better looking smaller one.
-- Display qbcore.notify option when requesting a service. 
-- You can now disable all "Service Request" related notifications with one setting. These can be annoying depending on player count
-   - Config.EnableServiceRequestandArrive
-- Radio and Phone Animations for notifications (Requires `ox_lib`)
-   - Player does animations when sending or receiving alerts and notifications
-   - Incoming 911 Call - Player does a pull out phone animation
-   - Responding - Player does radio talk animation
-- ox_lib notifications
-- Ped and Vehicle Database Menu
 
 # Installation
 ## MANUAL-INSTALL
